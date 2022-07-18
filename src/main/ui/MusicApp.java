@@ -11,6 +11,8 @@ public class MusicApp {
     private Song song1 =  new Song("song1", "unknown", "song1.wav");
 
     private void runMusicApp() {
-        String operation = "";
+        song1.processOperations("song1.wav");
+
+
     }
 }
