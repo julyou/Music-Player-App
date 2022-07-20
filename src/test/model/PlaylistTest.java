@@ -17,8 +17,8 @@ public class PlaylistTest {
     public void setUp() {
         testPlaylist1 = new Playlist();
         testPlaylist2 = new Playlist();
-        testSong1 = new Song("song1", "unknown", "song1.wav", "");
-        testSong2 = new Song("song2", "unknown", "song2.wav", "");
+        testSong1 = new Song("song1", "unknown", "song1.wav");
+        testSong2 = new Song("song2", "unknown", "song2.wav");
     }
 
     @Test

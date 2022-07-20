@@ -1,6 +1,11 @@
 package model;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.Line;
+import javax.sound.sampled.LineEvent;
 import java.applet.Applet;
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
@@ -13,7 +18,7 @@ public class Song {
     private String status;
 
     // EFFECTS: creates a song with title, artist, file location, and status
-    public Song(String title, String artist, String filePath, String status) {
+    public Song(String title, String artist, String filePath) {
         this.songTitle = title;
         this.artist = artist;
         this.status = "";
@@ -24,6 +29,7 @@ public class Song {
             System.err.println(ex);
         }
     }
+
 
     // EFFECTS: plays given song
     public void playSong() {
