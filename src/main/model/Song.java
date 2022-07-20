@@ -10,45 +10,50 @@ public class Song {
     private String songTitle;
     private String artist;
     private URL filePath;
-    private String operation;
-    private Scanner scanner;
+    private String status;
 
-    // EFFECTS: creates a song with title and artist
-    public Song(String title, String artist, String filePath) {
+    // EFFECTS: creates a song with title, artist, file location, and status
+    public Song(String title, String artist, String filePath, String status) {
         this.songTitle = title;
         this.artist = artist;
+        this.status = "";
 
+        try {
+            this.filePath = new URL("file:" + filePath);
+        } catch (MalformedURLException ex) {
+            System.err.println(ex);
+        }
     }
 
-    public void processOperations(String filePath) {
-        scanner = new Scanner(System.in);
-        String operation = "";
+    // EFFECTS: plays given song
+    public void playSong() {
+        Applet.newAudioClip(this.filePath).play();
+        status = "Playing";
+    }
 
-        while (true) {
-            System.out.println("Please select an option (play, pause, or quit):");
-            operation = scanner.nextLine();
-            System.out.println("you selected: " + operation);
+    // EFFECTS: pauses given song
+    public void pauseSong() {
+        Applet.newAudioClip(this.filePath).stop();
+        status = "Paused";
+    }
 
-            if (operation.equals("quit")) {
-                break;
-            }
+    // EFFECTS: loops given song
+    public void loopSong() {
+        Applet.newAudioClip(this.filePath).loop();
+        status = "Looping";
+    }
 
-            if (operation.equals("play")) {
-                try {
-                    this.filePath = new URL("file:" + filePath);
-                } catch (MalformedURLException ex) {
-                    System.err.println(ex);
-                }
-                Applet.newAudioClip(this.filePath).play();
-            } else if (operation.equals("pause")) {
-                try {
-                    this.filePath = new URL("file:" + filePath);
-                } catch (MalformedURLException ex) {
-                    System.err.println(ex);
-                }
-                Applet.newAudioClip(this.filePath).stop();
-            }
-        }
+    public boolean isPlaying() {
+        return status.equals("Playing");
+    }
+
+    public boolean isPaused() {
+        return status.equals("Paused");
+    }
+
+    public boolean isLooping() {
+        return status.equals("Looping");
+
     }
 
     // getters
