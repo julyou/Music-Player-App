@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,8 +7,10 @@ import java.util.List;
 public class Playlist {
 
     private List<Song> playlist;
+    private String playlistName;
 
-    public Playlist() {
+    public Playlist(String playlistName) {
+        this.playlistName = playlistName;
         playlist = new LinkedList<>();
     }
 
@@ -29,6 +30,13 @@ public class Playlist {
         return false;
     }
 
+    // MODIFIES: this;
+    // EFFECTS: renames playlist
+    public String renamePlaylist(String s) {
+        playlistName = s;
+        return s;
+    }
+
     // getters
     public List<Song> getSongsInPlaylist() {
         List<Song> songs = new LinkedList<>();
@@ -36,6 +44,10 @@ public class Playlist {
             songs.add(s);
         }
         return songs;
+    }
+
+    public String getPlaylistName() {
+        return playlistName;
     }
 
 
