@@ -7,6 +7,7 @@ import model.Song;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class MusicApp {
 
@@ -21,12 +22,16 @@ public class MusicApp {
     Playlist playlist = new Playlist("");
     Song song1 = new Song("song1", "unknown", "song1.wav", 34);
     Song song2 = new Song("song2", "unknown", "song2.wav", 44);
-    Song song3 = new Song("song2", "unknown", "song2.wav", 44);
+    Song song3 = new Song("Pink Panther", "Henry Mancini", "song3.wav", 30);
+    Song song4 = new Song("Imperial March", "John Williams", "song4.wav", 60);
+    Song song5 = new Song("Cantina Band", "John Williams", "song5.wav", 60);
+    Song song6 = new Song("Dhol Drums", "unknown", "song6.wav", 18);
 
 
     // MODIFIES: this
     // EFFECTS: processes user input
     private void runMusicApp() throws InterruptedException {
+
         boolean keepGoing = true;
         String command = null;
 
@@ -42,38 +47,23 @@ public class MusicApp {
                 for (Song s : songs) {
                     s.pauseSong();
                 }
-            } else if (command.equals("browse")) {
-                List<String> songNames = new LinkedList<>();
-                for (Song s : songs) {
-                    songNames.add(s.getSongTitle());
-                }
-                System.out.println("Here are all the songs you can play!" + songNames);
-
-            } else if (command.equals("create")) {
-                System.out.println("Please name your new playlist ");
-                List<String> songNames = new LinkedList<>();
-                for (Song s : songs) {
-                    songNames.add(s.getSongTitle());
-                }
-                System.out.println("Here are all the songs you can play!" + songNames);
-                displayMenu();
-            } else {
-                System.out.println("invalid");
             }
             processCommand(command);
         }
-
-        System.out.println("\nThanks for listening!");
     }
 
     // MODIFIES: this
     // EFFECTS: processes user command for songs
-    private void processCommand(String command) throws InterruptedException {
+    private void processCommand(String command) {
         if (command.equals("play")) {
             for (Song s : songs) {
                 s.playSong();
                 System.out.println("Playing " + s.getSongTitle() + " by " + s.getArtist());
-                // Thread.sleep(s.getSongDuration() * 1000);
+//                try {
+//                    TimeUnit.SECONDS.sleep(s.getSongDuration());
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
             }
         } else if (command.equals("pause")) {
             for (Song s : songs) {
@@ -89,6 +79,16 @@ public class MusicApp {
                     System.out.println("Looping " + s.getSongTitle() + " by " + s.getArtist());
                 }
             }
+        } else if (command.equals("browse")) {
+            List<String> songNames = new LinkedList<>();
+            for (Song s : songs) {
+                songNames.add(s.getSongTitle() + " by " + s.getArtist());
+            }
+            System.out.println("Here are all the songs you can play: " + songNames);
+        } else if (command.equals("create")) {
+            System.out.println("Please name your new playlist ");
+        } else if (command.equals("quit")) {
+            System.out.println("\nThanks for listening!");
         } else {
             System.out.println("Selection not valid...");
         }
@@ -117,6 +117,11 @@ public class MusicApp {
         songs.add(song1);
         songs.add(song2);
         songs.add(song3);
+        songs.add(song4);
+        songs.add(song5);
+        songs.add(song6);
+//        songs.add(song7);
+//        songs.add(song8);
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
