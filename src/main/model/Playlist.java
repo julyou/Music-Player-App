@@ -6,11 +6,11 @@ import java.util.List;
 // represents a playlist with songs
 public class Playlist {
 
+
     private List<Song> playlist;
     private String playlistName;
 
     public Playlist(String playlistName) {
-        this.playlistName = playlistName;
         playlist = new LinkedList<>();
         this.playlistName = playlistName;
     }
@@ -38,11 +38,15 @@ public class Playlist {
         return s;
     }
 
+    public void clearPlaylist() {
+        playlist.clear();
+    }
+
     // getters
-    public List<Song> getSongsInPlaylist() {
-        List<Song> songs = new LinkedList<>();
+    public List<String> getSongsInPlaylist() {
+        List<String> songs = new LinkedList<>();
         for (Song s : playlist) {
-            songs.add(s);
+            songs.add(s.getSongTitle());
         }
         return songs;
     }
