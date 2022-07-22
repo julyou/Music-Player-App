@@ -12,6 +12,7 @@ public class Playlist {
     public Playlist(String playlistName) {
         this.playlistName = playlistName;
         playlist = new LinkedList<>();
+        this.playlistName = playlistName;
     }
 
     // MODIFIES: this

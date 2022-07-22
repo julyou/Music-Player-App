@@ -17,14 +17,13 @@ public class PlaylistTest {
     public void setUp() {
         testPlaylist1 = new Playlist("playlist1");
         testPlaylist2 = new Playlist("playlist2");
-        testSong1 = new Song("song1", "unknown", "song1.wav", 33);
+        testSong1 = new Song("song1", "unknown", "song1.wav", 34);
         testSong2 = new Song("song2", "unknown", "song2.wav", 44);
     }
 
     @Test
     public void testConstructor() {
         assertEquals(0, testPlaylist1.getSongsInPlaylist().size());
-        assertEquals("playlist1", testPlaylist1.getPlaylistName());
     }
 
     @Test
@@ -70,11 +69,5 @@ public class PlaylistTest {
         assertTrue(testPlaylist1.removeSong(testSong1));
         assertEquals(0, testPlaylist1.getSongsInPlaylist().size());
         assertFalse(testPlaylist1.removeSong(testSong1));
-    }
-
-    @Test
-    public void testRenamePlaylist() {
-        testPlaylist1.renamePlaylist("Chill study music");
-        assertEquals("Chill study music", testPlaylist1.getPlaylistName());
     }
 }
