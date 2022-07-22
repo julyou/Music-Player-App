@@ -13,8 +13,8 @@ class SongTest {
 
     @BeforeEach
     public void setUp() {
-        testSong1 = new Song("song1", "unknown", "song1.wav");
-        testSong2 = new Song("song2", "unknown", "song2.wav");
+        testSong1 = new Song("song1", "unknown", "song1.wav",34);
+        testSong2 = new Song("song2", "unknown", "song2.wav", 44);
     }
 
     @Test

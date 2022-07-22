@@ -1,64 +1,62 @@
 package model;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.Line;
-import javax.sound.sampled.LineEvent;
 import java.applet.Applet;
-import java.io.File;
+import java.applet.AudioClip;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Scanner;
 
 // Represents a song that has a song title, artist, and file location
 public class Song {
     private String songTitle;
     private String artist;
+    private int duration;
     private URL filePath;
     private String status;
+    private AudioClip audioclip;
 
     // EFFECTS: creates a song with title, artist, file location, and status
-    public Song(String title, String artist, String filePath) {
+    public Song(String title, String artist, String src, int duration) {
         this.songTitle = title;
         this.artist = artist;
         this.status = "";
+        this.duration = duration;
 
         try {
-            this.filePath = new URL("file:" + filePath);
+            this.filePath = new URL("file:" + src);
         } catch (MalformedURLException ex) {
             System.err.println(ex);
         }
+        audioclip = Applet.newAudioClip(this.filePath);
     }
-
 
     // EFFECTS: plays given song
     public void playSong() {
-        Applet.newAudioClip(this.filePath).play();
-        status = "Playing";
+        audioclip.play();
+        status = "playing";
     }
 
     // EFFECTS: pauses given song
     public void pauseSong() {
-        Applet.newAudioClip(this.filePath).stop();
-        status = "Paused";
+        audioclip.stop();
+        status = "paused";
     }
 
     // EFFECTS: loops given song
     public void loopSong() {
-        Applet.newAudioClip(this.filePath).loop();
-        status = "Looping";
+        audioclip.loop();
+        status = "looping";
     }
 
     public boolean isPlaying() {
-        return status.equals("Playing");
+        return status.equals("playing");
     }
 
     public boolean isPaused() {
-        return status.equals("Paused");
+        return status.equals("paused");
     }
 
     public boolean isLooping() {
-        return status.equals("Looping");
+        return status.equals("looping");
 
     }
 
@@ -74,6 +72,21 @@ public class Song {
     public URL getSongURL() {
         return filePath;
     }
+
+    public String getSongStatus() {
+        return status;
+    }
+
+    public int getSongDuration() {
+        return duration;
+    }
+
+//    public int getSongDuration() {
+//    }
+
+//    public long getSongDuration(Song s) {
+//        return getFrameLength(s);
+//    }
 
 
 }
