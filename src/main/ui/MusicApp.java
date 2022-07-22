@@ -1,26 +1,30 @@
 package ui;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import model.Playlist;
 import model.Song;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 public class MusicApp {
 
     private Scanner input;
+
 
     // EFFECTS: runs the music player application
     public MusicApp() throws InterruptedException {
         runMusicApp();
     }
 
-    Queue<Song> songs = new LinkedList<>();
-    Playlist playlist = new Playlist("");
+    List<Song> songs = new LinkedList<>();
+    List<Playlist> playlists = new LinkedList<>();
+
+    Playlist playlist1 = new Playlist("Star Wars Soundtrack");
+    Playlist playlist2 = new Playlist("Instrumental");
+    Playlist playlist3 = new Playlist("Film scores");
+
+
     Song song1 = new Song("song1", "unknown", "song1.wav", 34);
     Song song2 = new Song("song2", "unknown", "song2.wav", 44);
     Song song3 = new Song("Pink Panther", "Henry Mancini", "song3.wav", 30);
@@ -37,34 +41,46 @@ public class MusicApp {
     // EFFECTS: processes user input
     private void runMusicApp() throws InterruptedException {
         boolean keepGoing = true;
-        String command = null;
+        String command;
+
 
         init();
 
+        System.out.println("type 'main' for main menu!");
         while (keepGoing) {
-            displayMenu();
+            command = null;
             command = input.next();
             command = command.toLowerCase();
 
-            if (command.equals("quit")) {
+            if (command.equals("main")) {
+                displayMainMenu();
+            } else if (command.equals("songs")) {
+                displayMenuSongs();
+            } else if (command.equals("playlists")) {
+                displayMenuPlaylist();
+            } else if (command.equals("quit")) {
                 keepGoing = false;
                 for (Song s : songs) {
                     s.pauseSong();
                 }
             }
+//            processCommandPlaylist(command);
             processCommand(command);
+
         }
     }
+
 
     // MODIFIES: this
     // EFFECTS: processes user command for songs
     private void processCommand(String command) throws InterruptedException {
-        if (command.equals("play")) {
+        if (command.equals("main")) {
+            return;
+        } else if (command.equals("play")) {
             for (Song s : songs) {
                 s.playSong();
                 System.out.println("Playing " + s.getSongTitle() + " by " + s.getArtist());
 //                TimeUnit.SECONDS.sleep(s.getSongDuration());
-
             }
         } else if (command.equals("pause")) {
             for (Song s : songs) {
@@ -80,23 +96,87 @@ public class MusicApp {
                     System.out.println("Looping " + s.getSongTitle() + " by " + s.getArtist());
                 }
             }
-        } else if (command.equals("browse")) {
-            List<String> songNames = new LinkedList<>();
-            for (Song s : songs) {
-                songNames.add(s.getSongTitle() + " by " + s.getArtist());
-            }
-            System.out.println("Here are all the songs in your library: ");
-            for (String s : songNames) {
-                System.out.println(" - " + s);
-            }
-        } else if (command.equals("create")) {
-            System.out.println("Please name your new playlist ");
+        } else if (command.equals("songs")) {
+//            allSongs();
+        } else if (command.equals("playlists")) {
+
+//            List<String> playlistNames = new LinkedList<>();
+//            for (Playlist p : playlists) {
+//                playlistNames.add(p.getPlaylistName());
+//            }
+//            System.out.println("Here are all the playlists in your library: ");
+//            int position = 1;
+//            for (String s : playlistNames) {
+//                System.out.println(position + ". " + s);
+//                position++;
+//            }
+
+//        } else if (command.equals("create")) {
+//            System.out.println("What would you like to name your new playlist? ");
+        } else if (command.equals("s")) {
+            System.out.println("This playlist contains: ");
+            System.out.println(playlist1.getSongsInPlaylist());
+        } else if (command.equals("i")) {
+            System.out.println("This playlist contains: ");
+            System.out.println(playlist2.getSongsInPlaylist());
+        } else if (command.equals("f")) {
+            System.out.println("This playlist contains: ");
+            System.out.println(playlist3.getSongsInPlaylist());
+        } else if (command.equals("new")) {
+            new Playlist("new playlist");
         } else if (command.equals("quit")) {
             System.out.println("\nThanks for listening!");
         } else {
             System.out.println("Selection not valid...");
         }
+
     }
+
+    private void allSongs() {
+        List<String> songNames = new LinkedList<>();
+        for (Song s : songs) {
+            songNames.add(s.getSongTitle() + " by " + s.getArtist());
+        }
+        System.out.println("Here are all the songs in your library: ");
+        int position = 1;
+        for (String s : songNames) {
+            System.out.println(position + ". " + s);
+            position++;
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: processes user command for songs
+//    private void processCommandPlaylist(String command) {
+//        if (command.equals("s")) {
+//            playlist1.getSongsInPlaylist();
+//        } else if (command.equals("i")) {
+//            playlist2.getSongsInPlaylist();
+//        } else if (command.equals("f")) {
+//            playlist3.getSongsInPlaylist();
+//        } else if (command.equals("new")) {
+//            new Playlist("new playlist");
+//        } else if (command.equals("main")) {
+//            displayMenu();
+//        }
+//    }
+
+//    // EFFECTS: prompts user to select chequing or savings account and returns it
+//    private Playlist selectPlaylist() {
+//        String selection = "";  // force entry into loop
+//
+//        while (!(selection.equals(int) || selection.equals("s"))) {
+//            System.out.println("What playlist would you like to select? (Please type the number)");
+//            selection = input.next();
+//            selection = selection.toLowerCase();
+//        }
+//
+//        if (selection.equals("c")) {
+//            return cheq;
+//        } else {
+//            return sav;
+//        }
+//    }
 
 //    // MODIFIES: this
 //    // EFFECTS: processes user command for songs
@@ -116,7 +196,7 @@ public class MusicApp {
 //    }
 
     // MODIFIES: this
-    // EFFECTS: initializes accounts
+// EFFECTS: initializes accounts
     private void init() {
         songs.add(song1);
         songs.add(song2);
@@ -128,20 +208,57 @@ public class MusicApp {
         songs.add(song8);
         songs.add(song9);
         songs.add(song10);
+
+        playlists.add(playlist1);
+        playlists.add(playlist2);
+        playlists.add(playlist3);
+
+        playlist1.addSong(song4);
+        playlist1.addSong(song5);
+        playlist1.addSong(song7);
+
+        playlist2.addSong(song2);
+        playlist2.addSong(song6);
+
+        playlist3.addSong(song3);
+        playlist3.addSong(song4);
+        playlist3.addSong(song5);
+        playlist3.addSong(song7);
+
+
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
 
     // EFFECTS: displays menu of options to user
-    private void displayMenu() {
+    private void displayMainMenu() {
         System.out.println("\nSelect from:");
-        System.out.println("\tcreate -> create new playlist");
-        System.out.println("\tbrowse -> browse songs");
+//        System.out.println("\tcreate -> create new playlist");
+        System.out.println("\tsongs -> browse songs");
+        System.out.println("\tplaylists -> browse playlists");
         System.out.println("\tplay -> start playing");
         System.out.println("\tpause -> pause song");
         System.out.println("\tloop  -> loop song");
         System.out.println("\tquit -> quit");
     }
+
+    private void displayMenuPlaylist() {
+        System.out.println("\nSelect a playlist or create your own:");
+        System.out.println("\ts -> Star Wars Soundtrack");
+        System.out.println("\ti -> Instrumental");
+        System.out.println("\tf -> Filmscores");
+        System.out.println("\tnew -> Create new playlist");
+        System.out.println("\tmain -> Main menu");
+    }
+
+    private void displayMenuSongs() {
+        allSongs();
+        System.out.println("\tplay -> start playing");
+//        System.out.println("\ti -> Instrumental");
+//        System.out.println("\tf -> Filmscores");
+        System.out.println("\tmain -> Main menu");
+    }
+
 
 //    // MODIFIES: this
 //    // EFFECTS: conducts a deposit transaction
