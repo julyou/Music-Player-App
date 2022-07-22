@@ -23,8 +23,9 @@ public class Playlist {
 
     // MODIFIES: this
     // EFFECTS: removes song to the playlist if present and returns true, false otherwise
-    public boolean removeSong(Song s) {
-        if (playlist.contains(s)) {
+    public boolean removeSong(int index) {
+        if (playlist.size() > index) {
+            Song s = playlist.get(index - 1);
             playlist.remove(s);
             return true;
         }

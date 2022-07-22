@@ -30,7 +30,7 @@ public class PlaylistTest {
     public void testAddSong() {
         testPlaylist1.addSong(testSong1);
         assertEquals(1, testPlaylist1.getSongsInPlaylist().size());
-        assertTrue(testPlaylist1.getSongsInPlaylist().contains(testSong1));
+        assertTrue(testPlaylist1.getSongsInPlaylist().contains(testSong1.getSongTitle()));
     }
 
     @Test
@@ -38,8 +38,8 @@ public class PlaylistTest {
         testPlaylist1.addSong(testSong1);
         testPlaylist1.addSong(testSong1);
         assertEquals(2, testPlaylist1.getSongsInPlaylist().size());
-        assertEquals(testSong1, testPlaylist1.getSongsInPlaylist().get(0));
-        assertEquals(testSong1, testPlaylist1.getSongsInPlaylist().get(1));
+        assertEquals(testSong1.getSongTitle(), testPlaylist1.getSongsInPlaylist().get(0));
+        assertEquals(testSong1.getSongTitle(), testPlaylist1.getSongsInPlaylist().get(1));
     }
 
     @Test
@@ -49,8 +49,8 @@ public class PlaylistTest {
 
         assertEquals(2, testPlaylist1.getSongsInPlaylist().size());
 
-        assertEquals(testSong1, testPlaylist1.getSongsInPlaylist().get(0));
-        assertEquals(testSong2, testPlaylist1.getSongsInPlaylist().get(1));
+        assertEquals(testSong1.getSongTitle(), testPlaylist1.getSongsInPlaylist().get(0));
+        assertEquals(testSong2.getSongTitle(), testPlaylist1.getSongsInPlaylist().get(1));
     }
 
     @Test
@@ -59,15 +59,15 @@ public class PlaylistTest {
         testPlaylist2.addSong(testSong1);
         assertEquals(1, testPlaylist1.getSongsInPlaylist().size());
         assertEquals(1, testPlaylist2.getSongsInPlaylist().size());
-        assertEquals(testSong1, testPlaylist1.getSongsInPlaylist().get(0));
-        assertEquals(testSong1, testPlaylist2.getSongsInPlaylist().get(0));
+        assertEquals(testSong1.getSongTitle(), testPlaylist1.getSongsInPlaylist().get(0));
+        assertEquals(testSong1.getSongTitle(), testPlaylist2.getSongsInPlaylist().get(0));
     }
 
     @Test
     public void testRemoveSongFromPlaylist() {
         testPlaylist1.addSong(testSong1);
-        assertTrue(testPlaylist1.removeSong(testSong1));
+        assertTrue(testPlaylist1.removeSong(0));
         assertEquals(0, testPlaylist1.getSongsInPlaylist().size());
-        assertFalse(testPlaylist1.removeSong(testSong1));
+        assertFalse(testPlaylist1.removeSong(0));
     }
 }

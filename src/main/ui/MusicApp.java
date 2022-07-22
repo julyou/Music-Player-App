@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+// based on Teller app; link below
+// <https://github.students.cs.ubc.ca/CPSC210/TellerApp.git>
 public class MusicApp {
 
     private Scanner input;
@@ -55,9 +57,12 @@ public class MusicApp {
             if (command.equals("main")) {
                 displayMainMenu();
             } else if (command.equals("songs")) {
-                displayMenuSongs();
+                allSongs();
+                displayMenuActions();
             } else if (command.equals("playlists")) {
                 displayMenuPlaylist();
+            } else if (command.equals("s") | command.equals("i") | command.equals("f")) {
+                displayMenuPlaylistActions();
             } else if (command.equals("quit")) {
                 keepGoing = false;
                 for (Song s : songs) {
@@ -116,6 +121,12 @@ public class MusicApp {
         } else if (command.equals("s")) {
             System.out.println("This playlist contains: ");
             System.out.println(playlist1.getSongsInPlaylist());
+        } else if (command.equals("remove")) {
+            System.out.println("which song would you like to remove?");
+            playlist1.removeSong(Integer.parseInt(command));
+//        } else if (command.equals("add")) {
+//            System.out.println("which song would you like to add?");
+//            playlist1.addSong(command);
         } else if (command.equals("i")) {
             System.out.println("This playlist contains: ");
             System.out.println(playlist2.getSongsInPlaylist());
@@ -244,18 +255,39 @@ public class MusicApp {
 
     private void displayMenuPlaylist() {
         System.out.println("\nSelect a playlist or create your own:");
+        System.out.println("\nCurrent playlists:");
         System.out.println("\ts -> Star Wars Soundtrack");
         System.out.println("\ti -> Instrumental");
         System.out.println("\tf -> Filmscores");
+        System.out.println("\n");
         System.out.println("\tnew -> Create new playlist");
         System.out.println("\tmain -> Main menu");
     }
 
-    private void displayMenuSongs() {
-        allSongs();
-        System.out.println("\tplay -> start playing");
-//        System.out.println("\ti -> Instrumental");
-//        System.out.println("\tf -> Filmscores");
+//    private void displayMenuSongs() {
+//        allSongs();
+//        System.out.println("\nActions:");
+//        System.out.println("\tplay -> play song");
+//        System.out.println("\tpause -> pause song");
+//        System.out.println("\tloop -> loop song");
+//        System.out.println("\tmain -> Main menu");
+//    }
+
+    private void displayMenuActions() {
+        System.out.println("\nActions:");
+        System.out.println("\tplay -> play song");
+        System.out.println("\tpause -> pause song");
+        System.out.println("\tloop -> loop song");
+        System.out.println("\tmain -> Main menu");
+    }
+
+    private void displayMenuPlaylistActions() {
+        System.out.println("\nActions:");
+        System.out.println("\tremove -> remove song");
+        System.out.println("\tadd -> add song");
+        System.out.println("\tplay -> play song");
+        System.out.println("\tpause -> pause song");
+        System.out.println("\tloop -> loop song");
         System.out.println("\tmain -> Main menu");
     }
 
