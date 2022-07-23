@@ -17,10 +17,15 @@ public class MusicApp {
     private static final String STOP_COMMAND = "stop";
     private static final String SONGS_COMMAND = "songs";
     private static final String PLAYLISTS_COMMAND = "playlists";
+    private static final String PLAYLIST1_COMMAND = "1";
+    private static final String PLAYLIST2_COMMAND = "2";
+    private static final String PLAYLIST3_COMMAND = "3";
     private static final String MAIN_MENU_COMMAND = "main";
     private static final String GO_BACK_COMMAND = "back";
     private static final String ADD_SONG_COMMAND = "add";
-    private static final String DELETE_SONG_COMMAND = "del";
+    private static final String DELETE_SONG_COMMAND = "dels";
+    private static final String CREATE_PLAYLIST_COMMAND = "new";
+    private static final String DELETE_PLAYLIST_COMMAND = "delp";
     private static final String QUIT_COMMAND = "quit";
 
     private Scanner input;
@@ -43,7 +48,6 @@ public class MusicApp {
     Song song7 = new Song("Main Title", "John Williams", "song7.wav", 60);
 
     private boolean keepGoing;
-    private String command;
 
     // EFFECTS: runs the music player application
     public MusicApp() throws InterruptedException {
@@ -129,9 +133,6 @@ public class MusicApp {
     private void processCommand(String command) throws InterruptedException {
         if (command.length() > 0) {
             switch (command) {
-                case MAIN_MENU_COMMAND:
-                    displayMainMenu();
-                    break;
                 case PLAY_COMMAND:
                     songthread.setSongs(songs);
                     songthread.start();
@@ -141,9 +142,11 @@ public class MusicApp {
                     break;
                 case SONGS_COMMAND:
                     getAllSongs(songs);
+                    displayMainMenu();
                     break;
                 case PLAYLISTS_COMMAND:
                     getAllPlaylists(playlists);
+                    displayMainMenu();
                     break;
                 case QUIT_COMMAND:
                     keepGoing = false;
@@ -170,7 +173,7 @@ public class MusicApp {
         }
     }
 
-    public void getAllPlaylists(List<Playlist> playlists) {
+    public void getAllPlaylists(List<Playlist> playlists) throws InterruptedException {
         List<String> playlistNames = new LinkedList<>();
         for (Playlist p : playlists) {
             playlistNames.add(p.getPlaylistName());
@@ -180,6 +183,63 @@ public class MusicApp {
         for (String s : playlistNames) {
             System.out.println(position + ". " + s);
             position++;
+        }
+        playlistExtraInfoOptions(playlists);
+    }
+
+    private void playlistExtraInfoOptions(List<Playlist> playlists) throws InterruptedException {
+        int index = 1;
+        for (Playlist p : playlists) {
+            System.out.println("Enter " + index + " to select the " + p.getPlaylistName() + " playlist");
+            index++;
+        }
+        processPlaylistCommands(playlists);
+    }
+
+    private void processPlaylistCommands(List<Playlist> playlists) throws InterruptedException {
+        String command = getUserInputString();
+
+        if (command.length() > 0) {
+            switch (command) {
+                case MAIN_MENU_COMMAND:
+                    displayMainMenu();
+                    break;
+                case PLAYLIST1_COMMAND:
+                    System.out.println("This playlist contains: ");
+                    System.out.println(playlist1.getSongsInPlaylist());
+                    processPlaylistCommands(playlists);
+                    break;
+                case PLAYLIST2_COMMAND:
+                    System.out.println("This playlist contains: ");
+                    System.out.println(playlist2.getSongsInPlaylist());
+                    processPlaylistCommands(playlists);
+                    break;
+                case PLAYLIST3_COMMAND:
+                    System.out.println("This playlist contains: ");
+                    System.out.println(playlist3.getSongsInPlaylist());
+                    processPlaylistCommands(playlists);
+                    break;
+                case CREATE_PLAYLIST_COMMAND:
+                    createNewPlaylist();
+                    processPlaylistCommands(playlists);
+                    break;
+                default:
+                    processCommand(command);
+            }
+        }
+    }
+
+    private void createNewPlaylist() {
+        //TODO:
+    }
+
+    private void addSongToPlaylist(Song s, Playlist p) {
+        if (!p.getSongsInPlaylist().contains(s.getSongTitle())) {
+            p.addSong(s);
+            System.out.println(s.getSongTitle() + " was added to " + p.getPlaylistName());
+            p.getSongsInPlaylist();
+        } else {
+            System.out.println(s.getSongTitle() + " already exists in " + p.getPlaylistName());
         }
     }
 
@@ -239,43 +299,17 @@ public class MusicApp {
 //        }
 //    }
 
-//    // EFFECTS: prompts user to select chequing or savings account and returns it
-//    private Playlist selectPlaylist() {
-//        String selection = "";  // force entry into loop
-//
-//        while (!(selection.equals(int) || selection.equals("s"))) {
-//            System.out.println("What playlist would you like to select? (Please type the number)");
-//            selection = input.next();
-//            selection = selection.toLowerCase();
-//        }
-//
-//        if (selection.equals("c")) {
-//            return cheq;
-//        } else {
-//            return sav;
-//        }
-//    }
-
-//    // MODIFIES: this
-//    // EFFECTS: processes user command for songs
-//    // TODO: fix this
-//    private void processCommandPlaylist(String command) {
-//        if (command.equals("rename")) {
-//            playlist.renamePlaylist("");
-//        } else if (command.equals("new")) {
-//            Playlist playlist = new Playlist("");
-////        } else if (command.equals("delete")) {
-////            // TODO: delete
-////            playlist.removeSong("");
-////            }
-////        } else {
-////            System.out.println("Selection not valid...");
-//        }
-//    }
-
     // MODIFIES: this
 // EFFECTS: initializes accounts
     private void init() {
+        loadSongs();
+        loadPlaylists();
+        input = new Scanner(System.in);
+        input.useDelimiter("\n");
+    }
+
+    // EFFECTS: creates list of all songs
+    private void loadSongs() {
         songs.add(song1);
         songs.add(song2);
         songs.add(song3);
@@ -283,10 +317,10 @@ public class MusicApp {
         songs.add(song5);
         songs.add(song6);
         songs.add(song7);
-//        songs.add(song8);
-//        songs.add(song9);
-//        songs.add(song10);
+    }
 
+    // EFFECTS: creates list of playlists
+    private void loadPlaylists() {
         playlists.add(playlist1);
         playlists.add(playlist2);
         playlists.add(playlist3);
@@ -302,10 +336,6 @@ public class MusicApp {
         playlist3.addSong(song4);
         playlist3.addSong(song5);
         playlist3.addSong(song7);
-
-
-        input = new Scanner(System.in);
-        input.useDelimiter("\n");
     }
 
 
