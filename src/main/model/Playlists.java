@@ -1,30 +1,40 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Playlists {
+
     private List<Playlist> playlists;
-    private Playlist playlist1;
-    private Playlist playlist2;
+    private List<Song> songs;
 
     public Playlists() {
-        playlist1 = new Playlist("playlist1");
-        playlist2 = new Playlist("playlist2");
         playlists = new LinkedList<>();
+        songs = new LinkedList<>();
     }
 
-    public void addPlaylist(Playlist p) {
-        playlists.add(p);
+    // getters
+    public List<Playlist> getPlaylists() {
+        return playlists;
     }
 
-    public void removePlaylist(Playlist p) {
-        playlists.remove(p);
+    public List<Song> getSongs() {
+        return songs;
     }
 
-    public void clearPlaylists() {
-        playlists.clear();
+    // REQUIRES: playlist != null
+    // MODIFIES: this
+    // EFFECTS: adds playlist to this chain
+    public void addPlaylist(Playlist playlist) {
+        playlists.add(playlist);
     }
+
+    // REQUIRES: playlist != null
+    // MODIFIES: this
+    // EFFECTS: removes playlist from this chain
+    public void removePlaylist(Playlist playlist) {
+        playlists.remove(playlist);
+    }
+
 
 }

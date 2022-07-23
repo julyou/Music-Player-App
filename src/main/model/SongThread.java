@@ -1,4 +1,4 @@
-package ui;
+package model;
 
 import model.Song;
 
@@ -22,9 +22,11 @@ public class SongThread extends Thread {
         flag = true;
         for (Song s : songs) {
             s.playSong();
+            System.out.println(s.getSongTitle() + " is playing");
             int i = 0;
 
             while (flag && i < s.getSongDuration()) {
+
                 try {
                     TimeUnit.SECONDS.sleep(1);
 
@@ -32,11 +34,10 @@ public class SongThread extends Thread {
                     throw new RuntimeException(e);
                 }
                 i++;
-                System.out.println(i + ". " + s.getSongTitle());
             }
-            System.out.println("out flag=" + flag);
             if (!flag) {
                 s.pauseSong();
+                System.out.println(s.getSongTitle() + " stopped playing");
                 break;
             }
         }
