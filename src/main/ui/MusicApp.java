@@ -1,6 +1,7 @@
 package ui;
 
 import model.Playlist;
+import model.Playlists;
 import model.Song;
 import model.SongThread;
 
@@ -162,6 +163,7 @@ public class MusicApp {
             index++;
         }
         System.out.println("\tnew -> create new playlist");
+        System.out.println("\tdelp -> delete playlist");
         System.out.println("\tmain -> main menu");
         System.out.println("\tquit -> quit");
 
@@ -194,11 +196,52 @@ public class MusicApp {
                 case CREATE_PLAYLIST_COMMAND:
                     playlistNameExtraInfoOptions(playlists);
                     break;
+                case DELETE_PLAYLIST_COMMAND:
+                    choosePlaylistToDelete(playlists);
+                    break;
                 default:
-                    processCommand(command);
+                    System.out.println("That is an invalid command. Please try again.");
+                    processPlaylistCommands(playlists);
             }
         }
     }
+
+    private void choosePlaylistToDelete(List<Playlist> pl) throws InterruptedException {
+        System.out.println("Which playlist would you like to delete? (type the number)");
+        getAllPlaylists(playlists);
+        processPlaylistToDelete(pl);
+    }
+
+    private void processPlaylistToDelete(List<Playlist> pl) throws InterruptedException {
+        String command = getUserInputString();
+        int commandInt = Integer.parseInt(command);
+        if (command.length() > 0 && commandInt <= pl.size() && 1 <= commandInt) {
+            checkCanDeletePlaylist(command, pl);
+//            playlistExtraInfoOptions(pl);
+        } else {
+            switch (command) {
+                case MAIN_MENU_COMMAND:
+                    displayMainMenu();
+                    break;
+                default:
+                    System.out.println("That is an invalid command. Please try again.");
+                    choosePlaylistToDelete(pl);
+            }
+        }
+    }
+
+    public void checkCanDeletePlaylist(String s, List<Playlist> pl) throws InterruptedException {
+        Playlist playlist = playlists.get(Integer.parseInt(s) - 1);
+        if (pl.contains(playlist)) {
+            pl.remove(playlist);
+            System.out.println(playlist.getPlaylistName() + " successfully deleted from library");
+
+            getAllPlaylists(pl);
+        } else {
+            System.out.println("That playlist doesn't exist");
+        }
+    }
+
 
     private void playlistNameExtraInfoOptions(List<Playlist> playlists) throws InterruptedException {
         System.out.println("\nWhat would you like to name your new playlist?");
@@ -223,6 +266,7 @@ public class MusicApp {
         System.out.println("\tadd -> add song");
         System.out.println("\tdels -> remove songs");
         System.out.println("\tmain -> main menu");
+        System.out.println("\tback -> back");
         System.out.println("\tquit -> quit");
 
         processPlaylistSongCommands(playlist);
@@ -241,11 +285,16 @@ public class MusicApp {
                     processPlaylistSongCommands(playlist);
                     break;
                 case DELETE_SONG_COMMAND:
+                    chooseSongToDelete(playlist);
                     processPlaylistSongCommands(playlist);
                     break;
+                case GO_BACK_COMMAND:
+                    playlistExtraInfoOptions(playlists);
                 default:
-                    processCommand(command);
+                    System.out.println("That is an invalid command. Please try again.");
+                    processPlaylistSongCommands(playlist);
             }
+
         }
     }
 
@@ -261,7 +310,7 @@ public class MusicApp {
         Song song = songs.get(Integer.parseInt(s) - 1);
         if (!playlist.getSongsInPlaylist().contains(song.getSongTitle())) {
             playlist.addSong(song);
-            System.out.println(song.getSongTitle() + " successfully added to " + playlist.getPlaylistName() + "playlist");
+            System.out.println(song.getSongTitle() + " successfully added to " + playlist.getPlaylistName());
 
             System.out.println(playlist.getPlaylistName() + " contains: ");
             System.out.println(playlist.getSongsInPlaylist());
@@ -273,7 +322,7 @@ public class MusicApp {
     private void processSongToAdd(Playlist playlist) throws InterruptedException {
         String command = getUserInputString();
         int commandInt = Integer.parseInt(command);
-        if (command.length() > 0 && commandInt <= 7 && 1 <= commandInt) {
+        if (command.length() > 0 && commandInt <= songs.size() && 1 <= commandInt) {
             checkCanAddSong(command, playlist);
             playlistSongsExtraInfoOptions(playlist);
         } else {
@@ -282,10 +331,85 @@ public class MusicApp {
                     displayMainMenu();
                     break;
                 default:
-                    processCommand(command);
+                    System.out.println("That is an invalid command. Please try again.");
+                    chooseSongToAdd(playlist);
             }
         }
     }
+
+    private void chooseSongToDelete(Playlist p) throws InterruptedException {
+        System.out.println("\nWhat song would you like to delete? (type the number)");
+        getAllSongs(songs);
+        processSongToDelete(p);
+    }
+
+    public void checkCanDeleteSong(String s, Playlist playlist) {
+        Song song = songs.get(Integer.parseInt(s) - 1);
+        if (playlist.getSongsInPlaylist().contains(song.getSongTitle())) {
+            playlist.removeSong(song);
+            System.out.println(song.getSongTitle() + " successfully deleted form " + playlist.getPlaylistName());
+
+            System.out.println(playlist.getPlaylistName() + " contains: ");
+            System.out.println(playlist.getSongsInPlaylist());
+        } else {
+            System.out.println(song.getSongTitle() + " doesn't exist in the playlist");
+        }
+    }
+
+    private void processSongToDelete(Playlist playlist) throws InterruptedException {
+        String command = getUserInputString();
+        int commandInt = Integer.parseInt(command);
+        if (command.length() > 0 && commandInt <= 7 && 1 <= commandInt) {
+            checkCanDeleteSong(command, playlist);
+            playlistSongsExtraInfoOptions(playlist);
+        } else {
+            switch (command) {
+                case MAIN_MENU_COMMAND:
+                    displayMainMenu();
+                    break;
+                default:
+                    System.out.println("That is an invalid command. Please try again.");
+                    chooseSongToDelete(playlist);
+            }
+        }
+    }
+
+//    private void choosePlaylistToDelete(Playlists pl) throws InterruptedException {
+//        System.out.println("\nWhat playlist would you like to delete? (type the number)");
+//        getAllPlaylists((List<Playlist>) pl);
+//        processPlaylistToDelete(pl);
+//    }
+//
+//    public void checkCanDeletePlaylist(String s, Playlists playlists) throws InterruptedException {
+//        Playlist playlist = this.playlists.get(Integer.parseInt(s) - 1);
+//        if (playlists.getPlaylists().contains(playlist.getPlaylistName())) {
+//            playlists.removePlaylist(playlist);
+//            System.out.println(playlist.getPlaylistName() + " successfully deleted form " + playlists.getPlaylists());
+//
+//            System.out.println("Your library contains: ");
+//            getAllPlaylists(this.playlists);
+//        } else {
+//            System.out.println(playlist.getPlaylistName() + " doesn't exist in the playlist");
+//        }
+//    }
+//
+//    private void processPlaylistToDelete(Playlists playlists) throws InterruptedException {
+//        String command = getUserInputString();
+//        int commandInt = Integer.parseInt(command);
+//        if (command.length() > 0 && commandInt <= this.playlists.size() && 1 <= commandInt) {
+//            checkCanDeletePlaylist(command, playlists);
+//            playlistExtraInfoOptions((List<Playlist>) playlists);
+//        } else {
+//            switch (command) {
+//                case MAIN_MENU_COMMAND:
+//                    displayMainMenu();
+//                    break;
+//                default:
+//                    System.out.println("That is an invalid command. Please try again.");
+//                    choosePlaylistToDelete(playlists);
+//            }
+//        }
+//    }
 
     //EFFECTS: stops playing songs and stops receiving user input
     public void endProgram() throws InterruptedException {
@@ -335,115 +459,4 @@ public class MusicApp {
     }
 
 
-    private void displayMenuPlaylist() {
-        System.out.println("\nSelect a playlist or create your own:");
-        System.out.println("\nCurrent playlists:");
-        System.out.println("\ts -> Star Wars Soundtrack");
-        System.out.println("\ti -> Instrumental");
-        System.out.println("\tf -> Film Scores");
-        System.out.println("\n");
-        System.out.println("\tnew -> Create new playlist");
-        System.out.println("\tmain -> Main menu");
-    }
-
-
-    private void displayMenuActions() {
-        System.out.println("\nActions:");
-        System.out.println("\tplay -> play song");
-        System.out.println("\tstop -> stop song");
-        System.out.println("\tmain -> Main menu");
-    }
-
-    private void displayMenuPlaylistActions() {
-        System.out.println("\nActions:");
-        System.out.println("\tremove -> remove song");
-        System.out.println("\tadd -> add song");
-        System.out.println("\tplay -> play song");
-        System.out.println("\tstop -> stop song");
-        System.out.println("\tmain -> Main menu");
-    }
-
-
-//    // MODIFIES: this
-//    // EFFECTS: conducts a deposit transaction
-//    private void doDeposit() {
-//        Account selected = selectAccount();
-//        System.out.print("Enter amount to deposit: $");
-//        double amount = input.nextDouble();
-//
-//        if (amount >= 0.0) {
-//            selected.deposit(amount);
-//        } else {
-//            System.out.println("Cannot deposit negative amount...\n");
-//        }
-//
-//        printBalance(selected);
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: conducts a withdraw transaction
-//    private void doWithdrawal() {
-//        Account selected = selectAccount();
-//        System.out.print("Enter amount to withdraw: $");
-//        double amount = input.nextDouble();
-//
-//        if (amount < 0.0) {
-//            System.out.println("Cannot withdraw negative amount...\n");
-//        } else if (selected.getBalance() < amount) {
-//            System.out.println("Insufficient balance on account...\n");
-//        } else {
-//            selected.withdraw(amount);
-//        }
-//
-//        printBalance(selected);
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: conducts a transfer transaction
-//    private void doTransfer() {
-//        System.out.println("\nTransfer from?");
-//        Account source = selectAccount();
-//        System.out.println("Transfer to?");
-//        Account destination = selectAccount();
-//
-//        System.out.print("Enter amount to transfer: $");
-//        double amount = input.nextDouble();
-//
-//        if (amount < 0.0) {
-//            System.out.println("Cannot transfer negative amount...\n");
-//        } else if (source.getBalance() < amount) {
-//            System.out.println("Insufficient balance on source account...\n");
-//        } else {
-//            source.withdraw(amount);
-//            destination.deposit(amount);
-//        }
-//
-//        System.out.print("Source ");
-//        printBalance(source);
-//        System.out.print("Destination ");
-//        printBalance(destination);
-//    }
-//
-//    // EFFECTS: prompts user to select playlist and returns songs in it
-//    private Playlist selectPlaylist() {
-//        String selection = "";  // force entry into loop
-//
-//        while (!(selection.equals("s") || selection.equals("p"))) {
-//            System.out.println("s for all songs");
-//            System.out.println("p for playlists");
-//            selection = input.next();
-//            selection = selection.toLowerCase();
-//        }
-//
-//        if (selection.equals("s")) {
-//            return songs;
-//        } else {
-//            return playlists;
-//        }
-//    }
-//
-//    // EFFECTS: prints balance of account to the screen
-//    private void printBalance(Account selected) {
-//        System.out.printf("Balance: $%.2f\n", selected.getBalance());
-//    }
 }
