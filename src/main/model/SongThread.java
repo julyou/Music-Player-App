@@ -1,46 +1,70 @@
 package model;
 
-import model.Song;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SongThread extends Thread {
-    private static boolean flag = true;
+    private static String status = "stopped";
+
     List<Song> songs = new LinkedList<>();
 
-    public void setSongs(List<Song> songsIn) {
-        songs = songsIn;
+    public void startPlaying(List<Song> songs) {
+        if (status.equals("playing")) {
+            stopPlaying();
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        this.songs = songs;
+        status = "playing";
     }
 
     public void stopPlaying() {
-        flag = false;
+        status = "stopped";
     }
 
-    public void run() {
-        flag = true;
+    public void end() {
+        status = "end";
+    }
+
+    private void playing() {
         for (Song s : songs) {
             s.playSong();
             System.out.println(s.getSongTitle() + " is playing");
             int i = 0;
-
-            while (flag && i < s.getSongDuration()) {
-
+            while (status.equals("playing") && i < s.getSongDuration()) {
                 try {
                     TimeUnit.SECONDS.sleep(1);
-
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
                 i++;
             }
-            if (!flag) {
+            if (!status.equals("playing")) {
                 s.pauseSong();
                 System.out.println(s.getSongTitle() + " stopped playing");
                 break;
             }
         }
+        if (status.equals("playing")) {
+            status = "stopped";
+        }
+    }
 
+    public void run() {
+        while (!status.equals("end")) {
+            if (status.equals("stopped")) {
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (status.equals("playing")) {
+                playing();
+            }
+        }
     }
 }

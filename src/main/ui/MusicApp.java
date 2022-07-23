@@ -1,11 +1,9 @@
 package ui;
 
 import model.Playlist;
-import model.Playlists;
 import model.Song;
 import model.SongThread;
 
-import javax.sound.sampled.DataLine;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -53,7 +51,20 @@ public class MusicApp {
 
     // EFFECTS: runs the music player application
     public MusicApp() throws InterruptedException {
+//        System.out.println("\nsongThread starting");
+        songthread.start();
+
+//        System.out.println("\nrunMusicApp started");
         runMusicApp();
+
+//        System.out.println("\nsongThread ending...")
+        songthread.end();
+
+//        System.out.println("\nsongThread join....");
+//        songthread.join();
+//        System.out.println("\nsongThread join ended");
+
+
     }
 
     // MODIFIES: this
@@ -104,8 +115,7 @@ public class MusicApp {
         if (command.length() > 0) {
             switch (command) {
                 case PLAY_COMMAND:
-                    songthread.setSongs(songs);
-                    songthread.start();
+                    songthread.startPlaying(songs);
                     break;
                 case STOP_COMMAND:
                     songthread.stopPlaying();
@@ -208,6 +218,10 @@ public class MusicApp {
                 case DELETE_PLAYLIST_COMMAND:
                     playlistPlaylistExtraInfoOptions(playlists);
                     break;
+                case QUIT_COMMAND:
+                    keepGoing = false;
+                    endProgram();
+                    break;
                 default:
                     System.out.println("That is an invalid command. Please try again.");
                     processPlaylistCommands(playlists);
@@ -235,6 +249,10 @@ public class MusicApp {
             switch (command) {
                 case MAIN_MENU_COMMAND:
                     displayMainMenu();
+                    break;
+                case QUIT_COMMAND:
+                    keepGoing = false;
+                    endProgram();
                     break;
                 default:
                     System.out.println("That is an invalid command. Please try again.");
@@ -300,10 +318,14 @@ public class MusicApp {
                     break;
                 case DELETE_SONG_COMMAND:
                     chooseSongToDelete(playlist);
-//                    processPlaylistSongCommands(playlist);
+                    processPlaylistSongCommands(playlist);
                     break;
                 case GO_BACK_COMMAND:
                     playlistExtraInfoOptions(playlists);
+                case QUIT_COMMAND:
+                    keepGoing = false;
+                    endProgram();
+                    break;
                 default:
                     System.out.println("That is an invalid command. Please try again.");
                     processPlaylistSongCommands(playlist);
@@ -342,6 +364,10 @@ public class MusicApp {
                 case MAIN_MENU_COMMAND:
                     displayMainMenu();
                     break;
+                case QUIT_COMMAND:
+                    keepGoing = false;
+                    endProgram();
+                    break;
                 default:
                     System.out.println("That is an invalid command. Please try again.");
                     chooseSongToAdd(playlist);
@@ -379,6 +405,10 @@ public class MusicApp {
                 case MAIN_MENU_COMMAND:
                     displayMainMenu();
                     break;
+                case QUIT_COMMAND:
+                    keepGoing = false;
+                    endProgram();
+                    break;
                 default:
                     System.out.println("That is an invalid command. Please try again.");
                     chooseSongToDelete(playlist);
@@ -388,8 +418,6 @@ public class MusicApp {
 
     //EFFECTS: stops playing songs and stops receiving user input
     public void endProgram() throws InterruptedException {
-        songthread.stopPlaying();
-        thread.sleep(800);
         System.out.println("Thanks for listening. Goodbye!");
         input.close();
     }

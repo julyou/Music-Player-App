@@ -80,13 +80,7 @@ public class Song {
     public int getSongDuration() {
         return duration;
     }
-
-//    public int getSongDuration() {
-//    }
-
-//    public long getSongDuration(Song s) {
-//        return getFrameLength(s);
-//    }
+    
 
 
 }

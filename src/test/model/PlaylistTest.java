@@ -66,8 +66,10 @@ public class PlaylistTest {
     @Test
     public void testRemoveSongFromPlaylist() {
         testPlaylist1.addSong(testSong1);
-        assertTrue(testPlaylist1.removeSong(0));
+        assertEquals(1, testPlaylist1.getSongsInPlaylist().size());
+        testPlaylist1.removeSong(testSong1);
         assertEquals(0, testPlaylist1.getSongsInPlaylist().size());
-        assertFalse(testPlaylist1.removeSong(0));
+        testPlaylist1.removeSong(testSong1);
+        assertEquals(0, testPlaylist1.getSongsInPlaylist().size());
     }
 }
