@@ -62,7 +62,7 @@ public class MusicApp {
             } else if (command.equals("playlists")) {
                 displayMenuPlaylist();
             } else if (command.equals("s") | command.equals("i") | command.equals("f")) {
-                displayMenuPlaylistActions();
+
             } else if (command.equals("quit")) {
                 keepGoing = false;
                 for (Song s : songs) {
@@ -121,6 +121,7 @@ public class MusicApp {
         } else if (command.equals("s")) {
             System.out.println("This playlist contains: ");
             System.out.println(playlist1.getSongsInPlaylist());
+            displayMenuPlaylistActions();
         } else if (command.equals("remove")) {
             System.out.println("which song would you like to remove?");
             playlist1.removeSong(Integer.parseInt(command));
@@ -130,11 +131,14 @@ public class MusicApp {
         } else if (command.equals("i")) {
             System.out.println("This playlist contains: ");
             System.out.println(playlist2.getSongsInPlaylist());
+            displayMenuPlaylistActions();
         } else if (command.equals("f")) {
             System.out.println("This playlist contains: ");
             System.out.println(playlist3.getSongsInPlaylist());
+            displayMenuPlaylistActions();
         } else if (command.equals("new")) {
-            new Playlist("new playlist");
+            Playlist newPlaylist = new Playlist("new playlist");
+            playlists.add(newPlaylist);
         } else if (command.equals("quit")) {
             System.out.println("\nThanks for listening!");
         } else {
