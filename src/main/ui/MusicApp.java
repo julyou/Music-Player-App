@@ -6,12 +6,16 @@ import model.Song;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 // based on Teller app; link below
 // <https://github.students.cs.ubc.ca/CPSC210/TellerApp.git>
+
 public class MusicApp {
 
     private Scanner input;
+    private SongThread songthread = new SongThread();
+    private Thread aa = new Thread();
 
 
     // EFFECTS: runs the music player application
@@ -82,11 +86,18 @@ public class MusicApp {
         if (command.equals("main")) {
             return;
         } else if (command.equals("play")) {
-            for (Song s : songs) {
-                s.playSong();
-                System.out.println("Playing " + s.getSongTitle() + " by " + s.getArtist());
+            songthread.setSongs(songs);
+            songthread.start();
+
+
+            //           for (Song s : songs) {
+            //               s.playSong();
+            //               System.out.println("Playing " + s.getSongTitle() + " by " + s.getArtist());
 //                TimeUnit.SECONDS.sleep(s.getSongDuration());
-            }
+            //         }
+        } else if (command.equals("stop")) {
+            songthread.stopPlaying();
+
         } else if (command.equals("pause")) {
             for (Song s : songs) {
                 if (s.isPlaying() | s.isLooping()) {
