@@ -6,16 +6,16 @@ import model.Song;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
-// based on Teller app; link below
-// <https://github.students.cs.ubc.ca/CPSC210/TellerApp.git>
+// based on Teller app and FitLifeGymChain; links below
+// https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+// https://github.students.cs.ubc.ca/CPSC210/LongFormProblemStarters.git
 
 public class MusicApp {
 
     private Scanner input;
     private SongThread songthread = new SongThread();
-    private Thread aa = new Thread();
+    private Thread thread = new Thread();
 
 
     // EFFECTS: runs the music player application
@@ -38,9 +38,9 @@ public class MusicApp {
     Song song5 = new Song("Cantina Band", "John Williams", "song5.wav", 60);
     Song song6 = new Song("Dhol Drums", "unknown", "song6.wav", 18);
     Song song7 = new Song("Main Title", "John Williams", "song7.wav", 60);
-    Song song8 = new Song("Chill", "unknown", "song8.wav", 44);
-    Song song9 = new Song("Action", "unknown", "song9.wav", 36);
-    Song song10 = new Song("Retro beats", "unknown", "song10.wav", 75);
+//    Song song8 = new Song("Chill", "unknown", "song8.wav", 44);
+//    Song song9 = new Song("Action", "unknown", "song9.wav", 36);
+//    Song song10 = new Song("Retro beats", "unknown", "song10.wav", 75);
 
 
     // MODIFIES: this
@@ -66,7 +66,7 @@ public class MusicApp {
             } else if (command.equals("playlists")) {
                 displayMenuPlaylist();
             } else if (command.equals("s") | command.equals("i") | command.equals("f")) {
-
+                displayMenuPlaylistActions();
             } else if (command.equals("quit")) {
                 keepGoing = false;
                 for (Song s : songs) {
@@ -231,9 +231,9 @@ public class MusicApp {
         songs.add(song5);
         songs.add(song6);
         songs.add(song7);
-        songs.add(song8);
-        songs.add(song9);
-        songs.add(song10);
+//        songs.add(song8);
+//        songs.add(song9);
+//        songs.add(song10);
 
         playlists.add(playlist1);
         playlists.add(playlist2);
@@ -273,7 +273,7 @@ public class MusicApp {
         System.out.println("\nCurrent playlists:");
         System.out.println("\ts -> Star Wars Soundtrack");
         System.out.println("\ti -> Instrumental");
-        System.out.println("\tf -> Filmscores");
+        System.out.println("\tf -> Film Scores");
         System.out.println("\n");
         System.out.println("\tnew -> Create new playlist");
         System.out.println("\tmain -> Main menu");
