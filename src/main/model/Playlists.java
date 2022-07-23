@@ -14,8 +14,11 @@ public class Playlists {
     }
 
     // getters
-    public List<Playlist> getPlaylists() {
-        return playlists;
+    public List<Playlist> getPlaylistNames() {
+        for (Playlist p : playlists) {
+            System.out.println(p.getPlaylistName());
+        }
+        return null;
     }
 
     public List<Song> getSongs() {
