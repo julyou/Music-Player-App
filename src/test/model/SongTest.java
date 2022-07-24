@@ -3,17 +3,20 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SongTest {
     Song testSong1;
     Song testSong2;
     String status;
-
+    URL filePath;
 
     @BeforeEach
     public void setUp() {
-        testSong1 = new Song("song1", "unknown", "song1.wav",34);
+        testSong1 = new Song("song1", "unknown", "song1.wav", 34);
         testSong2 = new Song("song2", "unknown", "song2.wav", 44);
         status = "";
     }
@@ -21,6 +24,9 @@ class SongTest {
     @Test
     public void testConstructor() {
         assertEquals("song1", testSong1.getSongTitle());
+        assertEquals("unknown", testSong1.getArtist());
+        assertEquals(44, testSong2.getSongDuration());
+
     }
 
     @Test
@@ -53,6 +59,15 @@ class SongTest {
         assertTrue(testSong1.isLooping());
     }
 
+//    @Test
+//    public void testMalformedURL() {
+//        try {
+//            filePath = new URL("");
+//            fail("Exception not thrown");
+//        } catch (MalformedURLException e) {
+//            assertEquals("error", e.getMessage());
+//        }
+//    }
 
 
 }
