@@ -36,9 +36,9 @@ public class Song {
     }
 
     // EFFECTS: pauses given song
-    public void pauseSong() {
+    public void stopSong() {
         audioclip.stop();
-        status = "paused";
+        status = "stopped";
     }
 
     // EFFECTS: loops given song
@@ -47,17 +47,19 @@ public class Song {
         status = "looping";
     }
 
+    // EFFECTS: returns true if song is playing, false otherwise
     public boolean isPlaying() {
         return status.equals("playing");
     }
 
-    public boolean isPaused() {
-        return status.equals("paused");
+    // EFFECTS: returns true if song is stopped, false otherwise
+    public boolean isStopped() {
+        return status.equals("stopped");
     }
 
+    // EFFECTS: returns true if song is looping, false otherwise
     public boolean isLooping() {
         return status.equals("looping");
-
     }
 
     // getters
@@ -77,10 +79,9 @@ public class Song {
         return duration;
     }
 
-    public URL getSongURL() {
-        return filePath;
+    public String getSongURL() {
+        return String.valueOf(filePath);
     }
-
 
 
 }

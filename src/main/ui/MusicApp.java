@@ -7,6 +7,7 @@ import model.SongThread;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 // based on Teller app and FitLifeGymChain; links below
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
@@ -27,6 +28,8 @@ public class MusicApp {
 
     private Scanner input;
     private SongThread songthread = new SongThread();
+
+    String status = "";
 
     List<Song> songs = new LinkedList<>();
     List<Playlist> playlists = new LinkedList<>();
@@ -214,11 +217,13 @@ public class MusicApp {
         displayPlaylistMenu(playlists);
     }
 
-    // EFFECTS: displays menu options of actions users can do inside a playlist (add/delete songs)
+    // EFFECTS: displays menu options of actions users can do inside a playlist (add/delete, play/stop songs)
     private void displayPlaylistSongsMenu(Playlist playlist) throws InterruptedException {
         System.out.println("\nSelect from:");
         System.out.println("\tadd -> add song");
-        System.out.println("\tdels -> remove songs");
+        System.out.println("\tdels -> remove song");
+        System.out.println("\tplay -> play song");
+        System.out.println("\tstop -> stop song");
         System.out.println("\tmain -> main menu");
         System.out.println("\tback -> back");
         System.out.println("\tquit -> quit");
@@ -241,6 +246,14 @@ public class MusicApp {
                 case DELETE_SONG_COMMAND:
                     displayDeleteSongMenu(playlist);
                     break;
+                case PLAY_COMMAND:
+                    songthread.startPlaying(playlist.getSongsInPlaylist());
+                    displayPlaylistSongsMenu(playlist);
+                    break;
+                case STOP_COMMAND:
+                    songthread.stopPlaying();
+                    displayPlaylistSongsMenu(playlist);
+                    break;
                 case GO_BACK_COMMAND:
                     displayPlaylistMenu(playlists);
                     break;
@@ -259,7 +272,7 @@ public class MusicApp {
         int i = Integer.parseInt(s);
         Playlist p = playlists.get(i - 1);
         System.out.println(p.getPlaylistName() + " contains: ");
-        System.out.println(p.getSongsInPlaylist());
+        System.out.println(p.getSongsTitlesInPlaylist());
         displayPlaylistSongsMenu(p);
     }
 
@@ -297,12 +310,12 @@ public class MusicApp {
     //          add is successful or unsuccessful
     public void checkCanAddSong(String s, Playlist playlist) {
         Song song = songs.get(Integer.parseInt(s) - 1);
-        if (!playlist.getSongsInPlaylist().contains(song.getSongTitle())) {
+        if (!playlist.getSongsTitlesInPlaylist().contains(song.getSongTitle())) {
             playlist.addSong(song);
             System.out.println(song.getSongTitle() + " successfully added to " + playlist.getPlaylistName());
 
             System.out.println(playlist.getPlaylistName() + " contains: ");
-            System.out.println(playlist.getSongsInPlaylist());
+            System.out.println(playlist.getSongsTitlesInPlaylist());
         } else {
             System.out.println(song.getSongTitle() + " is already in the playlist");
         }
@@ -342,12 +355,12 @@ public class MusicApp {
     //          deletion is successful or unsuccessful
     public void checkCanDeleteSong(String s, Playlist playlist) {
         Song song = songs.get(Integer.parseInt(s) - 1);
-        if (playlist.getSongsInPlaylist().contains(song.getSongTitle())) {
+        if (playlist.getSongsTitlesInPlaylist().contains(song.getSongTitle())) {
             playlist.removeSong(song);
             System.out.println(song.getSongTitle() + " successfully deleted form " + playlist.getPlaylistName());
 
             System.out.println(playlist.getPlaylistName() + " contains: ");
-            System.out.println(playlist.getSongsInPlaylist());
+            System.out.println(playlist.getSongsTitlesInPlaylist());
         } else {
             System.out.println(song.getSongTitle() + " doesn't exist in the playlist");
         }
@@ -435,6 +448,8 @@ public class MusicApp {
             position++;
         }
     }
+
+
 
     //EFFECTS: stops playing songs and stops receiving user input
     public void endProgram() {

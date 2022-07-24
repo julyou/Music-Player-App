@@ -43,7 +43,7 @@ public class SongThread extends Thread {
                 i++;
             }
             if (!status.equals("playing")) {
-                s.pauseSong();
+                s.stopSong();
                 System.out.println(s.getSongTitle() + " stopped playing");
                 break;
             }
