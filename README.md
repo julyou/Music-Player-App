@@ -29,5 +29,5 @@ sophisticated features for my music player later on.
 - As a user, I want to be able to remove a song from a playlist <br>
 - As a user, I want to be able to create a new playlist and add it to a list of playlists <br>
 - As a user, I want to be able to remove a playlist from a list of playlists <br>
-- As a user, I want to be able to select a song from a playlist and play/pause it<br>
+- As a user, I want to be able to play and pause songs<br>
 
