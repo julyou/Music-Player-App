@@ -6,7 +6,6 @@ import java.util.concurrent.TimeUnit;
 
 public class SongThread extends Thread {
     private static String status = "stopped";
-
     List<Song> songs = new LinkedList<>();
 
     public void startPlaying(List<Song> songs) {
@@ -66,5 +65,9 @@ public class SongThread extends Thread {
                 playing();
             }
         }
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

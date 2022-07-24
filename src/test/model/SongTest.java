@@ -3,23 +3,31 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class SongTest {
     Song testSong1;
     Song testSong2;
+    String status;
 
 
     @BeforeEach
     public void setUp() {
         testSong1 = new Song("song1", "unknown", "song1.wav",34);
         testSong2 = new Song("song2", "unknown", "song2.wav", 44);
+        status = "";
     }
 
     @Test
     public void testConstructor() {
+        assertEquals("song1", testSong1.getSongTitle());
+    }
 
+    @Test
+    public void testStatus() {
+        assertEquals("", testSong1.getSongStatus());
+        testSong1.playSong();
+        assertEquals("playing", testSong1.getSongStatus());
     }
 
     @Test
@@ -44,6 +52,7 @@ class SongTest {
         testSong1.loopSong();
         assertTrue(testSong1.isLooping());
     }
+
 
 
 }
