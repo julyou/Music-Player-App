@@ -232,6 +232,7 @@ public class MusicApp {
     }
 
     // EFFECTS: process playlist songs menu commands
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void processPlaylistSongsMenuCMD(Playlist playlist) throws InterruptedException {
         String command = getUserInputString();
 
