@@ -72,4 +72,20 @@ public class PlaylistTest {
         testPlaylist1.removeSong(testSong1);
         assertEquals(0, testPlaylist1.getSongsInPlaylist().size());
     }
+
+    @Test
+    public void testRenamePlaylist() {
+        assertEquals("playlist1", testPlaylist1.getPlaylistName());
+        testPlaylist1.renamePlaylist("renamed playlist");
+        assertEquals("renamed playlist", testPlaylist1.getPlaylistName());
+    }
+
+    @Test
+    public void testClearPlaylist() {
+        testPlaylist1.addSong(testSong1);
+        testPlaylist1.addSong(testSong2);
+        assertEquals(2, testPlaylist1.getSongsInPlaylist().size());
+        testPlaylist1.clearPlaylist();
+        assertEquals(0, testPlaylist1.getSongsInPlaylist().size());
+    }
 }
