@@ -3,7 +3,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,7 +11,6 @@ class SongTest {
     Song testSong1;
     Song testSong2;
     String status;
-    URL filePath;
 
     @BeforeEach
     public void setUp() {
@@ -26,6 +24,7 @@ class SongTest {
         assertEquals("song1", testSong1.getSongTitle());
         assertEquals("unknown", testSong1.getArtist());
         assertEquals(44, testSong2.getSongDuration());
+        assertEquals("file:song2.wav", testSong2.getSongURL());
 
     }
 
@@ -47,9 +46,9 @@ class SongTest {
     @Test
     public void testPauseSong() {
         testSong1.playSong();
-        assertFalse(testSong1.isPaused());
-        testSong1.pauseSong();
-        assertTrue(testSong1.isPaused());
+        assertFalse(testSong1.isStopped());
+        testSong1.stopSong();
+        assertTrue(testSong1.isStopped());
     }
 
     @Test

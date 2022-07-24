@@ -33,15 +33,25 @@ public class Playlist {
         return s;
     }
 
+    // MODIFIES: this;
+    // EFFECTS: clears songs in playlist
     public void clearPlaylist() {
         playlist.clear();
     }
 
     // getters
-    public List<String> getSongsInPlaylist() {
-        List<String> songs = new LinkedList<>();
+    public List<String> getSongsTitlesInPlaylist() {
+        List<String> songNames = new LinkedList<>();
         for (Song s : playlist) {
-            songs.add(s.getSongTitle());
+            songNames.add(s.getSongTitle());
+        }
+        return songNames;
+    }
+
+    public List<Song> getSongsInPlaylist() {
+        List<Song> songs = new LinkedList<>();
+        for (Song s : playlist) {
+            songs.add(s);
         }
         return songs;
     }
@@ -49,6 +59,5 @@ public class Playlist {
     public String getPlaylistName() {
         return playlistName;
     }
-
 
 }
