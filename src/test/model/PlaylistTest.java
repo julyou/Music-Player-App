@@ -24,6 +24,7 @@ public class PlaylistTest {
     @Test
     public void testConstructor() {
         assertEquals(0, testPlaylist1.getSongsTitlesInPlaylist().size());
+        assertEquals(0, testPlaylist1.getSongsInPlaylist().size());
     }
 
     @Test
@@ -31,6 +32,7 @@ public class PlaylistTest {
         testPlaylist1.addSong(testSong1);
         assertEquals(1, testPlaylist1.getSongsTitlesInPlaylist().size());
         assertTrue(testPlaylist1.getSongsTitlesInPlaylist().contains(testSong1.getSongTitle()));
+        assertTrue(testPlaylist1.getSongsInPlaylist().contains(testSong1));
     }
 
     @Test
