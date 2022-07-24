@@ -12,12 +12,16 @@ public class SongThreadTest {
     SongThread testSongThread;
     String status;
     List<Song> songs;
+    Song testSong1;
+    Song testSong2;
 
     @BeforeEach
     public void setUp() {
         testSongThread = new SongThread();
         status = "stopped";
         songs = new LinkedList<>();
+        testSong1 = new Song("song1", "unknown", "song1.wav", 34);
+        testSong2 = new Song("song2", "unknown", "song2.wav", 44);
     }
 
     @Test
@@ -38,13 +42,4 @@ public class SongThreadTest {
         assertEquals("end", testSongThread.getStatus());
     }
 
-//    @Test
-//    public void testPlaying() {
-//
-//    }
-//
-//    @Test
-//    public void testRun() {
-//
-//    }
 }

@@ -50,11 +50,9 @@ public class MusicApp {
         songthread.start();
         runMusicApp();
         songthread.end();
-
     }
 
-    // MODIFIES: this
-    // EFFECTS: processes user input
+    // EFFECTS: sets up the music application
     private void runMusicApp() {
         keepGoing = true;
         init();
@@ -62,6 +60,7 @@ public class MusicApp {
         endProgram();
     }
 
+    // EFFECTS: processes user input
     public void handleUserInput() {
         displayMainMenu();
         String cmd;
@@ -72,7 +71,7 @@ public class MusicApp {
         }
     }
 
-    // EFFECTS: displays menu of options to user
+    // EFFECTS: displays main menu to user
     private void displayMainMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\tsongs -> browse songs");
@@ -82,7 +81,7 @@ public class MusicApp {
         System.out.println("\tquit -> quit");
     }
 
-    // EFFECTS: prints menu options and info depending on user input
+    // EFFECTS: processes main menu commands
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void processMainMenuCMD(String command) {
         if (command.length() > 0) {
@@ -112,6 +111,7 @@ public class MusicApp {
         }
     }
 
+    // EFFECTS: displays playlist menu options to user
     private void displayPlaylistMenu(List<Playlist> playlists) {
         System.out.println("\nSelect from:");
         int index = 1;
@@ -127,6 +127,7 @@ public class MusicApp {
         processPlaylistMenuCMD(playlists);
     }
 
+    // EFFECTS: processes playlist menu commands
     private void processPlaylistMenuCMD(List<Playlist> playlists) {
         String command = getUserInputString();
         if (command.length() > 0) {
@@ -152,12 +153,14 @@ public class MusicApp {
         }
     }
 
+    // EFFECTS: Prompts user to select which playlist to delete and returns playlists in library
     private void displayDeletePlaylistMenu(List<Playlist> playlists) throws InterruptedException {
         System.out.println("\nWhich playlist would you like to delete? (type the number)");
         printAllPlaylists(playlists);
         processDeletePlaylistMenuCMD(playlists);
     }
 
+    // EFFECTS: processes delete playlist menu commands
     private void processDeletePlaylistMenuCMD(List<Playlist> pl) throws InterruptedException {
         String command = getUserInputString();
         int commandInt = Integer.parseInt(command);
@@ -179,7 +182,7 @@ public class MusicApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: deletes playlist from playlist if it exists and print success message, otherwise print error message
+    // EFFECTS: deletes playlist from playlist if it exists and prints success message, otherwise prints error message
     public void deletePlaylist(String s, List<Playlist> pl) {
         Playlist playlist = playlists.get(Integer.parseInt(s) - 1);
         if (pl.contains(playlist)) {
@@ -192,11 +195,14 @@ public class MusicApp {
         }
     }
 
+    // EFFECTS: prompts user to name their new playlist
     private void displayNewPlaylistMenu(List<Playlist> playlists) {
         System.out.println("\nWhat would you like to name your new playlist?");
         processNewPlaylistMenuCMD(playlists);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates new playlist with given name and returns all playlists in library
     private void processNewPlaylistMenuCMD(List<Playlist> playlists) {
         String command = getUserInputString();
 
@@ -208,6 +214,7 @@ public class MusicApp {
         displayPlaylistMenu(playlists);
     }
 
+    // EFFECTS: displays menu options of actions users can do inside a playlist (add/delete songs)
     private void displayPlaylistSongsMenu(Playlist playlist) throws InterruptedException {
         System.out.println("\nSelect from:");
         System.out.println("\tadd -> add song");
@@ -219,7 +226,7 @@ public class MusicApp {
         processPlaylistSongsMenuCMD(playlist);
     }
 
-
+    // EFFECTS: process playlist songs menu commands
     private void processPlaylistSongsMenuCMD(Playlist playlist) throws InterruptedException {
         String command = getUserInputString();
 
@@ -247,7 +254,7 @@ public class MusicApp {
         }
     }
 
-    // EFFECTS: prints songs in playlist
+    // EFFECTS: prints songs in given playlist
     public void printSongsInPlaylist(String s) throws InterruptedException {
         int i = Integer.parseInt(s);
         Playlist p = playlists.get(i - 1);
@@ -256,13 +263,14 @@ public class MusicApp {
         displayPlaylistSongsMenu(p);
     }
 
-    // EFFECTS: asks for user input to choose song to add
+    // EFFECTS: prompts user to choose song to add
     private void displayAddSongMenu(Playlist p) throws InterruptedException {
         System.out.println("\nWhat song would you like to add? (type the number)");
         printAllSongs(songs);
         processAddSongMenuCMD(p);
     }
 
+    // EFFECTS: process adding songs into playlist commands
     private void processAddSongMenuCMD(Playlist playlist) throws InterruptedException {
         String command = getUserInputString();
         int commandInt = Integer.parseInt(command);
@@ -284,6 +292,9 @@ public class MusicApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds song into playlist if not already there and returns songs in playlist. Prints message signalling
+    //          add is successful or unsuccessful
     public void checkCanAddSong(String s, Playlist playlist) {
         Song song = songs.get(Integer.parseInt(s) - 1);
         if (!playlist.getSongsInPlaylist().contains(song.getSongTitle())) {
@@ -297,12 +308,14 @@ public class MusicApp {
         }
     }
 
+    // EFFECTS: prompts user to choose which song to delete from playlist
     private void displayDeleteSongMenu(Playlist p) throws InterruptedException {
         System.out.println("\nWhat song would you like to delete? (type the number)");
         printAllSongs(songs);
         processDeleteSongMenuCMD(p);
     }
 
+    // EFFECTS: processes delete song commands
     private void processDeleteSongMenuCMD(Playlist playlist) throws InterruptedException {
         String command = getUserInputString();
         int commandInt = Integer.parseInt(command);
@@ -324,6 +337,9 @@ public class MusicApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: deletes song from playlist if it exists and returns songs in playlist. Prints message signalling
+    //          deletion is successful or unsuccessful
     public void checkCanDeleteSong(String s, Playlist playlist) {
         Song song = songs.get(Integer.parseInt(s) - 1);
         if (playlist.getSongsInPlaylist().contains(song.getSongTitle())) {

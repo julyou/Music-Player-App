@@ -77,6 +77,10 @@ public class Song {
         return duration;
     }
 
+    public URL getSongURL() {
+        return filePath;
+    }
+
 
 
 }
