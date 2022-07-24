@@ -3,6 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,15 +59,28 @@ class SongTest {
         assertTrue(testSong1.isLooping());
     }
 
-//    @Test
-//    public void testMalformedURL() {
-//        try {
-//            filePath = new URL("");
-//            fail("Exception not thrown");
-//        } catch (MalformedURLException e) {
-//            assertEquals("error", e.getMessage());
-//        }
-//    }
+    @Test
+    public void testExpectMalformedURL() {
+        URL filePath;
 
+        try {
+            filePath = new URL("asdf");
+            fail("MalformedURL was not thrown");
+        } catch (MalformedURLException e){
+            // expected
+        }
+    }
+
+    @Test
+    public void testExpectNotMalformedURL() {
+        URL filePath;
+
+        try {
+            filePath = new URL("file:song2.wav");
+            // expected
+        } catch (MalformedURLException e){
+            fail("MalformedURL was thrown");
+        }
+    }
 
 }
