@@ -69,10 +69,6 @@ public class Song {
         return artist;
     }
 
-    public URL getSongURL() {
-        return filePath;
-    }
-
     public String getSongStatus() {
         return status;
     }
@@ -80,7 +76,7 @@ public class Song {
     public int getSongDuration() {
         return duration;
     }
-    
+
 
 
 }
