@@ -76,19 +76,18 @@ class SongTest {
 
     @Test
     public void testExpectMalformedURL() {
-        testSong3 = new Song("song3", "unknown", "1", 2);
         AudioClip audioclip;
         boolean i;
         URL filePath;
 
         try {
-            filePath = new URL(testSong3.getSongURL());
+            filePath = new URL("filePath");
             audioclip = Applet.newAudioClip(filePath);
             audioclip.play();
             i = false;
-        } catch (MalformedURLException ex) {
+        } catch (Exception ex) {
             i = true;
         }
-//        assertTrue(i);
+        assertTrue(i);
     }
 }
