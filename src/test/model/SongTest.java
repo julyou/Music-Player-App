@@ -81,6 +81,7 @@ class SongTest {
             fail("MalformedURL was not thrown");
             i = false;
         } catch (MalformedURLException ex) {
+            System.err.println(ex);
             i = true;
         }
         assertTrue(i);
