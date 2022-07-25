@@ -21,11 +21,12 @@ public class SongThread extends Thread {
     public void startPlaying(List<Song> songs) {
         if (status.equals("playing")) {
             stopPlaying();
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                status = "end";
-            }
+//            try {
+//                TimeUnit.SECONDS.sleep(1);
+//            } catch (InterruptedException e) {
+//                status = "end1";
+//                return;
+//            }
         }
         this.songs = songs;
         status = "playing";

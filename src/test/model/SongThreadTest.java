@@ -19,7 +19,7 @@ public class SongThreadTest {
     public void setUp() {
         testSongThread = new SongThread();
         songs = new LinkedList<>();
-        testSong1 = new Song("test", "unknown", "test.wav", 3);
+        testSong1 = new Song("test", "unknown", "data/test.wav", 3);
         songs.add(testSong1);
     }
 
@@ -50,6 +50,9 @@ public class SongThreadTest {
 
         testSongThread.end();
         assertEquals("end", testSongThread.getStatus());
+
+        testSongThread.startPlaying(songs);
+        assertEquals("playing", testSongThread.getStatus());
     }
 
     @Test
@@ -68,7 +71,7 @@ public class SongThreadTest {
         testSongThread.startPlaying(songs);
         TimeUnit.SECONDS.sleep(2);
 
-        assertEquals("playing", testSongThread.getStatus());
+        assertEquals("stopped", testSongThread.getStatus());
         testSongThread.end();
     }
 

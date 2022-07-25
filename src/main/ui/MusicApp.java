@@ -36,13 +36,13 @@ public class MusicApp {
     Playlist playlist2 = new Playlist("Instrumental");
     Playlist playlist3 = new Playlist("Film scores");
 
-    Song song1 = new Song("song1", "unknown", "song1.wav", 34);
-    Song song2 = new Song("song2", "unknown", "song2.wav", 44);
-    Song song3 = new Song("Pink Panther", "Henry Mancini", "song3.wav", 30);
-    Song song4 = new Song("Imperial March", "John Williams", "song4.wav", 60);
-    Song song5 = new Song("Cantina Band", "John Williams", "song5.wav", 60);
-    Song song6 = new Song("Dhol Drums", "unknown", "song6.wav", 18);
-    Song song7 = new Song("Main Title", "John Williams", "song7.wav", 60);
+    Song song1 = new Song("song1", "unknown", "data/song1.wav", 34);
+    Song song2 = new Song("song2", "unknown", "data/song2.wav", 44);
+    Song song3 = new Song("Pink Panther", "Henry Mancini", "data/song3.wav", 30);
+    Song song4 = new Song("Imperial March", "John Williams", "data/song4.wav", 60);
+    Song song5 = new Song("Cantina Band", "John Williams", "data/song5.wav", 60);
+    Song song6 = new Song("Dhol Drums", "unknown", "data/song6.wav", 18);
+    Song song7 = new Song("Main Title", "John Williams", "data/song7.wav", 60);
 
     private boolean keepGoing;
 
