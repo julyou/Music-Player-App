@@ -10,7 +10,7 @@ public class Song {
     private final String songTitle;
     private final String artist;
     private final int duration;
-    private URL filePath;
+    private final URL filePath;
     private String status;
     private final AudioClip audioclip;
 
