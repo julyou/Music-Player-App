@@ -77,7 +77,7 @@ class SongTest {
         URL filePath = null;
 
         try {
-            filePath = new URL("abc：song2.wav");
+            filePath = new URL("song2");
             i = false;
         } catch (Exception ex) {
             i = true;

@@ -9,6 +9,7 @@ public class Playlist {
     private final List<Song> playlist;
     private String playlistName;
 
+    // EFFECTS: creates a playlist with a playlist name
     public Playlist(String playlistName) {
         playlist = new LinkedList<>();
         this.playlistName = playlistName;
