@@ -26,10 +26,10 @@ public class MusicApp {
     private static final String DELETE_PLAYLIST_COMMAND = "delp";
     private static final String QUIT_COMMAND = "quit";
 
-    private Scanner input;
-    private SongThread songthread = new SongThread();
+    private static final String status = "stopped";
 
-    String status = "";
+    private Scanner input;
+    private final SongThread songthread = new SongThread();
 
     List<Song> songs = new LinkedList<>();
     List<Playlist> playlists = new LinkedList<>();
@@ -449,8 +449,6 @@ public class MusicApp {
             position++;
         }
     }
-
-
 
     //EFFECTS: stops playing songs and stops receiving user input
     public void endProgram() {
