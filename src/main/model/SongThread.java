@@ -1,12 +1,18 @@
 package model;
 
+import javax.swing.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SongThread extends Thread {
-    private static String status = "stopped";
-    List<Song> songs = new LinkedList<>();
+    private static String status;
+    List<Song> songs;
+
+    public SongThread() {
+        status = "stopped";
+        songs = new LinkedList<>();
+    }
 
     public void startPlaying(List<Song> songs) {
         if (status.equals("playing")) {
@@ -32,7 +38,6 @@ public class SongThread extends Thread {
     private void playing() {
         for (Song s : songs) {
             s.playSong();
-            System.out.println(s.getSongTitle() + " is playing");
             int i = 0;
             while (status.equals("playing") && i < s.getSongDuration()) {
                 try {
@@ -44,7 +49,6 @@ public class SongThread extends Thread {
             }
             if (!status.equals("playing")) {
                 s.stopSong();
-                System.out.println(s.getSongTitle() + " stopped playing");
                 break;
             }
         }
@@ -71,3 +75,16 @@ public class SongThread extends Thread {
         return status;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

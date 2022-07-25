@@ -66,7 +66,7 @@ class SongTest {
         try {
             filePath = new URL("file:song2.wav");
             // expected
-        } catch (MalformedURLException e){
+        } catch (MalformedURLException e) {
             fail("MalformedURL should not have been thrown thrown");
         }
         assertEquals("file:song2.wav", filePath.toString());
@@ -74,16 +74,13 @@ class SongTest {
 
     @Test
     public void testExpectMalformedURL() {
-        URL filePath;
+        URL filePath = null;
 
         try {
             filePath = new URL("asdf");
             fail("MalformedURL was not thrown");
-        } catch (MalformedURLException e){
+        } catch (MalformedURLException ex) {
             // expected
         }
     }
-
-
-
 }

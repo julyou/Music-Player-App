@@ -7,12 +7,12 @@ import java.net.URL;
 
 // Represents a song that has a song title, artist, and file location
 public class Song {
-    private String songTitle;
-    private String artist;
-    private int duration;
+    private final String songTitle;
+    private final String artist;
+    private final int duration;
     private URL filePath;
     private String status;
-    private AudioClip audioclip;
+    private final AudioClip audioclip;
 
     // EFFECTS: creates a song with title, artist, file location, and status
     public Song(String title, String artist, String src, int duration) {

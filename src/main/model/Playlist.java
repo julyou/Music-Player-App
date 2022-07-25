@@ -6,7 +6,7 @@ import java.util.List;
 // represents a playlist with songs
 public class Playlist {
 
-    private List<Song> playlist;
+    private final List<Song> playlist;
     private String playlistName;
 
     public Playlist(String playlistName) {
