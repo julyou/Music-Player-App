@@ -3,7 +3,7 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 
-// represents a playlist with songs
+// represents a playlist containing songs
 public class Playlist {
 
     private final List<Song> playlist;

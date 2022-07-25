@@ -12,6 +12,7 @@ import java.util.Scanner;
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
 // https://github.students.cs.ubc.ca/CPSC210/LongFormProblemStarters.git
 
+// Music player application
 public class MusicApp {
     private static final String PLAY_COMMAND = "play";
     private static final String STOP_COMMAND = "stop";

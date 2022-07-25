@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+// represents a thread of songs that can be run to play, pause, and end
 public class SongThread extends Thread {
     private static String status;
     List<Song> songs;
