@@ -25,19 +25,19 @@ public class Song {
         audioclip = Applet.newAudioClip(this.filePath);
     }
 
-    // EFFECTS: plays given song
+    // EFFECTS: plays song
     public void playSong() {
         audioclip.play();
         status = "playing";
     }
 
-    // EFFECTS: pauses given song
+    // EFFECTS: pauses song
     public void stopSong() {
         audioclip.stop();
         status = "stopped";
     }
 
-    // EFFECTS: loops given song
+    // EFFECTS: loops song
     public void loopSong() {
         audioclip.loop();
         status = "looping";
