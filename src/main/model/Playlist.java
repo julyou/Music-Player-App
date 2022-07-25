@@ -21,21 +21,23 @@ public class Playlist {
         playlist.add(s);
     }
 
+    // REQUIRES: song exists in playlist
     // MODIFIES: this
-    // EFFECTS: removes song to the playlist if present and returns true, false otherwise
+    // EFFECTS: removes song from the playlist
     public void removeSong(Song s) {
         playlist.remove(s);
     }
 
-    // MODIFIES: this;
+    // MODIFIES: this
     // EFFECTS: renames playlist
     public String renamePlaylist(String s) {
         playlistName = s;
         return s;
     }
 
-    // MODIFIES: this;
-    // EFFECTS: clears songs in playlist
+    // REQUIRES: playlist is not empty
+    // MODIFIES: this
+    // EFFECTS: removes all songs in playlist
     public void clearPlaylist() {
         playlist.clear();
     }
