@@ -3,6 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -16,7 +17,7 @@ public class SongThreadTest {
     Song testSong1;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws MalformedURLException {
         testSongThread = new SongThread();
         songs = new LinkedList<>();
         testSong1 = new Song("test", "unknown", "data/test.wav", 3);
