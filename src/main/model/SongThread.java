@@ -23,7 +23,7 @@ public class SongThread extends Thread {
 //            try {
 //                TimeUnit.SECONDS.sleep(1);
 //            } catch (InterruptedException e) {
-//                status = "end1";
+//                status = "end";
 //                return;
 //            }
         }

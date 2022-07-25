@@ -3,8 +3,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -73,21 +71,4 @@ class SongTest {
         }
         assertEquals("file:song2.wav", filePath.toString());
     }
-
-//    @Test
-//    public void testExpectMalformedURL() {
-//        AudioClip audioclip;
-//        boolean i;
-//        URL filePath;
-//
-//        try {
-//            filePath = new URL("filePath");
-//            audioclip = Applet.newAudioClip(filePath);
-//            audioclip.play();
-//            i = false;
-//        } catch (MalformedURLException ex) {
-//            i = true;
-//        }
-//        assertTrue(i);
-//    }
 }
