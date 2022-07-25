@@ -1,6 +1,5 @@
 package model;
 
-import javax.swing.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -20,7 +19,7 @@ public class SongThread extends Thread {
             try {
                 TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
-     //           throw new RuntimeException(e);
+                return;
             }
         }
         this.songs = songs;
@@ -44,7 +43,6 @@ public class SongThread extends Thread {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
                     continue;
-                    //throw new RuntimeException(e);
                 }
                 i++;
             }
@@ -64,7 +62,6 @@ public class SongThread extends Thread {
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
-                    //             throw new RuntimeException(e);
                     status = "end";
                 }
             } else if (status.equals("playing")) {
