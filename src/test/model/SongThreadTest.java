@@ -3,13 +3,10 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static java.lang.Thread.currentThread;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -39,51 +36,47 @@ public class SongThreadTest {
         assertEquals("stopped", testSongThread.getStatus());
 
         testSongThread.startPlaying(songs);
+        TimeUnit.SECONDS.sleep(1);
         assertEquals("playing", testSongThread.getStatus());
 
         testSongThread.stopPlaying();
         assertEquals("stopped", testSongThread.getStatus());
 
         testSongThread.startPlaying(songs);
+        TimeUnit.SECONDS.sleep(1);
         assertEquals("playing", testSongThread.getStatus());
         TimeUnit.SECONDS.sleep(testSong1.getSongDuration() + 1);
         assertEquals("stopped", testSongThread.getStatus());
 
-        testSongThread.startPlaying(songs);
-        assertEquals("playing", testSongThread.getStatus());
-
         testSongThread.end();
         assertEquals("end", testSongThread.getStatus());
     }
 
     @Test
-    public void testStartPlaying() throws InterruptedException {
+    public void testStartPlaying() {
         testSongThread.startPlaying(songs);
         assertEquals("playing", testSongThread.getStatus());
-        Thread.sleep(1000);
-        assertEquals("playing", testSongThread.getStatus());
     }
+
 
     @Test
     public void testStartPlayingTwice() throws InterruptedException {
         testSongThread.start();
+
         testSongThread.startPlaying(songs);
+        TimeUnit.SECONDS.sleep(2);
         testSongThread.startPlaying(songs);
-        testSongThread.interrupt();
-        TimeUnit.SECONDS.sleep(1);
-        assertEquals("end", testSongThread.getStatus());
+        TimeUnit.SECONDS.sleep(2);
+
+        assertEquals("playing", testSongThread.getStatus());
+        testSongThread.end();
     }
+
 
     @Test
     public void testStopPlaying() {
-        testSongThread.start();
         testSongThread.stopPlaying();
         assertEquals("stopped", testSongThread.getStatus());
-
-        testSongThread.startPlaying(songs);
-        assertEquals("playing", testSongThread.getStatus());
-
-        testSongThread.end();
     }
 
     @Test
@@ -93,51 +86,42 @@ public class SongThreadTest {
     }
 
     @Test
-    public void testAll() {
-        testSongThread.end();
+    public void testExpectExceptionPlaying() throws InterruptedException {
+        testSongThread.start();
+        testSongThread.startPlaying(songs);
+
+            TimeUnit.SECONDS.sleep(1);
+
+        testSongThread.interrupt();
+        TimeUnit.SECONDS.sleep(1);
         assertEquals("end", testSongThread.getStatus());
     }
 
     @Test
-    public void testExpectNoException() {
-        boolean i;
-        try {
-            TimeUnit.SECONDS.sleep(1);
-            i = true;
-        } catch (InterruptedException e) {
-            fail("InterruptedException should not have been thrown");
-            i = false;
-        }
-        assertTrue(i);
+    public void testExpectExceptionRun() throws InterruptedException {
+        testSongThread.start();
+        TimeUnit.SECONDS.sleep(1);
+
+        testSongThread.interrupt();
+        TimeUnit.SECONDS.sleep(1);
+
+        assertEquals("end", testSongThread.getStatus());
     }
 
     @Test
     public void testExpectExceptionStartPlaying() throws InterruptedException {
-        testSongThread.startPlaying(songs);
-        testSongThread.startPlaying(songs);
+        testSongThread.start();
 
+        testSongThread.startPlaying(songs);
+        TimeUnit.SECONDS.sleep(2);
+
+        testSongThread.startPlaying(songs);
         testSongThread.interrupt();
         TimeUnit.SECONDS.sleep(1);
-        assertEquals("stopped", testSongThread.getStatus());
-    }
 
-    @Test
-    public void testExpectExceptionPlaying() throws InterruptedException {
-        testSongThread.start();
-        testSongThread.startPlaying(songs);
-        TimeUnit.SECONDS.sleep(1);
-        testSongThread.interrupt();
-        assertEquals("playing", testSongThread.getStatus());
+        assertEquals("end", testSongThread.getStatus());
+        testSongThread.end();
     }
-
-    @Test
-    public void testExpectExceptionRun() {
-        testSongThread.start();
-        testSongThread.stopPlaying();
-        testSongThread.interrupt();
-        assertEquals("stopped", testSongThread.getStatus());
-    }
-
 }
 
 

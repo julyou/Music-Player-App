@@ -73,16 +73,15 @@ class SongTest {
 
     @Test
     public void testExpectMalformedURL() {
-        int i = 0;
+        boolean i;
         URL filePath = null;
 
         try {
-            filePath = new URL("asd");
-            fail("MalformedURL was not thrown");
-        } catch (MalformedURLException ex) {
-            i = 1;
+            filePath = new URL("abc：song2.wav");
+            i = false;
+        } catch (Exception ex) {
+            i = true;
         }
-        assertNull(filePath);
-        assertEquals(1, i);
+        assertTrue(i);
     }
 }

@@ -7,7 +7,6 @@ import model.SongThread;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 // based on Teller app and FitLifeGymChain; links below
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
@@ -26,8 +25,6 @@ public class MusicApp {
     private static final String CREATE_PLAYLIST_COMMAND = "new";
     private static final String DELETE_PLAYLIST_COMMAND = "delp";
     private static final String QUIT_COMMAND = "quit";
-
-    private static final String status = "stopped";
 
     private Scanner input;
     private final SongThread songthread = new SongThread();
