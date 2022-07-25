@@ -31,6 +31,7 @@ public class SongThreadTest {
     public void testConstructor() {
         assertEquals("stopped", testSongThread.getStatus());
         assertEquals(1, songs.size());
+        assertEquals(3, testSong1.getSongDuration());
     }
 
     @Test
@@ -40,8 +41,9 @@ public class SongThreadTest {
 
         testSongThread.startPlaying(songs);
         assertEquals("playing", testSongThread.getStatus());
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(3);
         assertEquals("playing", testSongThread.getStatus());
+
         testSongThread.stopPlaying();
         assertEquals("stopped", testSongThread.getStatus());
 
@@ -92,26 +94,30 @@ public class SongThreadTest {
     }
 
     @Test
-    public void testExpectException() {
-        boolean i;
-
-        try {
-//            testSongThread.start();
-//            testSongThread.stopPlaying();
-//            testSongThread.interrupt();
-            Thread.currentThread().interrupt();
-            TimeUnit.SECONDS.sleep(1);
-            assertTrue(Thread.currentThread().isInterrupted());
-            fail("InterruptedException should have been thrown");
-            i = false;
-        } catch (InterruptedException e) {
-            i = true;
-        }
-        assertTrue(i);
-
-//        testSongThread.end();
+    public void testExpectExceptionStartPlaying() {
+        testSongThread.start();
+        testSongThread.startPlaying(songs);
+        testSongThread.startPlaying(songs);
+        testSongThread.interrupt();
+        assertEquals("stopped", testSongThread.getStatus());
     }
 
+    @Test
+    public void testExpectExceptionPlaying() throws InterruptedException {
+        testSongThread.start();
+        testSongThread.startPlaying(songs);
+        TimeUnit.SECONDS.sleep(3);
+        testSongThread.interrupt();
+        assertEquals("playing", testSongThread.getStatus());
+    }
+
+    @Test
+    public void testExpectExceptionRun() {
+        testSongThread.start();
+        testSongThread.stopPlaying();
+        testSongThread.interrupt();
+        assertEquals("stopped", testSongThread.getStatus());
+    }
 
 }
 

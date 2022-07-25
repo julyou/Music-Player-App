@@ -18,9 +18,9 @@ public class SongThread extends Thread {
         if (status.equals("playing")) {
             stopPlaying();
             try {
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+     //           throw new RuntimeException(e);
             }
         }
         this.songs = songs;
@@ -43,7 +43,8 @@ public class SongThread extends Thread {
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    continue;
+                    //throw new RuntimeException(e);
                 }
                 i++;
             }
@@ -63,7 +64,8 @@ public class SongThread extends Thread {
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    //             throw new RuntimeException(e);
+                    status = "end";
                 }
             } else if (status.equals("playing")) {
                 playing();
