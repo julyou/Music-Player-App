@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.net.MalformedURLException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlaylistTest {
@@ -14,7 +16,7 @@ public class PlaylistTest {
 
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws MalformedURLException {
         testPlaylist1 = new Playlist("playlist1");
         testPlaylist2 = new Playlist("playlist2");
         testSong1 = new Song("song1", "unknown", "song1.wav", 34);

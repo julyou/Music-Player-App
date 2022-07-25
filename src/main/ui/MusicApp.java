@@ -4,6 +4,7 @@ import model.Playlist;
 import model.Song;
 import model.SongThread;
 
+import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -47,7 +48,7 @@ public class MusicApp {
     private boolean keepGoing;
 
     // EFFECTS: runs the music player application
-    public MusicApp() {
+    public MusicApp() throws MalformedURLException {
         songthread.start();
         runMusicApp();
         songthread.end();

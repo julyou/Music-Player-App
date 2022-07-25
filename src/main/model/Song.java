@@ -15,17 +15,13 @@ public class Song {
     private final AudioClip audioclip;
 
     // EFFECTS: creates a song with title, artist, file location, and status
-    public Song(String title, String artist, String src, int duration) {
+    public Song(String title, String artist, String src, int duration) throws MalformedURLException {
         this.songTitle = title;
         this.artist = artist;
         this.status = "";
         this.duration = duration;
 
-        try {
-            this.filePath = new URL("file:" + src);
-        } catch (MalformedURLException ex) {
-            System.err.println(ex);
-        }
+        this.filePath = new URL("file:" + src);
         audioclip = Applet.newAudioClip(this.filePath);
     }
 
