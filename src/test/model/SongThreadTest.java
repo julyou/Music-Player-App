@@ -103,8 +103,6 @@ public class SongThreadTest {
     @Test
     public void testExpectExceptionRun() throws InterruptedException {
         testSongThread.start();
-        testSongThread.startPlaying(songs);
-        assertEquals("playing", testSongThread.getStatus());
         TimeUnit.SECONDS.sleep(1);
 
         testSongThread.interrupt();

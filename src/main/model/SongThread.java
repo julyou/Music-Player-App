@@ -79,7 +79,7 @@ public class SongThread extends Thread {
                 } catch (InterruptedException e) {
                     status = "end";
                 }
-            } else if (status.equals("playing")) {
+            } else {
                 playing();
             }
         }
