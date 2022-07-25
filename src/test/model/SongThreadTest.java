@@ -41,7 +41,7 @@ public class SongThreadTest {
 
         testSongThread.startPlaying(songs);
         assertEquals("playing", testSongThread.getStatus());
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(3);
         assertEquals("playing", testSongThread.getStatus());
 
         testSongThread.stopPlaying();
@@ -94,9 +94,19 @@ public class SongThreadTest {
     }
 
     @Test
-    public void testExpectExceptionPlaying() {
+    public void testExpectExceptionStartPlaying() {
         testSongThread.start();
         testSongThread.startPlaying(songs);
+        testSongThread.startPlaying(songs);
+        testSongThread.interrupt();
+        assertEquals("stopped", testSongThread.getStatus());
+    }
+
+    @Test
+    public void testExpectExceptionPlaying() throws InterruptedException {
+        testSongThread.start();
+        testSongThread.startPlaying(songs);
+        TimeUnit.SECONDS.sleep(3);
         testSongThread.interrupt();
         assertEquals("playing", testSongThread.getStatus());
     }
