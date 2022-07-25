@@ -5,7 +5,7 @@ import java.applet.AudioClip;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-// Represents a song that has a song title, artist, and file location
+// Represents a song that has a song title, artist, file location, and duration
 public class Song {
     private final String songTitle;
     private final String artist;
