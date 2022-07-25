@@ -17,8 +17,9 @@ public class SongThread extends Thread {
         if (status.equals("playing")) {
             stopPlaying();
             try {
-                TimeUnit.SECONDS.sleep(2);
+                TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
+                status = "end";
                 return;
             }
         }
@@ -42,7 +43,8 @@ public class SongThread extends Thread {
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
-                    continue;
+                    status = "end";
+                    return;
                 }
                 i++;
             }

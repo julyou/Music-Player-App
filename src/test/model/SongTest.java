@@ -77,13 +77,11 @@ class SongTest {
         URL filePath = null;
 
         try {
-            filePath = new URL("asdf：song2.wav");
-            fail("MalformedURL was not thrown");
+            filePath = new URL("abc：song2.wav");
             i = false;
-        } catch (MalformedURLException ex) {
+        } catch (Exception ex) {
             i = true;
         }
         assertTrue(i);
-        assertNull(filePath);
     }
 }
