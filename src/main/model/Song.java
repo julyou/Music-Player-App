@@ -1,12 +1,15 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 // Represents a song that has a song title, artist, file location, and duration
-public class Song {
+public class Song implements Writable {
     private final String songTitle;
     private final String artist;
     private final int duration;
@@ -79,5 +82,16 @@ public class Song {
         return String.valueOf(filePath);
     }
 
-
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("song name", songTitle);
+        json.put("artist", artist);
+        json.put("artist", artist);
+        json.put("duration", duration);
+        json.put("url", filePath);
+        json.put("status", status);
+        json.put("audioclip", audioclip);
+        return json;
+    }
 }

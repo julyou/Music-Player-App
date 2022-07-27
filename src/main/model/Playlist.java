@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.LinkedList;
 import java.util.List;
 
-// represents a playlist containing songs
-public class Playlist {
+// represents a playlist with songs
+public class Playlist implements Writable {
 
     private final List<Song> playlist;
     private String playlistName;
@@ -63,4 +67,21 @@ public class Playlist {
         return playlistName;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("songs", songsToJson());
+        json.put("playlist name", playlistName);
+        return json;
+    }
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray songsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Song s : playlist) {
+            jsonArray.put(s.toJson());
+        }
+        return jsonArray;
+    }
 }

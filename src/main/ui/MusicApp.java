@@ -1,9 +1,14 @@
 package ui;
 
 import model.Playlist;
+import model.Playlists;
 import model.Song;
 import model.SongThread;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,30 +30,39 @@ public class MusicApp {
     private static final String DELETE_SONG_COMMAND = "dels";
     private static final String CREATE_PLAYLIST_COMMAND = "new";
     private static final String DELETE_PLAYLIST_COMMAND = "delp";
+    private static final String SAVE_PLAYLIST_COMMAND = "save";
+    private static final String LOAD_PLAYLIST_COMMAND = "load";
     private static final String QUIT_COMMAND = "quit";
 
     private Scanner input;
     private final SongThread songthread = new SongThread();
-
-    List<Song> songs = new LinkedList<>();
-    List<Playlist> playlists = new LinkedList<>();
-
-    Playlist playlist1 = new Playlist("Star Wars Soundtrack");
-    Playlist playlist2 = new Playlist("Instrumental");
-    Playlist playlist3 = new Playlist("Film scores");
-
-    Song song1 = new Song("song1", "unknown", "data/song1.wav", 34);
-    Song song2 = new Song("song2", "unknown", "data/song2.wav", 44);
-    Song song3 = new Song("Pink Panther", "Henry Mancini", "data/song3.wav", 30);
-    Song song4 = new Song("Imperial March", "John Williams", "data/song4.wav", 60);
-    Song song5 = new Song("Cantina Band", "John Williams", "data/song5.wav", 60);
-    Song song6 = new Song("Dhol Drums", "unknown", "data/song6.wav", 18);
-    Song song7 = new Song("Main Title", "John Williams", "data/song7.wav", 60);
-
     private boolean keepGoing;
+
+    private List<Song> songs = new LinkedList<>();
+    private Playlists playlists;
+    private static final String JSON_STORE = "./data/playlists.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
+    private Playlist playlist1 = new Playlist("Star Wars Soundtrack");
+    private Playlist playlist2 = new Playlist("Instrumental");
+    private Playlist playlist3 = new Playlist("Film scores");
+
+    private Song song1 = new Song("song1", "unknown", "data/song1.wav", 34);
+    private Song song2 = new Song("song2", "unknown", "data/song2.wav", 44);
+    private Song song3 = new Song("Pink Panther", "Henry Mancini", "data/song3.wav", 30);
+    private Song song4 = new Song("Imperial March", "John Williams", "data/song4.wav", 60);
+    private Song song5 = new Song("Cantina Band", "John Williams", "data/song5.wav", 60);
+    private Song song6 = new Song("Dhol Drums", "unknown", "data/song6.wav", 18);
+    private Song song7 = new Song("Main Title", "John Williams", "data/song7.wav", 60);
+
 
     // EFFECTS: runs the music player application
     public MusicApp() throws MalformedURLException {
+        playlists = new Playlists("Main");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+
         songthread.start();
         runMusicApp();
         songthread.end();
@@ -114,15 +128,17 @@ public class MusicApp {
     }
 
     // EFFECTS: displays playlist menu options to user
-    private void displayPlaylistMenu(List<Playlist> playlists) {
+    private void displayPlaylistMenu(Playlists playlists) {
         System.out.println("\nSelect from:");
         int index = 1;
-        for (Playlist p : playlists) {
+        for (Playlist p : playlists.getPlaylists()) {
             System.out.println("\t" + index + " -> " + p.getPlaylistName() + " playlist");
             index++;
         }
         System.out.println("\tnew -> create new playlist");
         System.out.println("\tdelp -> delete playlist");
+        System.out.println("\tsave -> save playlists");
+        System.out.println("\tload -> load playlist");
         System.out.println("\tmain -> main menu");
         System.out.println("\tquit -> quit");
 
@@ -130,8 +146,10 @@ public class MusicApp {
     }
 
     // EFFECTS: processes playlist menu commands
-    private void processPlaylistMenuCMD(List<Playlist> playlists) {
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    private void processPlaylistMenuCMD(Playlists playlists) {
         String command = getUserInputString();
+        int size = playlists.getPlaylists().size();
         if (command.length() > 0) {
             try {
                 if (command.equals(MAIN_MENU_COMMAND)) {
@@ -140,9 +158,13 @@ public class MusicApp {
                     displayNewPlaylistMenu(playlists);
                 } else if (command.equals(DELETE_PLAYLIST_COMMAND)) {
                     displayDeletePlaylistMenu(playlists);
+                } else if (command.equals(SAVE_PLAYLIST_COMMAND)) {
+                    savePlaylists();
+                } else if (command.equals(LOAD_PLAYLIST_COMMAND)) {
+                    loadPlaylists();
                 } else if (command.equals(QUIT_COMMAND)) {
                     keepGoing = false;
-                } else if ((Integer.parseInt(command) <= playlists.size()) && (Integer.parseInt(command) > 0)) {
+                } else if (Integer.parseInt(command) <= size && (Integer.parseInt(command) > 0)) {
                     printSongsInPlaylist(command);
                 } else {
                     System.out.println("That is an invalid command. Please try again.");
@@ -155,18 +177,19 @@ public class MusicApp {
         }
     }
 
+
     // EFFECTS: Prompts user to select which playlist to delete and returns playlists in library
-    private void displayDeletePlaylistMenu(List<Playlist> playlists) throws InterruptedException {
+    private void displayDeletePlaylistMenu(Playlists playlists) throws InterruptedException {
         System.out.println("\nWhich playlist would you like to delete? (type the number)");
         printAllPlaylists(playlists);
         processDeletePlaylistMenuCMD(playlists);
     }
 
     // EFFECTS: processes delete playlist menu commands
-    private void processDeletePlaylistMenuCMD(List<Playlist> pl) throws InterruptedException {
+    private void processDeletePlaylistMenuCMD(Playlists pl) throws InterruptedException {
         String command = getUserInputString();
         int commandInt = Integer.parseInt(command);
-        if (command.length() > 0 && commandInt <= pl.size() && 4 <= commandInt) {
+        if (command.length() > 0 && commandInt <= pl.getPlaylistSize() && 4 <= commandInt) {
             deletePlaylist(command, pl);
         }
 
@@ -185,10 +208,10 @@ public class MusicApp {
 
     // MODIFIES: this
     // EFFECTS: deletes playlist from playlist if it exists and prints success message, otherwise prints error message
-    public void deletePlaylist(String s, List<Playlist> pl) {
-        Playlist playlist = playlists.get(Integer.parseInt(s) - 1);
-        if (pl.contains(playlist)) {
-            pl.remove(playlist);
+    public void deletePlaylist(String s, Playlists pl) {
+        Playlist playlist = playlists.getPlaylist(Integer.parseInt(s) - 1);
+        if (pl.getPlaylists().contains(playlist)) {
+            pl.getPlaylists().remove(playlist);
             System.out.println(playlist.getPlaylistName() + " successfully deleted from library");
             printAllPlaylists(pl);
             displayPlaylistMenu(playlists);
@@ -198,19 +221,19 @@ public class MusicApp {
     }
 
     // EFFECTS: prompts user to name their new playlist
-    private void displayNewPlaylistMenu(List<Playlist> playlists) {
+    private void displayNewPlaylistMenu(Playlists playlists) {
         System.out.println("\nWhat would you like to name your new playlist?");
         processNewPlaylistMenuCMD(playlists);
     }
 
     // MODIFIES: this
     // EFFECTS: creates new playlist with given name and returns all playlists in library
-    private void processNewPlaylistMenuCMD(List<Playlist> playlists) {
+    private void processNewPlaylistMenuCMD(Playlists playlists) {
         String command = getUserInputString();
 
         Playlist playlist = new Playlist(command);
         if (command.length() > 0) {
-            playlists.add(playlist);
+            this.playlists.addPlaylist(playlist);
         }
         printAllPlaylists(playlists);
         displayPlaylistMenu(playlists);
@@ -270,7 +293,7 @@ public class MusicApp {
     // EFFECTS: prints songs in given playlist
     public void printSongsInPlaylist(String s) throws InterruptedException {
         int i = Integer.parseInt(s);
-        Playlist p = playlists.get(i - 1);
+        Playlist p = playlists.getPlaylist(i - 1);
         System.out.println(p.getPlaylistName() + " contains: ");
         System.out.println(p.getSongsTitlesInPlaylist());
         displayPlaylistSongsMenu(p);
@@ -369,15 +392,15 @@ public class MusicApp {
     // MODIFIES: this
     // EFFECTS: initializes accounts
     private void init() {
-        loadSongs();
-        loadPlaylists();
+        loadAllSongs();
+        loadAllPlaylists();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
 
     // MODIFIES: this
     // EFFECTS: creates list of all songs
-    private void loadSongs() {
+    private void loadAllSongs() {
         songs.add(song1);
         songs.add(song2);
         songs.add(song3);
@@ -389,10 +412,10 @@ public class MusicApp {
 
     // MODIFIES: this
     // EFFECTS: creates list of playlists
-    private void loadPlaylists() {
-        playlists.add(playlist1);
-        playlists.add(playlist2);
-        playlists.add(playlist3);
+    private void loadAllPlaylists() {
+        playlists.addPlaylist(playlist1);
+        playlists.addPlaylist(playlist2);
+        playlists.addPlaylist(playlist3);
 
         playlist1.addSong(song4);
         playlist1.addSong(song5);
@@ -436,9 +459,9 @@ public class MusicApp {
     }
 
     // EFFECTS: prints all playlists in library
-    public void printAllPlaylists(List<Playlist> playlists) {
+    public void printAllPlaylists(Playlists playlists) {
         List<String> playlistNames = new LinkedList<>();
-        for (Playlist p : playlists) {
+        for (Playlist p : playlists.getPlaylists()) {
             playlistNames.add(p.getPlaylistName());
         }
         System.out.println("Here are all the playlists in your library: ");
@@ -453,5 +476,28 @@ public class MusicApp {
     public void endProgram() {
         System.out.println("Thanks for listening. Goodbye!");
         input.close();
+    }
+
+    // EFFECTS: saves playlists to file
+    private void savePlaylists() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(playlists);
+            jsonWriter.close();
+            System.out.println("Saved " + playlists.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads playlists from file
+    private void loadPlaylists() {
+        try {
+            playlists = jsonReader.read();
+            System.out.println("Loaded" + playlists.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 }
