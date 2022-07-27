@@ -1,10 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.LinkedList;
 import java.util.List;
 
 // represents a playlist with songs
-public class Playlist {
+public class Playlist implements Writable {
 
     private final List<Song> playlist;
     private String playlistName;
@@ -63,4 +66,8 @@ public class Playlist {
         return playlistName;
     }
 
+    @Override
+    public JSONObject toJson() {
+        return null;
+    }
 }
