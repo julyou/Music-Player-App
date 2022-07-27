@@ -70,8 +70,8 @@ public class Playlist implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("playlist name", playlistName);
         json.put("songs", songsToJson());
+        json.put("playlist name", playlistName);
         return json;
     }
 

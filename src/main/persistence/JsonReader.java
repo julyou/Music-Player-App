@@ -8,11 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.stream.Stream;
 
 // Represents a reader that reads playlists from JSON data stored in file
@@ -68,4 +67,31 @@ public class JsonReader {
         Playlist p = new Playlist(name);
         pl.addPlaylist(p);
     }
+
+
+//    // EFFECTS: parses songs from JSON object and returns it
+//    private Playlist parseSongs(JSONObject jsonObject) throws MalformedURLException {
+//        String name = jsonObject.getString("name");
+//        Playlist p = new Playlist(name);
+//        addSongs(p, jsonObject);
+//        return p;
+//    }
+
+//    // MODIFIES: p
+//    // EFFECTS: parses the songs from JSON object and adds them to playlist
+//    private void addSongs(Playlist p, JSONObject jsonObject) throws MalformedURLException {
+//        JSONArray jsonArray = jsonObject.getJSONArray("playlist");
+//        for (Object json : jsonArray) {
+//            JSONObject nextSongs = (JSONObject) json;
+//            addSong(p, nextSongs);
+//        }
+//    }
+//
+//    // MODIFIES: p
+//    // EFFECTS: parses the songs from JSON object and adds them to playlist
+//    private void addSong(Playlist p, JSONObject jsonObject) throws MalformedURLException {
+//        String name = jsonObject.getString("name");
+//        Song s = new Song(name, "artist", "", 0);
+//        p.addSong(s);
+//    }
 }

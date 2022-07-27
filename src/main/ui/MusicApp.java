@@ -484,7 +484,7 @@ public class MusicApp {
             jsonWriter.open();
             jsonWriter.write(playlists);
             jsonWriter.close();
-            System.out.println("Saved playlists to " + JSON_STORE);
+            System.out.println("Saved " + playlists.getName() + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
