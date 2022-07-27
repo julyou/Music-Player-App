@@ -12,10 +12,12 @@ import java.util.List;
 // Represents a main playlist having a collection of playlists
 public class Playlists implements Writable {
     private List<Playlist> playlists;
+    private String name;
 
     // EFFECTS: constructs workroom with a name and empty list of thingies
-    public Playlists() {
-        playlists = new LinkedList<>();
+    public Playlists(String name) {
+        this.name = name;
+        playlists = new ArrayList<>();
     }
 
     // MODIFIES: this
@@ -27,7 +29,8 @@ public class Playlists implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("", playlistsToJson());
+        json.put("name", name);
+        json.put("playlists", playlistsToJson());
         return json;
     }
 
@@ -52,6 +55,10 @@ public class Playlists implements Writable {
     // EFFECTS: returns an unmodifiable list of thingies in this workroom
     public List<Playlist> getPlaylists() {
         return playlists;
+    }
+
+    public String getName() {
+        return name;
     }
 }
 

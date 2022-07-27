@@ -3,6 +3,7 @@ package persistence;
 import model.Playlist;
 
 import model.Playlists;
+import model.Song;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
-// TODO: Represents a reader that reads playlists from JSON data stored in file
+// Represents a reader that reads playlists from JSON data stored in file
 public class JsonReader {
     private String source;
 
@@ -23,7 +24,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads ??? from file and returns it;
+    // EFFECTS: read playlists from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Playlists read() throws IOException {
         String jsonData = readFile(source);
@@ -42,26 +43,26 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses playlists from JSON object and returns it
     private Playlists parsePlaylists(JSONObject jsonObject) {
-//        String name = jsonObject.getString("name");
-        Playlists pl = new Playlists();
-        addPlaylist(pl, jsonObject);
+        String name = jsonObject.getString("name");
+        Playlists pl = new Playlists(name);
+        addPlaylists(pl, jsonObject);
         return pl;
     }
 
-//    // MODIFIES: wr
-//    // EFFECTS: parses thingies from JSON object and adds them to workroom
-//    private void addThingies(Playlists pl, JSONObject jsonObject) {
-//        JSONArray jsonArray = jsonObject.getJSONArray("thingies");
-//        for (Object json : jsonArray) {
-//            JSONObject nextThingy = (JSONObject) json;
-//            addPlaylist(pl, nextThingy);
-//        }
-//    }
+    // MODIFIES: pl
+    // EFFECTS: parses the playlists from JSON object and adds them to playlists
+    private void addPlaylists(Playlists pl, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("playlists");
+        for (Object json : jsonArray) {
+            JSONObject nextPlaylist = (JSONObject) json;
+            addPlaylist(pl, nextPlaylist);
+        }
+    }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // MODIFIES: pl
+    // EFFECTS: parses playlist from JSON object and adds it to workroom
     private void addPlaylist(Playlists pl, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         Playlist p = new Playlist(name);

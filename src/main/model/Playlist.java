@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -68,6 +69,19 @@ public class Playlist implements Writable {
 
     @Override
     public JSONObject toJson() {
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("playlist name", playlistName);
+        json.put("songs", songsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray songsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Song s : playlist) {
+            jsonArray.put(s.toJson());
+        }
+        return jsonArray;
     }
 }

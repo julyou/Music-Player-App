@@ -82,9 +82,16 @@ public class Song implements Writable {
         return String.valueOf(filePath);
     }
 
-
     @Override
     public JSONObject toJson() {
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("song name", songTitle);
+        json.put("artist", artist);
+        json.put("artist", artist);
+        json.put("duration", duration);
+        json.put("url", filePath);
+        json.put("status", status);
+        json.put("audioclip", audioclip);
+        return json;
     }
 }

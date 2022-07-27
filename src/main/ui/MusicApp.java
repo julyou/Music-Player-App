@@ -36,34 +36,33 @@ public class MusicApp {
 
     private Scanner input;
     private final SongThread songthread = new SongThread();
-
-    List<Song> songs = new LinkedList<>();
-    Playlists playlists = new Playlists();
-//    List<Playlist> playlists = new LinkedList<>();
-//    Playlists masterPlaylists = new Playlists("main");
-
-    Playlist playlist1 = new Playlist("Star Wars Soundtrack");
-    Playlist playlist2 = new Playlist("Instrumental");
-    Playlist playlist3 = new Playlist("Film scores");
-
-    Song song1 = new Song("song1", "unknown", "data/song1.wav", 34);
-    Song song2 = new Song("song2", "unknown", "data/song2.wav", 44);
-    Song song3 = new Song("Pink Panther", "Henry Mancini", "data/song3.wav", 30);
-    Song song4 = new Song("Imperial March", "John Williams", "data/song4.wav", 60);
-    Song song5 = new Song("Cantina Band", "John Williams", "data/song5.wav", 60);
-    Song song6 = new Song("Dhol Drums", "unknown", "data/song6.wav", 18);
-    Song song7 = new Song("Main Title", "John Williams", "data/song7.wav", 60);
-
     private boolean keepGoing;
 
+    private List<Song> songs = new LinkedList<>();
+    private Playlists playlists;
     private static final String JSON_STORE = "./data/playlists.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
+    private Playlist playlist1 = new Playlist("Star Wars Soundtrack");
+    private Playlist playlist2 = new Playlist("Instrumental");
+    private Playlist playlist3 = new Playlist("Film scores");
+
+    private Song song1 = new Song("song1", "unknown", "data/song1.wav", 34);
+    private Song song2 = new Song("song2", "unknown", "data/song2.wav", 44);
+    private Song song3 = new Song("Pink Panther", "Henry Mancini", "data/song3.wav", 30);
+    private Song song4 = new Song("Imperial March", "John Williams", "data/song4.wav", 60);
+    private Song song5 = new Song("Cantina Band", "John Williams", "data/song5.wav", 60);
+    private Song song6 = new Song("Dhol Drums", "unknown", "data/song6.wav", 18);
+    private Song song7 = new Song("Main Title", "John Williams", "data/song7.wav", 60);
+
+
     // EFFECTS: runs the music player application
     public MusicApp() throws MalformedURLException {
+        playlists = new Playlists("Main");
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+
         songthread.start();
         runMusicApp();
         songthread.end();
@@ -93,8 +92,6 @@ public class MusicApp {
         System.out.println("\nSelect from:");
         System.out.println("\tsongs -> browse songs");
         System.out.println("\tplaylists -> browse playlists");
-        System.out.println("\tsave -> save playlists");
-        System.out.println("\tload -> load playlist");
         System.out.println("\tplay -> start playing");
         System.out.println("\tstop -> stop song");
         System.out.println("\tquit -> quit");
@@ -122,10 +119,6 @@ public class MusicApp {
                 case QUIT_COMMAND:
                     keepGoing = false;
                     break;
-                case SAVE_PLAYLIST_COMMAND:
-                    savePlaylists();
-                case LOAD_PLAYLIST_COMMAND:
-                    loadPlaylists();
                 default:
                     System.out.println("That is an invalid command. Please try again.");
                     displayMainMenu();
@@ -144,6 +137,8 @@ public class MusicApp {
         }
         System.out.println("\tnew -> create new playlist");
         System.out.println("\tdelp -> delete playlist");
+        System.out.println("\tsave -> save playlists");
+        System.out.println("\tload -> load playlist");
         System.out.println("\tmain -> main menu");
         System.out.println("\tquit -> quit");
 
@@ -163,6 +158,10 @@ public class MusicApp {
                     displayNewPlaylistMenu(playlists);
                 } else if (command.equals(DELETE_PLAYLIST_COMMAND)) {
                     displayDeletePlaylistMenu(playlists);
+                } else if (command.equals(SAVE_PLAYLIST_COMMAND)) {
+                    savePlaylists();
+                } else if (command.equals(LOAD_PLAYLIST_COMMAND)) {
+                    loadPlaylists();
                 } else if (command.equals(QUIT_COMMAND)) {
                     keepGoing = false;
                 } else if (Integer.parseInt(command) <= size && (Integer.parseInt(command) > 0)) {
@@ -234,7 +233,7 @@ public class MusicApp {
 
         Playlist playlist = new Playlist(command);
         if (command.length() > 0) {
-            playlists.addPlaylist(playlist);
+            this.playlists.addPlaylist(playlist);
         }
         printAllPlaylists(playlists);
         displayPlaylistMenu(playlists);
@@ -492,11 +491,11 @@ public class MusicApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
+    // EFFECTS: loads playlists from file
     private void loadPlaylists() {
         try {
             playlists = jsonReader.read();
-            System.out.println("Loaded playlists from " + JSON_STORE);
+            System.out.println("Loaded" + playlists.getName() + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
