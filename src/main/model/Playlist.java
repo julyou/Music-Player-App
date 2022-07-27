@@ -72,13 +72,13 @@ public class Playlist implements Writable {
         JSONObject json = new JSONObject();
         json.put("songs", songsToJson());
         json.put("playlist name", playlistName);
+//        json.put("playlist", playlist);
         return json;
     }
 
     // EFFECTS: returns things in this workroom as a JSON array
     private JSONArray songsToJson() {
         JSONArray jsonArray = new JSONArray();
-
         for (Song s : playlist) {
             jsonArray.put(s.toJson());
         }

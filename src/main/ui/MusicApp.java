@@ -59,7 +59,8 @@ public class MusicApp {
 
     // EFFECTS: runs the music player application
     public MusicApp() throws MalformedURLException {
-        playlists = new Playlists("Main");
+        playlists = new Playlists("Main playlist");
+//        playlists = new Playlists();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
@@ -170,9 +171,11 @@ public class MusicApp {
                     System.out.println("That is an invalid command. Please try again.");
                     processPlaylistMenuCMD(playlists);
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 System.out.println("That is an invalid command. Please try again.");
                 processPlaylistMenuCMD(playlists);
+            } catch (InterruptedException e) {
+                System.out.println("interrupted");
             }
         }
     }
@@ -480,24 +483,31 @@ public class MusicApp {
 
     // EFFECTS: saves playlists to file
     private void savePlaylists() {
+        jsonWriter = new JsonWriter(JSON_STORE);
         try {
             jsonWriter.open();
             jsonWriter.write(playlists);
             jsonWriter.close();
             System.out.println("Saved " + playlists.getName() + " to " + JSON_STORE);
+//            System.out.println("Saved playlists to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
+
+        displayPlaylistMenu(playlists);
     }
 
     // MODIFIES: this
     // EFFECTS: loads playlists from file
     private void loadPlaylists() {
+        jsonReader = new JsonReader(JSON_STORE);
         try {
-            playlists = jsonReader.read();
+            playlists = jsonReader.readPlaylists();
             System.out.println("Loaded" + playlists.getName() + " from " + JSON_STORE);
+//            System.out.println("Loaded playlists from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
+        displayPlaylistMenu(playlists);
     }
 }
