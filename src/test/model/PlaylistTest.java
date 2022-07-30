@@ -92,4 +92,23 @@ public class PlaylistTest {
         testPlaylist1.clearPlaylist();
         assertEquals(0, testPlaylist1.getSongsTitlesInPlaylist().size());
     }
+
+    @Test
+    public void testSongsToJson() {
+        testPlaylist1.addSong(testSong1);
+        testPlaylist1.addSong(testSong2);
+        testPlaylist1.toJson();
+
+        assertEquals("song1", testSong1.toJson().getString("song name"));
+        assertEquals("unknown", testSong1.toJson().getString("artist"));
+        assertEquals(34, testSong1.toJson().getInt("duration"));
+        assertEquals("file:song1.wav", String.valueOf(testSong1.toJson().get("url")));
+        assertEquals("", testSong1.toJson().getString("status"));
+
+        assertEquals("song2", testSong2.toJson().getString("song name"));
+        assertEquals("unknown", testSong2.toJson().getString("artist"));
+        assertEquals(44, testSong2.toJson().getInt("duration"));
+        assertEquals("file:song2.wav", String.valueOf(testSong2.toJson().get("url")));
+        assertEquals("", testSong2.toJson().getString("status"));
+    }
 }
