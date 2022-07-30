@@ -9,13 +9,10 @@ import java.util.List;
 
 // Represents a main playlist having a collection of playlists
 public class Playlists implements Writable {
-    private List<Playlist> playlists;
-//    private String name;
+    private final List<Playlist> playlists;
 
-    // EFFECTS: constructs workroom with a name and empty list of thingies
-//    public Playlists(String name)
+    // EFFECTS: constructs playlists with an empty list of playlist
     public Playlists() {
-//        this.name = name;
         playlists = new ArrayList<>();
     }
 

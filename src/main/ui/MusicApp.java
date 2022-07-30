@@ -39,24 +39,23 @@ public class MusicApp {
     private final SongThread songthread = new SongThread();
     private boolean keepGoing;
 
-    private List<Song> songs = new LinkedList<>();
+    private final List<Song> songs = new LinkedList<>();
     private Playlists playlists;
     private static final String JSON_STORE_PLAYLISTS = "./data/playlists.json";
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private final JsonWriter jsonWriter;
+    private final JsonReader jsonReader;
 
+    private final Playlist playlist1 = new Playlist("Star Wars Soundtrack");
+    private final Playlist playlist2 = new Playlist("Instrumental");
+    private final Playlist playlist3 = new Playlist("Film scores");
 
-    private Playlist playlist1 = new Playlist("Star Wars Soundtrack");
-    private Playlist playlist2 = new Playlist("Instrumental");
-    private Playlist playlist3 = new Playlist("Film scores");
-
-    private Song song1 = new Song("song1", "unknown", "data/song1.wav", 34);
-    private Song song2 = new Song("song2", "unknown", "data/song2.wav", 44);
-    private Song song3 = new Song("Pink Panther", "Henry Mancini", "data/song3.wav", 30);
-    private Song song4 = new Song("Imperial March", "John Williams", "data/song4.wav", 60);
-    private Song song5 = new Song("Cantina Band", "John Williams", "data/song5.wav", 60);
-    private Song song6 = new Song("Dhol Drums", "unknown", "data/song6.wav", 18);
-    private Song song7 = new Song("Main Title", "John Williams", "data/song7.wav", 60);
+    private final Song song1 = new Song("song1", "unknown", "data/song1.wav", 34);
+    private final Song song2 = new Song("song2", "unknown", "data/song2.wav", 44);
+    private final Song song3 = new Song("Pink Panther", "Henry Mancini", "data/song3.wav", 30);
+    private final Song song4 = new Song("Imperial March", "John Williams", "data/song4.wav", 60);
+    private final Song song5 = new Song("Cantina Band", "John Williams", "data/song5.wav", 60);
+    private final Song song6 = new Song("Dhol Drums", "unknown", "data/song6.wav", 18);
+    private final Song song7 = new Song("Main Title", "John Williams", "data/song7.wav", 60);
 
 
     // EFFECTS: runs the music player application
@@ -256,6 +255,7 @@ public class MusicApp {
     }
 
     // EFFECTS: process playlist songs menu commands
+    //          throws InterruptedException if thread is interrupted
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void processPlaylistSongsMenuCMD(Playlist playlist) throws InterruptedException {
         String command = getUserInputString();
@@ -486,7 +486,7 @@ public class MusicApp {
             jsonWriter.open();
             jsonWriter.writePlaylists(playlists);
             jsonWriter.close();
-            System.out.println("Saved playlists to " + JSON_STORE_PLAYLISTS);
+            System.out.println("Your playlists have been saved to " + JSON_STORE_PLAYLISTS);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE_PLAYLISTS);
         }

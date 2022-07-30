@@ -14,20 +14,21 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+// based on JsonSerializationDemo: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 // Represents a reader that reads playlists from JSON data stored in file
 public class JsonReader {
-    private String source;
+    private final String src;
 
     // EFFECTS: constructs reader to read from source file
-    public JsonReader(String source) {
-        this.source = source;
+    public JsonReader(String src) {
+        this.src = src;
     }
 
     // EFFECTS: reads source file as string and returns it
-    private String readFile(String source) throws IOException {
+    private String readFile(String src) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
-        try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
+        try (Stream<String> stream = Files.lines(Paths.get(src), StandardCharsets.UTF_8)) {
             stream.forEach(s -> contentBuilder.append(s));
         }
 
@@ -37,7 +38,7 @@ public class JsonReader {
     // EFFECTS: read playlists from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Playlists readPlaylists() throws IOException {
-        String jsonData = readFile(source);
+        String jsonData = readFile(src);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parsePlaylists(jsonObject);
 
@@ -75,12 +76,11 @@ public class JsonReader {
 
     // MODIFIES: p
     // EFFECTS: parses song from JSON object and adds it to playlist
+    //          throws MalformedURLException if URL cannot be parsed
     private void addSong(Playlist p, JSONObject jsonObject) throws MalformedURLException {
         String name = jsonObject.getString("song name");
         String artist = jsonObject.getString("artist");
-//        String status = jsonObject.getString("status");
         String src = jsonObject.getString("url");
-//        String audioClip = jsonObject.getString("audioclip");
         int duration = jsonObject.getInt("duration");
 
         Song song = new Song(name, artist, src, duration);

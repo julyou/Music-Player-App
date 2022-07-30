@@ -29,7 +29,6 @@ public class SongThread extends Thread {
         status = "stopped";
     }
 
-
     // MODIFIES: this
     // EFFECTS: terminates song thread
     public void end() {
