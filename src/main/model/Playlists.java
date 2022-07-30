@@ -5,31 +5,29 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 // Represents a main playlist having a collection of playlists
 public class Playlists implements Writable {
     private List<Playlist> playlists;
-    private String name;
+//    private String name;
 
     // EFFECTS: constructs workroom with a name and empty list of thingies
-    public Playlists(String name) {
-        this.name = name;
+//    public Playlists(String name)
+    public Playlists() {
+//        this.name = name;
         playlists = new ArrayList<>();
     }
 
     // MODIFIES: this
     // EFFECTS: adds playlist to this playlists
-    public void addPlaylist(Playlist pl) {
-        playlists.add(pl);
+    public void addPlaylist(Playlist p) {
+        playlists.add(p);
     }
 
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("name", name);
         json.put("playlists", playlistsToJson());
         return json;
     }
@@ -43,8 +41,9 @@ public class Playlists implements Writable {
         return jsonArray;
     }
 
+
     // getters
-    public int getPlaylistSize() {
+    public int getPlaylistsSize() {
         return playlists.size();
     }
 
@@ -52,13 +51,19 @@ public class Playlists implements Writable {
         return playlists.get(i);
     }
 
-    // EFFECTS: returns an unmodifiable list of thingies in this workroom
+    // EFFECTS: returns  list playlists in this workroom
     public List<Playlist> getPlaylists() {
         return playlists;
     }
 
-    public String getName() {
-        return name;
-    }
+//    // EFFECTS: returns an unmodifiable list of thingies in this workroom
+//    public List<Playlist> getUnmodifiablePlaylists() {
+//        return Collections.unmodifiableList(playlists);
+//    }
+
+//    public String getName() {
+//        return name;
+//        return null;
+//}
 }
 

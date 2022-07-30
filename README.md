@@ -31,5 +31,5 @@ sophisticated features for my music player later on.
 - As a user, I want to be able to remove a playlist from a list of playlists <br>
 - As a user, I want to be able to play and pause songs<br>
 - As a user, I want to be able to save the playlists that I create<br>
-  As a user, I want to be able to be able to load my playlists from file 
+- As a user, I want to be able to be able to load my playlists from file 
 
