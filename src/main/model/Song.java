@@ -90,7 +90,7 @@ public class Song implements Writable {
         json.put("duration", duration);
         json.put("url", filePath);
         json.put("status", status);
-        json.put("audioclip", audioclip);
+//        json.put("audioclip", audioclip);
         return json;
     }
 }

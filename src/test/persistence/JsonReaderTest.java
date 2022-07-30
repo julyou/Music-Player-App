@@ -15,7 +15,7 @@ class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderNonExistentFile() {
-        JsonReader reader = new JsonReader("./data/invalidFile.json");
+        JsonReader reader = new JsonReader("./data/invalidFile1.json");
         try {
             Playlists pl = reader.readPlaylists();
             fail("IOException expected");
@@ -62,6 +62,40 @@ class JsonReaderTest extends JsonTest {
             assertEquals("Dhol Drums", titles1.get(0));
             assertEquals("Cantina Band", titles2.get(0));
             assertEquals("Main Title", titles2.get(1));
+        } catch (IOException e) {
+            fail("Couldn't read from file");
+        }
+    }
+
+    @Test
+    void testReaderPlaylistToJson() {
+        JsonReader reader = new JsonReader("./data/testReaderGeneralPlaylists.json");
+        try {
+            Playlists pl = reader.readPlaylists();
+            List<Playlist> ps = pl.getPlaylists();
+            Playlist p1 = ps.get(0);
+            Playlist p2 = ps.get(1);
+            assertEquals(1, p1.getSongsInPlaylist().size());
+            assertEquals(2, p2.getSongsInPlaylist().size());
+        } catch (IOException e) {
+            fail("Couldn't read from file");
+        }
+    }
+
+    @Test
+    void testReaderSongsToJson() {
+        JsonReader reader = new JsonReader("./data/testReaderGeneralPlaylists.json");
+        try {
+            Playlists pl = reader.readPlaylists();
+            List<Playlist> ps = pl.getPlaylists();
+            Playlist p = ps.get(0);
+            Song s = p.getSongsInPlaylist().get(0);
+            assertEquals("Dhol Drums", s.getSongTitle());
+            assertEquals("unknown", s.getArtist());
+            assertEquals("file:data/song6.wav", s.getSongURL());
+            assertEquals(18, s.getSongDuration());
+            assertEquals("", s.getSongStatus());
+
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

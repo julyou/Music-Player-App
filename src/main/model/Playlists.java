@@ -41,7 +41,6 @@ public class Playlists implements Writable {
         return jsonArray;
     }
 
-
     // getters
     public int getPlaylistsSize() {
         return playlists.size();
@@ -51,19 +50,9 @@ public class Playlists implements Writable {
         return playlists.get(i);
     }
 
-    // EFFECTS: returns  list playlists in this workroom
     public List<Playlist> getPlaylists() {
         return playlists;
     }
 
-//    // EFFECTS: returns an unmodifiable list of thingies in this workroom
-//    public List<Playlist> getUnmodifiablePlaylists() {
-//        return Collections.unmodifiableList(playlists);
-//    }
-
-//    public String getName() {
-//        return name;
-//        return null;
-//}
 }
 

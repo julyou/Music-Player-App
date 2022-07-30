@@ -17,7 +17,7 @@ class JsonWriterTest extends JsonTest {
     void testWriterInvalidFile() {
         try {
             Playlists pl = new Playlists();
-            JsonWriter writer = new JsonWriter("./data/invalidFile.json");
+            JsonWriter writer = new JsonWriter("./data/invalid\0File.json");
             writer.open();
             fail("IOException was expected");
         } catch (IOException e) {
@@ -36,7 +36,7 @@ class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/testWriterEmptyPlaylists.json");
             pl = reader.readPlaylists();
-            assertEquals(0, pl.toJson().length());
+            assertEquals(0, pl.getPlaylistsSize());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
@@ -55,7 +55,6 @@ class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralPlaylists.json");
             pl = reader.readPlaylists();
-            assertEquals(0, pl.toJson().length());
             List<Playlist> playlists = pl.getPlaylists();
             assertEquals(2, playlists.size());
             checkPlaylist("Instrumental", playlists.get(0));

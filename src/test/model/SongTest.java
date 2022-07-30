@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,13 +10,15 @@ import java.net.URL;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SongTest {
+    JSONObject json;
+
     Song testSong1;
     Song testSong2;
-    Song testSong3;
     String status;
 
     @BeforeEach
     public void setUp() throws MalformedURLException {
+        json = new JSONObject();
         testSong1 = new Song("song1", "unknown", "song1.wav", 34);
         testSong2 = new Song("song2", "unknown", "song2.wav", 44);
         status = "";
@@ -71,4 +74,14 @@ class SongTest {
         }
         assertEquals("file:song2.wav", filePath.toString());
     }
+
+    @Test
+    public void testToJson() {
+        assertEquals("song1", testSong1.toJson().getString("song name"));
+        assertEquals("unknown", testSong1.toJson().getString("artist"));
+        assertEquals(34, testSong1.toJson().getInt("duration"));
+        assertEquals("file:song1.wav", String.valueOf(testSong1.toJson().get("url")));
+        assertEquals("", testSong1.toJson().getString("status"));
+    }
+
 }
