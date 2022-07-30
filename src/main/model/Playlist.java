@@ -46,6 +46,23 @@ public class Playlist implements Writable {
         playlist.clear();
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("songs", songsToJson());
+        json.put("playlist name", playlistName);
+        return json;
+    }
+
+    // EFFECTS: returns songs in this playlist as a JSON array
+    private JSONArray songsToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Song s : playlist) {
+            jsonArray.put(s.toJson());
+        }
+        return jsonArray;
+    }
+
     // getters
     public List<String> getSongsTitlesInPlaylist() {
         List<String> songNames = new LinkedList<>();
@@ -67,20 +84,5 @@ public class Playlist implements Writable {
         return playlistName;
     }
 
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("songs", songsToJson());
-        json.put("playlist name", playlistName);
-        return json;
-    }
 
-    // EFFECTS: returns things in this playlist as a JSON array
-    private JSONArray songsToJson() {
-        JSONArray jsonArray = new JSONArray();
-        for (Song s : playlist) {
-            jsonArray.put(s.toJson());
-        }
-        return jsonArray;
-    }
 }

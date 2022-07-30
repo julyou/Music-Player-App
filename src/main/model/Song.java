@@ -14,15 +14,18 @@ public class Song implements Writable {
     private final String artist;
     private final int duration;
     private final URL filePath;
+    private final String src;
     private String status;
     private final AudioClip audioclip;
 
     // EFFECTS: creates a song with title, artist, file location, and status
+    //          throws MalformedURLException if URL cannot be parsed
     public Song(String title, String artist, String src, int duration) throws MalformedURLException {
         this.songTitle = title;
         this.artist = artist;
         this.status = "";
         this.duration = duration;
+        this.src = src;
 
         this.filePath = new URL("file:" + src);
         audioclip = Applet.newAudioClip(this.filePath);
@@ -61,6 +64,18 @@ public class Song implements Writable {
         return status.equals("looping");
     }
 
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("song name", songTitle);
+        json.put("artist", artist);
+        json.put("duration", duration);
+        json.put("source", src);
+        json.put("status", status);
+        return json;
+    }
+
     // getters
     public String getSongTitle() {
         return songTitle;
@@ -82,15 +97,7 @@ public class Song implements Writable {
         return String.valueOf(filePath);
     }
 
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("song name", songTitle);
-        json.put("artist", artist);
-        json.put("duration", duration);
-        json.put("url", filePath);
-        json.put("status", status);
-//        json.put("audioclip", audioclip);
-        return json;
+    public String getSongSrc() {
+        return src;
     }
 }

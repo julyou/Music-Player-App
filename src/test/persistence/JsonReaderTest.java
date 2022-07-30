@@ -92,7 +92,7 @@ class JsonReaderTest extends JsonTest {
             Song s = p.getSongsInPlaylist().get(0);
             assertEquals("Dhol Drums", s.getSongTitle());
             assertEquals("unknown", s.getArtist());
-            assertEquals("file:data/song6.wav", s.getSongURL());
+            assertEquals("file:data/song6.wav", s.getSongSrc());
             assertEquals(18, s.getSongDuration());
             assertEquals("", s.getSongStatus());
 

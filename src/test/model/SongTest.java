@@ -80,7 +80,7 @@ class SongTest {
         assertEquals("song1", testSong1.toJson().getString("song name"));
         assertEquals("unknown", testSong1.toJson().getString("artist"));
         assertEquals(34, testSong1.toJson().getInt("duration"));
-        assertEquals("file:song1.wav", String.valueOf(testSong1.toJson().get("url")));
+        assertEquals("song1.wav", String.valueOf(testSong1.toJson().getString("source")));
         assertEquals("", testSong1.toJson().getString("status"));
     }
 
