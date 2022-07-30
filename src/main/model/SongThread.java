@@ -18,15 +18,6 @@ public class SongThread extends Thread {
     // MODIFIES: this
     // EFFECTS: Starts playing songs in the thread
     public void startPlaying(List<Song> songs) {
-//        if (status.equals("playing")) {
-//            stopPlaying();
-//            try {
-//                TimeUnit.SECONDS.sleep(1);
-//            } catch (InterruptedException e) {
-//                status = "end";
-//                return;
-//            }
-//        }
         this.songs = songs;
         status = "playing";
     }

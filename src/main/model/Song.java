@@ -87,7 +87,6 @@ public class Song implements Writable {
         JSONObject json = new JSONObject();
         json.put("song name", songTitle);
         json.put("artist", artist);
-        json.put("artist", artist);
         json.put("duration", duration);
         json.put("url", filePath);
         json.put("status", status);

@@ -1,92 +1,91 @@
 {
-    "name": "Main playlist",
-    "playlists": [
+  "playlists": [
+    {
+      "songs": [
         {
-            "songs": [
-                {
-                    "duration": 60,
-                    "song name": "Imperial March",
-                    "artist": "John Williams",
-                    "audioclip": "sun.applet.AppletAudioClip@2e5d6d97",
-                    "url": "file:data/song4.wav",
-                    "status": ""
-                },
-                {
-                    "duration": 60,
-                    "song name": "Cantina Band",
-                    "artist": "John Williams",
-                    "audioclip": "sun.applet.AppletAudioClip@238e0d81",
-                    "url": "file:data/song5.wav",
-                    "status": ""
-                },
-                {
-                    "duration": 60,
-                    "song name": "Main Title",
-                    "artist": "John Williams",
-                    "audioclip": "sun.applet.AppletAudioClip@31221be2",
-                    "url": "file:data/song7.wav",
-                    "status": ""
-                }
-            ],
-            "playlist name": "Star Wars Soundtrack"
+          "duration": 60,
+          "song name": "Imperial March",
+          "artist": "John Williams",
+          "audioclip": "sun.applet.AppletAudioClip@7daf6ecc",
+          "url": "file:data/song4.wav",
+          "status": "playing"
         },
         {
-            "songs": [
-                {
-                    "duration": 44,
-                    "song name": "song2",
-                    "artist": "unknown",
-                    "audioclip": "sun.applet.AppletAudioClip@377dca04",
-                    "url": "file:data/song2.wav",
-                    "status": ""
-                },
-                {
-                    "duration": 18,
-                    "song name": "Dhol Drums",
-                    "artist": "unknown",
-                    "audioclip": "sun.applet.AppletAudioClip@728938a9",
-                    "url": "file:data/song6.wav",
-                    "status": ""
-                }
-            ],
-            "playlist name": "Instrumental"
+          "duration": 60,
+          "song name": "Cantina Band",
+          "artist": "John Williams",
+          "audioclip": "sun.applet.AppletAudioClip@2e5d6d97",
+          "url": "file:data/song5.wav",
+          "status": ""
         },
         {
-            "songs": [
-                {
-                    "duration": 30,
-                    "song name": "Pink Panther",
-                    "artist": "Henry Mancini",
-                    "audioclip": "sun.applet.AppletAudioClip@21b8d17c",
-                    "url": "file:data/song3.wav",
-                    "status": ""
-                },
-                {
-                    "duration": 60,
-                    "song name": "Imperial March",
-                    "artist": "John Williams",
-                    "audioclip": "sun.applet.AppletAudioClip@2e5d6d97",
-                    "url": "file:data/song4.wav",
-                    "status": ""
-                },
-                {
-                    "duration": 60,
-                    "song name": "Cantina Band",
-                    "artist": "John Williams",
-                    "audioclip": "sun.applet.AppletAudioClip@238e0d81",
-                    "url": "file:data/song5.wav",
-                    "status": ""
-                },
-                {
-                    "duration": 60,
-                    "song name": "Main Title",
-                    "artist": "John Williams",
-                    "audioclip": "sun.applet.AppletAudioClip@31221be2",
-                    "url": "file:data/song7.wav",
-                    "status": ""
-                }
-            ],
-            "playlist name": "Film scores"
+          "duration": 60,
+          "song name": "Main Title",
+          "artist": "John Williams",
+          "audioclip": "sun.applet.AppletAudioClip@238e0d81",
+          "url": "file:data/song7.wav",
+          "status": ""
         }
-    ]
+      ],
+      "playlist name": "Star Wars Soundtrack"
+    },
+    {
+      "songs": [
+        {
+          "duration": 44,
+          "song name": "song2",
+          "artist": "unknown",
+          "audioclip": "sun.applet.AppletAudioClip@31221be2",
+          "url": "file:data/song2.wav",
+          "status": ""
+        },
+        {
+          "duration": 18,
+          "song name": "Dhol Drums",
+          "artist": "unknown",
+          "audioclip": "sun.applet.AppletAudioClip@377dca04",
+          "url": "file:data/song6.wav",
+          "status": ""
+        }
+      ],
+      "playlist name": "Instrumental"
+    },
+    {
+      "songs": [
+        {
+          "duration": 30,
+          "song name": "Pink Panther",
+          "artist": "Henry Mancini",
+          "audioclip": "sun.applet.AppletAudioClip@728938a9",
+          "url": "file:data/song3.wav",
+          "status": ""
+        },
+        {
+          "duration": 60,
+          "song name": "Imperial March",
+          "artist": "John Williams",
+          "audioclip": "sun.applet.AppletAudioClip@7daf6ecc",
+          "url": "file:data/song4.wav",
+          "status": "playing"
+        },
+        {
+          "duration": 60,
+          "song name": "Cantina Band",
+          "artist": "John Williams",
+          "audioclip": "sun.applet.AppletAudioClip@2e5d6d97",
+          "url": "file:data/song5.wav",
+          "status": ""
+        },
+        {
+          "duration": 60,
+          "song name": "Main Title",
+          "artist": "John Williams",
+          "audioclip": "sun.applet.AppletAudioClip@238e0d81",
+          "url": "file:data/song7.wav",
+          "status": ""
+        }
+      ],
+      "playlist name": "Film scores"
+    }
+  ]
 }

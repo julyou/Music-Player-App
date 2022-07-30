@@ -14,24 +14,25 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-// based on Teller app and FitLifeGymChain; links below
+// based on Teller app, FitLifeGymChain, JsonSerializationDemo; links below
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
 // https://github.students.cs.ubc.ca/CPSC210/LongFormProblemStarters.git
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 
 // Music player application
 public class MusicApp {
     private static final String PLAY_COMMAND = "play";
     private static final String STOP_COMMAND = "stop";
     private static final String SONGS_COMMAND = "songs";
-    private static final String PLAYLISTS_COMMAND = "playlists";
+    private static final String PLAYLISTS_COMMAND = "pl";
     private static final String MAIN_MENU_COMMAND = "main";
     private static final String GO_BACK_COMMAND = "back";
     private static final String ADD_SONG_COMMAND = "add";
     private static final String DELETE_SONG_COMMAND = "dels";
     private static final String CREATE_PLAYLIST_COMMAND = "new";
     private static final String DELETE_PLAYLIST_COMMAND = "delp";
-    private static final String SAVE_PLAYLIST_COMMAND = "save";
-    private static final String LOAD_PLAYLIST_COMMAND = "load";
+    private static final String SAVE_COMMAND = "save";
+    private static final String LOAD_COMMAND = "load";
     private static final String QUIT_COMMAND = "quit";
 
     private Scanner input;
@@ -40,9 +41,10 @@ public class MusicApp {
 
     private List<Song> songs = new LinkedList<>();
     private Playlists playlists;
-    private static final String JSON_STORE = "./data/playlists.json";
+    private static final String JSON_STORE_PLAYLISTS = "./data/playlists.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+
 
     private Playlist playlist1 = new Playlist("Star Wars Soundtrack");
     private Playlist playlist2 = new Playlist("Instrumental");
@@ -59,10 +61,9 @@ public class MusicApp {
 
     // EFFECTS: runs the music player application
     public MusicApp() throws MalformedURLException {
-        playlists = new Playlists("Main playlist");
-//        playlists = new Playlists();
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
+        playlists = new Playlists();
+        jsonWriter = new JsonWriter(JSON_STORE_PLAYLISTS);
+        jsonReader = new JsonReader(JSON_STORE_PLAYLISTS);
 
         songthread.start();
         runMusicApp();
@@ -91,8 +92,8 @@ public class MusicApp {
     // EFFECTS: displays main menu to user
     private void displayMainMenu() {
         System.out.println("\nSelect from:");
-        System.out.println("\tsongs -> browse songs");
-        System.out.println("\tplaylists -> browse playlists");
+        System.out.println("\tsongs -> browse all songs");
+        System.out.println("\tpl -> browse all playlists");
         System.out.println("\tplay -> start playing");
         System.out.println("\tstop -> stop song");
         System.out.println("\tquit -> quit");
@@ -159,9 +160,9 @@ public class MusicApp {
                     displayNewPlaylistMenu(playlists);
                 } else if (command.equals(DELETE_PLAYLIST_COMMAND)) {
                     displayDeletePlaylistMenu(playlists);
-                } else if (command.equals(SAVE_PLAYLIST_COMMAND)) {
+                } else if (command.equals(SAVE_COMMAND)) {
                     savePlaylists();
-                } else if (command.equals(LOAD_PLAYLIST_COMMAND)) {
+                } else if (command.equals(LOAD_COMMAND)) {
                     loadPlaylists();
                 } else if (command.equals(QUIT_COMMAND)) {
                     keepGoing = false;
@@ -192,10 +193,9 @@ public class MusicApp {
     private void processDeletePlaylistMenuCMD(Playlists pl) throws InterruptedException {
         String command = getUserInputString();
         int commandInt = Integer.parseInt(command);
-        if (command.length() > 0 && commandInt <= pl.getPlaylistSize() && 4 <= commandInt) {
+        if (command.length() > 0 && commandInt <= pl.getPlaylistsSize() && 4 <= commandInt) {
             deletePlaylist(command, pl);
         }
-
         if (command.equals(MAIN_MENU_COMMAND)) {
             displayMainMenu();
         } else if (command.equals(QUIT_COMMAND)) {
@@ -234,9 +234,8 @@ public class MusicApp {
     private void processNewPlaylistMenuCMD(Playlists playlists) {
         String command = getUserInputString();
 
-        Playlist playlist = new Playlist(command);
         if (command.length() > 0) {
-            this.playlists.addPlaylist(playlist);
+            this.playlists.addPlaylist(new Playlist(command));
         }
         printAllPlaylists(playlists);
         displayPlaylistMenu(playlists);
@@ -483,15 +482,13 @@ public class MusicApp {
 
     // EFFECTS: saves playlists to file
     private void savePlaylists() {
-        jsonWriter = new JsonWriter(JSON_STORE);
         try {
             jsonWriter.open();
-            jsonWriter.write(playlists);
+            jsonWriter.writePlaylists(playlists);
             jsonWriter.close();
-            System.out.println("Saved " + playlists.getName() + " to " + JSON_STORE);
-//            System.out.println("Saved playlists to " + JSON_STORE);
+            System.out.println("Saved playlists to " + JSON_STORE_PLAYLISTS);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
+            System.out.println("Unable to write to file: " + JSON_STORE_PLAYLISTS);
         }
 
         displayPlaylistMenu(playlists);
@@ -500,13 +497,11 @@ public class MusicApp {
     // MODIFIES: this
     // EFFECTS: loads playlists from file
     private void loadPlaylists() {
-        jsonReader = new JsonReader(JSON_STORE);
         try {
             playlists = jsonReader.readPlaylists();
-            System.out.println("Loaded" + playlists.getName() + " from " + JSON_STORE);
-//            System.out.println("Loaded playlists from " + JSON_STORE);
+            System.out.println("Loaded playlists from " + JSON_STORE_PLAYLISTS);
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+            System.out.println("Unable to read from file: " + JSON_STORE_PLAYLISTS);
         }
         displayPlaylistMenu(playlists);
     }

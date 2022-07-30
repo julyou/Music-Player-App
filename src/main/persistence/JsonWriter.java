@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.List;
 
 // Represents a writer that writes JSON representation of workroom to file
 public class JsonWriter {
@@ -29,7 +28,7 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of playlists to file
-    public void write(Playlists pl) {
+    public void writePlaylists(Playlists pl) {
         JSONObject json = pl.toJson();
         saveToFile(json.toString(TAB));
     }
