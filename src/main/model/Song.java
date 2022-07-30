@@ -82,6 +82,11 @@ public class Song implements Writable {
         return String.valueOf(filePath);
     }
 
+    public AudioClip getSongAudioclip() {
+        return audioclip;
+    }
+
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
