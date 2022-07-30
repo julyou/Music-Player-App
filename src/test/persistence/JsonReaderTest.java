@@ -94,7 +94,6 @@ class JsonReaderTest extends JsonTest {
             assertEquals("unknown", s.getArtist());
             assertEquals("file:data/song6.wav", s.getSongURL());
             assertEquals(18, s.getSongDuration());
-            assertEquals("sun.applet.AppletAudioClip@377dca04", s.getSongAudioclip());
             assertEquals("", s.getSongStatus());
 
         } catch (IOException e) {

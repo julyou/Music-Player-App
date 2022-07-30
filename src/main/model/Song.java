@@ -82,11 +82,6 @@ public class Song implements Writable {
         return String.valueOf(filePath);
     }
 
-    public AudioClip getSongAudioclip() {
-        return audioclip;
-    }
-
-
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -95,7 +90,7 @@ public class Song implements Writable {
         json.put("duration", duration);
         json.put("url", filePath);
         json.put("status", status);
-        json.put("audioclip", audioclip);
+//        json.put("audioclip", audioclip);
         return json;
     }
 }
