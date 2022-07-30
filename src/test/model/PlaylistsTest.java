@@ -1,6 +1,5 @@
 package model;
 
-import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,13 +11,9 @@ public class PlaylistsTest {
 
     Playlists testPlaylists;
     Playlist testPlaylist;
-    JSONObject json;
-    Song testSong1;
-    Song testSong2;
-
 
     @BeforeEach
-    public void setUp() throws MalformedURLException {
+    public void setUp() {
         testPlaylists = new Playlists();
         testPlaylist = new Playlist("playlist");
     }
