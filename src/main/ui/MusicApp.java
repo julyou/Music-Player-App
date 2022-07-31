@@ -6,7 +6,9 @@ import model.Song;
 import model.SongThread;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.menus.MainMenuFrame;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -35,6 +37,9 @@ public class MusicApp {
     private static final String LOAD_COMMAND = "load";
     private static final String QUIT_COMMAND = "quit";
 
+    private static final int WIDTH = 500;
+    private static final int HEIGHT = 400;
+
     private Scanner input;
     private final SongThread songthread = new SongThread();
     private boolean keepGoing;
@@ -57,6 +62,7 @@ public class MusicApp {
     private final Song song6 = new Song("Dhol Drums", "unknown", "data/song6.wav", 18);
     private final Song song7 = new Song("Main Title", "John Williams", "data/song7.wav", 60);
 
+    private JFrame frame;
 
     // EFFECTS: runs the music player application
     public MusicApp() throws MalformedURLException {
@@ -69,12 +75,28 @@ public class MusicApp {
         songthread.end();
     }
 
+
     // EFFECTS: sets up the music application
     private void runMusicApp() {
         keepGoing = true;
         init();
+        initializeFrame();
         handleUserInput();
         endProgram();
+    }
+
+    // MODIFIES this
+    // EFFECTS: creates and shows UI
+    public void initializeFrame() {
+        new MainMenuFrame(this);
+//        frame = new JFrame("Music Player");
+//        frame.getContentPane().add(new MainMenuFrame(this));
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.pack();
+//        frame.setVisible(true);
+//        frame.setSize(WIDTH, HEIGHT);
+//        frame.getContentPane().setBackground(new Color(234, 231, 226));
+//        frame.setResizable(false);
     }
 
     // EFFECTS: processes user input
@@ -460,6 +482,27 @@ public class MusicApp {
         }
     }
 
+    // getters
+    public List<Song> getAllSongs() {
+        List<Song> songs = new LinkedList<>();
+        for (Song s : this.songs) {
+            songs.add(s);
+        }
+        return songs;
+    }
+
+    public Playlists getAllPlaylists() {
+        return playlists;
+    }
+
+//    private List<String> getAllSongs(List<Song> songs) {
+//        List<String> songNames = new LinkedList<>();
+//        for (Song s : songs) {
+//            songNames.add(s.getSongTitle() + " by " + s.getArtist());
+//        }
+//        return songNames;
+//    }
+
     // EFFECTS: prints all playlists in library
     public void printAllPlaylists(Playlists playlists) {
         List<String> playlistNames = new LinkedList<>();
@@ -505,4 +548,6 @@ public class MusicApp {
         }
         displayPlaylistMenu(playlists);
     }
+
+
 }
