@@ -1,5 +1,6 @@
 package ui.menus;
 
+import model.Playlist;
 import model.Song;
 import ui.MusicApp;
 
@@ -19,6 +20,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
     private final JMenuBar menuBar;
     private final JMenu file;
     private final JMenuItem mainMenu;
+    private final JMenuItem back;
 
     private final JList<String> list;
     private final DefaultListModel<String> listModel;
@@ -27,7 +29,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
     private ImageIcon homeIcon;
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    SongMenuFrame(MusicApp app) {
+    SongMenuFrame(MusicApp app, Playlist playlist) {
         this.app = app;
 
         frame.setTitle("Songs");
@@ -44,10 +46,13 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         file = new JMenu("File");
         file.setFont(new Font("Serif", Font.PLAIN, 18));
         file.setBackground(new Color(201, 181, 144));
+
         mainMenu = new JMenuItem("Main menu");
+        back = new JMenuItem("Back");
 
         menuBar.add(file);
         file.add(mainMenu);
+        file.add(back);
 
         frame.setJMenuBar(menuBar);
 
@@ -77,6 +82,10 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
             frame.dispose();
             MainMenuFrame mainMenuFrame = new MainMenuFrame(app);
             System.out.println("main menu");
+        } else if (e.getSource() == back) {
+            frame.dispose();
+            PlaylistMenuFrame playlistMenuFrame = new PlaylistMenuFrame(app);
+            System.out.println("playlist menu");
         }
     }
 
