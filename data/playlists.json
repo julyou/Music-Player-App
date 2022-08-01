@@ -5,21 +5,21 @@
                 "duration": 60,
                 "song name": "Imperial March",
                 "artist": "John Williams",
-                "url": "data/song4.wav",
+                "source": "data/song4.wav",
                 "status": ""
             },
             {
                 "duration": 60,
                 "song name": "Cantina Band",
                 "artist": "John Williams",
-                "url": "data/song5.wav",
+                "source": "data/song5.wav",
                 "status": ""
             },
             {
                 "duration": 60,
                 "song name": "Main Title",
                 "artist": "John Williams",
-                "url": "data/song7.wav",
+                "source": "data/song7.wav",
                 "status": ""
             }
         ],
@@ -31,14 +31,14 @@
                 "duration": 44,
                 "song name": "song2",
                 "artist": "unknown",
-                "url": "data/song2.wav",
+                "source": "data/song2.wav",
                 "status": ""
             },
             {
                 "duration": 18,
                 "song name": "Dhol Drums",
                 "artist": "unknown",
-                "url": "data/song6.wav",
+                "source": "data/song6.wav",
                 "status": ""
             }
         ],
@@ -50,41 +50,31 @@
                 "duration": 30,
                 "song name": "Pink Panther",
                 "artist": "Henry Mancini",
-                "url": "data/song3.wav",
+                "source": "data/song3.wav",
                 "status": ""
             },
             {
                 "duration": 60,
                 "song name": "Imperial March",
                 "artist": "John Williams",
-                "url": "data/song4.wav",
+                "source": "data/song4.wav",
                 "status": ""
             },
             {
                 "duration": 60,
                 "song name": "Cantina Band",
                 "artist": "John Williams",
-                "url": "data/song5.wav",
+                "source": "data/song5.wav",
                 "status": ""
             },
             {
                 "duration": 60,
                 "song name": "Main Title",
                 "artist": "John Williams",
-                "url": "data/song7.wav",
+                "source": "data/song7.wav",
                 "status": ""
             }
         ],
         "playlist name": "Film scores"
-    },
-    {
-        "songs": [{
-            "duration": 34,
-            "song name": "song1",
-            "artist": "unknown",
-            "url": "data/song1.wav",
-            "status": ""
-        }],
-        "playlist name": "test"
     }
 ]}

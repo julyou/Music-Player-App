@@ -36,11 +36,10 @@ public class AllSongsMenuFrame extends javax.swing.JFrame implements ActionListe
 //        frame.getContentPane().setBackground(new Color(234, 231, 226));
 
         menuBar = new JMenuBar();
-        menuBar.setBackground(new Color(201, 181, 144));
+        menuBar.setOpaque(true);
 
         file = new JMenu("File");
         file.setFont(new Font("Serif", Font.PLAIN, 18));
-        file.setBackground(new Color(201, 181, 144));
         mainMenu = new JMenuItem("Main menu");
 
         menuBar.add(file);
