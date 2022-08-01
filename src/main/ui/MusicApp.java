@@ -62,7 +62,6 @@ public class MusicApp {
     private final Song song6 = new Song("Dhol Drums", "unknown", "data/song6.wav", 18);
     private final Song song7 = new Song("Main Title", "John Williams", "data/song7.wav", 60);
 
-    private JFrame frame;
 
     // EFFECTS: runs the music player application
     public MusicApp() throws MalformedURLException {
@@ -75,9 +74,12 @@ public class MusicApp {
         songthread.end();
     }
 
+    public SongThread getSongThread() {
+        return songthread;
+    }
 
     // EFFECTS: sets up the music application
-    private void runMusicApp() {
+    public void runMusicApp() {
         keepGoing = true;
         init();
         initializeFrame();
@@ -89,14 +91,6 @@ public class MusicApp {
     // EFFECTS: creates and shows UI
     public void initializeFrame() {
         new MainMenuFrame(this);
-//        frame = new JFrame("Music Player");
-//        frame.getContentPane().add(new MainMenuFrame(this));
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
-//        frame.setVisible(true);
-//        frame.setSize(WIDTH, HEIGHT);
-//        frame.getContentPane().setBackground(new Color(234, 231, 226));
-//        frame.setResizable(false);
     }
 
     // EFFECTS: processes user input

@@ -18,8 +18,8 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
 
     String text;
 
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 400;
+    private static final int WIDTH = 700;
+    private static final int HEIGHT = 450;
 
     private final JMenuBar menuBar;
     private final JMenu file;
@@ -40,13 +40,17 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
         frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setVisible(true);
-        frame.getContentPane().setBackground(new Color(234, 231, 226));
+//        frame.getContentPane().setBackground(new Color(234, 231, 226));
         frame.setResizable(true);
         frame.setLayout(new GridLayout(3, 3, 0, 0));
 
         menuBar = new JMenuBar();
+        menuBar.setOpaque(true);
+        menuBar.setBackground(new Color(201, 181, 144));
 
         file = new JMenu("File");
+        file.setFont(new Font("Serif", Font.PLAIN, 18));
+        file.setBackground(new Color(201, 181, 144));
         saveMenu = new JMenuItem("Save");
         loadMenu = new JMenuItem("Load");
         mainMenu = new JMenuItem("Main menu");
@@ -83,6 +87,7 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
         list.setVisibleRowCount(5);
+        list.setFont(new Font("Serif", Font.PLAIN, 14));
 
         frame.add(list);
 

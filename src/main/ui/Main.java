@@ -12,10 +12,6 @@ public class Main {
     private static final int HEIGHT = 400;
 
     public static void main(String[] args) throws MalformedURLException {
-        AppLabel label = new AppLabel();
-        label.setText("Welcome!");
-        label.setBounds(0, 0, 250, 250);
-
         new MusicApp();
     }
 }

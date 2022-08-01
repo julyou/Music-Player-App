@@ -12,9 +12,8 @@ import java.awt.event.ActionListener;
 
 public class AllSongsMenuFrame extends javax.swing.JFrame implements ActionListener, ListSelectionListener {
     JFrame frame = new JFrame();
-    JLabel label = new JLabel("hi");
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 400;
+    private static final int WIDTH = 700;
+    private static final int HEIGHT = 450;
 
     private final JMenuBar menuBar;
     private final JMenu file;
@@ -29,18 +28,19 @@ public class AllSongsMenuFrame extends javax.swing.JFrame implements ActionListe
     AllSongsMenuFrame(MusicApp app) {
         this.app = app;
 
-        label.setBounds(0, 0, 100, 50);
-        label.setFont(new Font("Serif", Font.PLAIN, 36));
-
         frame.setTitle("Your Songs");
         frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setVisible(true);
-        frame.getContentPane().setBackground(new Color(234, 231, 226));
+//        frame.setBackground(new Color(234, 231, 226));
+//        frame.getContentPane().setBackground(new Color(234, 231, 226));
 
         menuBar = new JMenuBar();
+        menuBar.setBackground(new Color(201, 181, 144));
 
         file = new JMenu("File");
+        file.setFont(new Font("Serif", Font.PLAIN, 18));
+        file.setBackground(new Color(201, 181, 144));
         mainMenu = new JMenuItem("Main menu");
 
         menuBar.add(file);
@@ -63,6 +63,7 @@ public class AllSongsMenuFrame extends javax.swing.JFrame implements ActionListe
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
         list.setVisibleRowCount(5);
+        list.setFont(new Font("Serif", Font.PLAIN, 14));
 
         frame.add(list);
     }

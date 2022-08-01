@@ -12,8 +12,9 @@ import java.awt.event.ActionListener;
 
 public class SongMenuFrame extends JFrame implements ActionListener, ListSelectionListener {
     JFrame frame = new JFrame();
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 400;
+
+    private static final int WIDTH = 700;
+    private static final int HEIGHT = 450;
 
     private final JMenuBar menuBar;
     private final JMenu file;
@@ -23,6 +24,8 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
     private final DefaultListModel<String> listModel;
     private final MusicApp app;
 
+    private ImageIcon homeIcon;
+
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     SongMenuFrame(MusicApp app) {
         this.app = app;
@@ -31,11 +34,16 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setVisible(true);
-        frame.getContentPane().setBackground(new Color(234, 231, 226));
+//        frame.setBackground(new Color(234, 231, 226));
 
         menuBar = new JMenuBar();
+        menuBar.setOpaque(true);
+        menuBar.setBackground(new Color(201, 181, 144));
 
+//        ImageIcon homeIcon = new ImageIcon("data/images/homeIcon.png");
         file = new JMenu("File");
+        file.setFont(new Font("Serif", Font.PLAIN, 18));
+        file.setBackground(new Color(201, 181, 144));
         mainMenu = new JMenuItem("Main menu");
 
         menuBar.add(file);
