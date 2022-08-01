@@ -6,7 +6,9 @@ import model.Song;
 import model.SongThread;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.menus.MainMenuFrame;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -34,6 +36,9 @@ public class MusicApp {
     private static final String SAVE_COMMAND = "save";
     private static final String LOAD_COMMAND = "load";
     private static final String QUIT_COMMAND = "quit";
+
+    private static final int WIDTH = 500;
+    private static final int HEIGHT = 400;
 
     private Scanner input;
     private final SongThread songthread = new SongThread();
@@ -69,12 +74,23 @@ public class MusicApp {
         songthread.end();
     }
 
+    public SongThread getSongThread() {
+        return songthread;
+    }
+
     // EFFECTS: sets up the music application
-    private void runMusicApp() {
+    public void runMusicApp() {
         keepGoing = true;
         init();
+        initializeFrame();
         handleUserInput();
         endProgram();
+    }
+
+    // MODIFIES this
+    // EFFECTS: creates and shows UI
+    public void initializeFrame() {
+        new MainMenuFrame(this);
     }
 
     // EFFECTS: processes user input
@@ -460,6 +476,27 @@ public class MusicApp {
         }
     }
 
+    // getters
+    public List<Song> getAllSongs() {
+        List<Song> songs = new LinkedList<>();
+        for (Song s : this.songs) {
+            songs.add(s);
+        }
+        return songs;
+    }
+
+    public Playlists getAllPlaylists() {
+        return playlists;
+    }
+
+//    private List<String> getAllSongs(List<Song> songs) {
+//        List<String> songNames = new LinkedList<>();
+//        for (Song s : songs) {
+//            songNames.add(s.getSongTitle() + " by " + s.getArtist());
+//        }
+//        return songNames;
+//    }
+
     // EFFECTS: prints all playlists in library
     public void printAllPlaylists(Playlists playlists) {
         List<String> playlistNames = new LinkedList<>();
@@ -505,4 +542,6 @@ public class MusicApp {
         }
         displayPlaylistMenu(playlists);
     }
+
+
 }
