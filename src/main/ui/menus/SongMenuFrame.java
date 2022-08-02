@@ -1,15 +1,21 @@
 package ui.menus;
 
 import model.Playlist;
+import model.Playlists;
 import model.Song;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 import ui.MusicApp;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
 public class SongMenuFrame extends JFrame implements ActionListener, ListSelectionListener {
     JFrame frame = new JFrame();
@@ -26,7 +32,6 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
     private final DefaultListModel<String> listModel;
     private final MusicApp app;
 
-    private ImageIcon homeIcon;
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     SongMenuFrame(MusicApp app, Playlist playlist) {
@@ -36,27 +41,19 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setVisible(true);
-//        frame.setBackground(new Color(234, 231, 226));
 
         menuBar = new JMenuBar();
-        menuBar.setOpaque(true);
-        menuBar.setBackground(new Color(201, 181, 144));
-
-//        ImageIcon homeIcon = new ImageIcon("data/images/homeIcon.png");
         file = new JMenu("File");
-        file.setFont(new Font("Serif", Font.PLAIN, 18));
-        file.setBackground(new Color(201, 181, 144));
-
+        file.setFont(new Font("Serif", Font.PLAIN, 16));
         mainMenu = new JMenuItem("Main menu");
         back = new JMenuItem("Back");
-
+        mainMenu.addActionListener(this);
         menuBar.add(file);
         file.add(mainMenu);
         file.add(back);
 
         frame.setJMenuBar(menuBar);
 
-        mainMenu.addActionListener(this);
 
         listModel = new DefaultListModel<>();
 
@@ -93,4 +90,101 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
     public void valueChanged(ListSelectionEvent e) {
 
     }
+
+    // based on ListDemoProject
+    // https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDemoProject/src/components/ListDemo.java
+    class DeleteButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            int index = list.getSelectedIndex();
+            listModel.remove(index);
+//            saveLoadLabel.setText("");
+
+            int size = listModel.getSize();
+
+            if (size == 0) {
+//                deleteButton.setEnabled(false);
+
+            } else {
+                if (index == listModel.getSize()) {
+                    index--;
+                }
+
+                list.setSelectedIndex(index);
+                list.ensureIndexIsVisible(index);
+            }
+        }
+    }
+
+    // based on ListDemoProject
+    // https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDemoProject/src/components/ListDemo.java
+    //This listener is shared by the text field and the hire button.
+    class AddButtonListener implements ActionListener, DocumentListener {
+        private boolean alreadyEnabled = false;
+        private JButton button;
+        private Playlists playlistList;
+
+        public AddButtonListener(JButton button, Playlists playlistList) {
+            this.button = button;
+            this.playlistList = playlistList;
+        }
+
+        //Required by ActionListener.
+        public void actionPerformed(ActionEvent e) {
+//            String name = inputPlaylistNameForm.getText();
+//            Playlist playlist = new Playlist(name);
+//            listModel.addElement(playlist.getPlaylistName());
+//            playlistList.addPlaylist(playlist);
+//            saveLoadLabel.setText("");
+
+
+            int index = list.getSelectedIndex(); //get selected index
+            if (index == -1) { //no selection, so insert at beginning
+                index = 0;
+            } else {           //add after the selected item
+                index++;
+            }
+
+            //Reset the text field.
+//            inputPlaylistNameForm.requestFocusInWindow();
+//            inputPlaylistNameForm.setText("");
+
+            //Select the new item and make it visible.
+            list.setSelectedIndex(index);
+            list.ensureIndexIsVisible(index);
+        }
+
+//        protected boolean alreadyInList(String name) {
+//            return listModel.contains(name);
+//        }
+
+        public void insertUpdate(DocumentEvent e) {
+            enableButton();
+        }
+
+        public void removeUpdate(DocumentEvent e) {
+            handleEmptyTextField(e);
+        }
+
+        public void changedUpdate(DocumentEvent e) {
+            if (!handleEmptyTextField(e)) {
+                enableButton();
+            }
+        }
+
+        private void enableButton() {
+            if (!alreadyEnabled) {
+                button.setEnabled(true);
+            }
+        }
+
+        private boolean handleEmptyTextField(DocumentEvent e) {
+            if (e.getDocument().getLength() <= 0) {
+                button.setEnabled(false);
+                alreadyEnabled = false;
+                return true;
+            }
+            return false;
+        }
+    }
 }
+
