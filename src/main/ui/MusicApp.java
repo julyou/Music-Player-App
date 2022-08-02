@@ -518,7 +518,7 @@ public class MusicApp {
     }
 
     // EFFECTS: saves playlists to file
-    private void savePlaylists() {
+    public void savePlaylists() {
         try {
             jsonWriter.open();
             jsonWriter.writePlaylists(playlists);
@@ -533,7 +533,7 @@ public class MusicApp {
 
     // MODIFIES: this
     // EFFECTS: loads playlists from file
-    private void loadPlaylists() {
+    public void loadPlaylists() {
         try {
             playlists = jsonReader.readPlaylists();
             System.out.println("Loaded playlists from " + JSON_STORE_PLAYLISTS);
