@@ -41,7 +41,6 @@ public class JsonReader {
         String jsonData = readFile(src);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parsePlaylists(jsonObject);
-
     }
 
     // MODIFIES: pl
