@@ -1,6 +1,9 @@
 package ui.menus;
 
 import model.Playlist;
+import model.Playlists;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 import ui.MusicApp;
 
 import javax.swing.*;
@@ -11,28 +14,26 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListener, ListSelectionListener {
-    JButton button1;
-    JButton button2;
-    JButton button3;
 
-    JPanel sidePanel;
-    JButton openButton;
+    private JButton openButton;
+    private Playlists playlists;
+    private JLabel saveLoadLabel;
 
-    ArrayList<Playlist> playlists;
+    private JScrollPane scrollPanel;
 
-    JScrollPane scrollPanel;
-
-    MusicApp app;
-
-    String text;
+    private MusicApp app;
 
     private static final int WIDTH = 700;
     private static final int HEIGHT = 450;
     private static final String addPlaylistString = "Add Playlist";
     private static final String deletePlaylistString = "Delete Playlist";
+    private static final String JSON_STORE = "data/playlists.json";
+
 
     private final JMenuBar menuBar;
     private final JMenu file;
@@ -40,14 +41,16 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
     private final JMenuItem loadMenu;
     private final JMenuItem mainMenu;
 
-    JButton saveButton;
-    JButton loadButton;
+    private JButton saveButton;
+    private JButton loadButton;
 
     private final JFrame frame;
-    JPanel bottomPanel;
-    JPanel mainPanel;
-    JButton addButton;
-    JButton deleteButton;
+    private JPanel bottomPanel;
+    private JPanel mainPanel;
+    private JPanel sidePanel;
+    private JPanel topMainPanel;
+    private JButton addButton;
+    private JButton deleteButton;
     private JTextField inputPlaylistNameForm;
 
 
@@ -65,15 +68,10 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
         frame.setVisible(true);
         frame.setResizable(true);
 
-//        topMainPanel.setLayout(new GridLayout(3, 3, 0, 0));
-
         menuBar = new JMenuBar();
-//        menuBar.setOpaque(true);
-//        menuBar.setBackground(new Color(201, 181, 144));
 
         file = new JMenu("File");
         file.setFont(new Font("Serif", Font.PLAIN, 16));
-//        file.setBackground(new Color(201, 181, 144));
         saveMenu = new JMenuItem("Save");
         loadMenu = new JMenuItem("Load");
         mainMenu = new JMenuItem("Main menu");
@@ -91,11 +89,12 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
         for (Playlist p : app.getAllPlaylists().getPlaylists()) {
             listModel.addElement(p.getPlaylistName());
         }
-//        for (int i = 0; i < app.getAllPlaylists().getPlaylistsSize(); i++) {
-//            Playlist title = app.getAllPlaylists().getPlaylist(i);
-////            String title = app.getAllPlaylists().getPlaylist(i).getPlaylistName();
-//            listModel.addElement(title);
-//        }
+
+        playlists = new Playlists();
+        for (Playlist p : app.getAllPlaylists().getPlaylists()) {
+            playlists.addPlaylist(p);
+        }
+
 
         // Create the list and put it in a scroll pane.
         list = new JList<>(listModel);
@@ -106,8 +105,6 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
 
         scrollPanel = new JScrollPane(list);
         scrollPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.77), (int) (HEIGHT * 0.7)));
-
-//        frame.add(list);
 
         addButton = new JButton(addPlaylistString);
         AddButtonListener addButtonListener = new AddButtonListener(addButton, playlists);
@@ -123,8 +120,14 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
         deleteButton.setActionCommand(deletePlaylistString);
         deleteButton.addActionListener(new DeleteButtonListener());
 
+        inputPlaylistNameForm = new JTextField("", 27);
+        inputPlaylistNameForm.setFont(new Font("Serif", Font.PLAIN, 14));
+        inputPlaylistNameForm.setPreferredSize(new Dimension(WIDTH / 2, (int) (HEIGHT * .1)));
+        inputPlaylistNameForm.addActionListener(addButtonListener);
+        inputPlaylistNameForm.getDocument().addDocumentListener(addButtonListener);
+
         openButton = new JButton("View playlist");
-        openButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .32)));
+        openButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .25)));
         openButton.setFont(new Font("Serif", Font.PLAIN, 14));
         openButton.addActionListener(new ViewListener());
         openButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -132,40 +135,38 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
         saveButton = new JButton("Save playlists");
         saveButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .18)));
         saveButton.setFont(new Font("Serif", Font.PLAIN, 14));
-        saveButton.addActionListener(this);
+        saveButton.addActionListener(new PlaylistsSaveListener());
         saveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         loadButton = new JButton("Load playlists");
         loadButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .18)));
         loadButton.setFont(new Font("Serif", Font.PLAIN, 14));
-        loadButton.addActionListener(this);
+        loadButton.addActionListener(new PlaylistsLoadListener());
         loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        inputPlaylistNameForm = new JTextField("", 27);
-        inputPlaylistNameForm.setFont(new Font("Serif", Font.PLAIN, 14));
-        inputPlaylistNameForm.setPreferredSize(new Dimension(WIDTH / 2, (int) (HEIGHT * .09)));
-        inputPlaylistNameForm.getDocument().addDocumentListener(addButtonListener);
-        inputPlaylistNameForm.addActionListener(addButtonListener);
+        saveLoadLabel = new JLabel("");
+        saveLoadLabel.setPreferredSize(new Dimension(WIDTH / 6, (int) (HEIGHT * .05)));
+        saveLoadLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         sidePanel = new JPanel();
-//        sidePanel.setLayout(new BoxLayout());
-        sidePanel.setPreferredSize(new Dimension((int) (WIDTH * 0.2), (int) (HEIGHT * 0.82)));
+        sidePanel.setPreferredSize(new Dimension((int) (WIDTH * 0.2), (int) (HEIGHT * 0.75)));
         sidePanel.add(openButton);
         sidePanel.add(saveButton);
         sidePanel.add(loadButton);
+        sidePanel.add(saveLoadLabel);
 
         bottomPanel = new JPanel();
-        bottomPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .15)));
+        bottomPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .14)));
         bottomPanel.add(inputPlaylistNameForm);
         bottomPanel.add(addButton);
         bottomPanel.add(deleteButton);
 
         mainPanel = new JPanel();
-        mainPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.76), (int) (HEIGHT * .82)));
+        mainPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.76), (int) (HEIGHT * .7)));
         mainPanel.add(scrollPanel, BorderLayout.WEST);
 
-        JPanel topMainPanel = new JPanel();
-        topMainPanel.setPreferredSize(new Dimension((int) (WIDTH), (int) (HEIGHT * .85)));
+        topMainPanel = new JPanel();
+        topMainPanel.setPreferredSize(new Dimension((int) (WIDTH), (int) (HEIGHT * .75)));
         topMainPanel.add(mainPanel, BorderLayout.WEST);
         topMainPanel.add(sidePanel, BorderLayout.EAST);
 
@@ -179,6 +180,7 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
         public void actionPerformed(ActionEvent e) {
             int index = list.getSelectedIndex();
             listModel.remove(index);
+            saveLoadLabel.setText("");
 
             int size = listModel.getSize();
 
@@ -202,9 +204,9 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
     class AddButtonListener implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
         private JButton button;
-        private ArrayList<Playlist> playlistList;
+        private Playlists playlistList;
 
-        public AddButtonListener(JButton button, ArrayList<Playlist> playlistList) {
+        public AddButtonListener(JButton button, Playlists playlistList) {
             this.button = button;
             this.playlistList = playlistList;
         }
@@ -214,8 +216,8 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
             String name = inputPlaylistNameForm.getText();
             Playlist playlist = new Playlist(name);
             listModel.addElement(playlist.getPlaylistName());
-            playlistList.add(playlist);
-
+            playlistList.addPlaylist(playlist);
+            saveLoadLabel.setText("");
 
             //User didn't type in a unique name...
             if (name.equals("") || alreadyInList(name)) {
@@ -291,16 +293,47 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
             frame.dispose();
             MainMenuFrame mainMenuFrame = new MainMenuFrame(app);
             System.out.println("main menu");
-        } else if (e.getSource() == loadButton) {
-            app.loadPlaylists();
-            frame.dispose();
-            PlaylistMenuFrame playlistMenuFrame = new PlaylistMenuFrame(app);
-            System.out.println("load playlists");
-        } else if (e.getSource() == saveButton) {
-            app.savePlaylists();
         }
     }
 
+    // EFFECTS: listens for save button click
+    private class PlaylistsSaveListener implements ActionListener {
+        // MODIFIES: this
+        // EFFECTS: saves playlist list to file
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
+                jsonWriter.open();
+                jsonWriter.writePlaylists(playlists);
+                jsonWriter.close();
+                saveLoadLabel.setText("Saved");
+            } catch (FileNotFoundException f) {
+                saveLoadLabel.setText("Could not save playlists");
+
+            }
+        }
+    }
+
+    // EFFECTS: listens for load button click
+    private class PlaylistsLoadListener implements ActionListener {
+        // MODIFIES: this
+        // EFFECTS: saves playlist list to file
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                JsonReader jsonReader = new JsonReader(JSON_STORE);
+                playlists = jsonReader.readPlaylists();
+                for (Playlist p : playlists.getPlaylists()) {
+                    listModel.addElement(p.getPlaylistName());
+                }
+                saveLoadLabel.setText("Loaded");
+            } catch (Exception ex) {
+                saveLoadLabel.setText("Could not load playlists");
+            }
+
+        }
+    }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
