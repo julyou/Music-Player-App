@@ -16,27 +16,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
-public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListener, ListSelectionListener {
+public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListener {
 
     private MusicApp app;
     private Playlists playlists;
     private JList<String> list;
-    private final DefaultListModel<String> listModel;
+    private DefaultListModel<String> listModel;
 
     private final JFrame frame;
     private JPanel bottomPanel;
     private JPanel mainPanel;
     private JPanel sidePanel;
     private JPanel topMainPanel;
-    private JPanel topMenuPanel;
 
     private JScrollPane scrollPanel;
+
     private final JMenuBar menuBar;
     private final JMenu file;
     private final JMenuItem mainMenu;
-
-//    private JButton homeButton;
-//    private JButton backButton;
 
     private JButton addButton;
     private JButton deleteButton;
@@ -47,8 +44,8 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
     private JButton loadButton;
     private JLabel saveLoadLabel;
 
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = 450;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 550;
     private static final String addPlaylistString = "Add Playlist";
     private static final String deletePlaylistString = "Delete Playlist";
     private static final String JSON_STORE = "data/playlists.json";
@@ -56,7 +53,7 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
 
     // TODO: checkstyle fix
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    PlaylistMenuFrame(MusicApp app) {
+    public AllPlaylistsMenuFrame(MusicApp app) {
         this.app = app;
 
         frame = new JFrame("Playlists");
@@ -134,23 +131,6 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
         saveLoadLabel.setPreferredSize(new Dimension(WIDTH / 6, (int) (HEIGHT * .05)));
         saveLoadLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-//        ImageIcon homeIcon = new ImageIcon("data/images/homeIcon.png");
-//        Image homeImage = homeIcon.getImage();
-//        Image newHomeImage = homeImage.getScaledInstance(40,20, Image.SCALE_SMOOTH);
-//        ImageIcon newHomeIcon = new ImageIcon(newHomeImage);
-//        homeButton = new JButton(newHomeIcon);
-//        homeButton.addActionListener(this);
-//        homeButton.setPreferredSize(new Dimension(12, (int) (HEIGHT * 0.05)));
-//
-//        ImageIcon backIcon = new ImageIcon("data/images/backIcon.png");
-//        Image backImage = backIcon.getImage();
-//        Image newBackImage = backImage.getScaledInstance(40,20, Image.SCALE_SMOOTH);
-//        ImageIcon newBackIcon = new ImageIcon(newBackImage);
-//        backButton = new JButton(newBackIcon);
-//        backButton.addActionListener(this);
-//        backButton.setPreferredSize(new Dimension(12, (int) (HEIGHT * 0.05)));
-
-
         sidePanel = new JPanel();
         sidePanel.setPreferredSize(new Dimension((int) (WIDTH * 0.2), (int) (HEIGHT * 0.75)));
         sidePanel.add(openButton);
@@ -173,14 +153,7 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
         topMainPanel.add(mainPanel, BorderLayout.WEST);
         topMainPanel.add(sidePanel, BorderLayout.EAST);
 
-//        topMenuPanel = new JPanel();
-//        topMenuPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.3), (int) (HEIGHT * .05)));
-//        topMenuPanel.setAlignmentY(LEFT_ALIGNMENT);
-//        topMenuPanel.add(backButton);
-//        topMenuPanel.add(homeButton);
-
-//        frame.setJMenuBar(menuBar);
-//        frame.add(topMenuPanel, BorderLayout.NORTH);
+        frame.setJMenuBar(menuBar);
         frame.add(topMainPanel, BorderLayout.NORTH);
         frame.add(bottomPanel, BorderLayout.SOUTH);
     }
@@ -291,10 +264,19 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
     // Listens for "View playlist" button press
     class ViewListener implements ActionListener {
         // MODIFIES: this
-        // EFFECTS: on button press, change frame to song menu frame
+        // EFFECTS: on button press, change frame to song menu frame of respective playlist
         public void actionPerformed(ActionEvent e) {
             String playlistName = list.getSelectedValue();
-            SongMenuFrame songMenuFrame = new SongMenuFrame(app, new Playlist(playlistName));
+            frame.dispose();
+            if (list.getSelectedValue().equals("Star Wars Soundtrack")) {
+                SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(0));
+            } else if (list.getSelectedValue().equals("Instrumental")) {
+                SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(1));
+            } else if (list.getSelectedValue().equals("Film scores")) {
+                SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(2));
+            } else {
+                SongMenuFrame songMenuFrame = new SongMenuFrame(app, new Playlist(playlistName));
+            }
         }
     }
 
@@ -333,6 +315,7 @@ public class PlaylistMenuFrame extends javax.swing.JFrame implements ActionListe
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
+                listModel.removeAllElements();
                 JsonReader jsonReader = new JsonReader(JSON_STORE);
                 playlists = jsonReader.readPlaylists();
                 for (Playlist p : playlists.getPlaylists()) {

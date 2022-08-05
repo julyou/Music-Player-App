@@ -3,8 +3,6 @@ package ui.menus;
 import model.Playlist;
 import model.Playlists;
 import model.Song;
-import persistence.JsonReader;
-import persistence.JsonWriter;
 import ui.MusicApp;
 
 import javax.swing.*;
@@ -15,13 +13,20 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 
 public class SongMenuFrame extends JFrame implements ActionListener, ListSelectionListener {
-    JFrame frame = new JFrame();
+    private JFrame frame = new JFrame();
 
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = 450;
+    private JButton playButton;
+    private JButton pauseButton;
+    private JScrollPane scrollPanel;
+
+    private JPanel bottomMainPanel;
+    private JPanel playPausePanel;
+
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 550;
+
 
     private final JMenuBar menuBar;
     private final JMenu file;
@@ -31,11 +36,12 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
     private final JList<String> list;
     private final DefaultListModel<String> listModel;
     private final MusicApp app;
+    private final Playlist playlist;
 
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     SongMenuFrame(MusicApp app, Playlist playlist) {
         this.app = app;
+        this.playlist = playlist;
 
         frame.setTitle("Songs");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,17 +54,16 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         mainMenu = new JMenuItem("Main menu");
         back = new JMenuItem("Back");
         mainMenu.addActionListener(this);
+        back.addActionListener(this);
         menuBar.add(file);
         file.add(mainMenu);
         file.add(back);
 
         frame.setJMenuBar(menuBar);
 
-
         listModel = new DefaultListModel<>();
 
-        //TODO: connect with playlist
-        for (Song s : app.getAllSongs()) {
+        for (Song s : playlist.getSongsInPlaylist()) {
             String title = s.getSongTitle();
             listModel.addElement(title);
         }
@@ -69,8 +74,40 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
         list.setVisibleRowCount(5);
+        list.setFont(new Font("Serif", Font.PLAIN, 14));
+        scrollPanel = new JScrollPane(list);
+        scrollPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.77), (int) (HEIGHT * 0.7)));
 
-        frame.add(list);
+        playPausePanel = new JPanel();
+        playPausePanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .17)));
+        playPausePanel.add(initPlayButton());
+        playPausePanel.add(initPauseButton());
+
+        bottomMainPanel = new JPanel();
+        bottomMainPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .17)));
+        bottomMainPanel.add(playPausePanel);
+
+        frame.add(bottomMainPanel, BorderLayout.SOUTH);
+        frame.add(scrollPanel, BorderLayout.NORTH);
+    }
+
+
+    private JButton initPlayButton() {
+        playButton = new JButton();
+        playButton.addActionListener(this);
+        playButton.setPreferredSize(new Dimension(WIDTH / 4, (int) (HEIGHT * .12)));
+        playButton.setText("Play");
+        playButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        return playButton;
+    }
+
+    private JButton initPauseButton() {
+        pauseButton = new JButton();
+        pauseButton.addActionListener(this);
+        pauseButton.setPreferredSize(new Dimension(WIDTH / 4, (int) (HEIGHT * .12)));
+        pauseButton.setText("Stop");
+        pauseButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        return pauseButton;
     }
 
     @Override
@@ -81,9 +118,22 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
             System.out.println("main menu");
         } else if (e.getSource() == back) {
             frame.dispose();
-            PlaylistMenuFrame playlistMenuFrame = new PlaylistMenuFrame(app);
+            AllPlaylistsMenuFrame allPlaylistsMenuFrame = new AllPlaylistsMenuFrame(app);
             System.out.println("playlist menu");
         }
+        if (e.getSource() == playButton) {
+            app.getSongThread().startPlaying(playlist.getSongsInPlaylist());
+        } else if (e.getSource() == pauseButton) {
+            app.getSongThread().stopPlaying();
+        }
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public MusicApp getApp() {
+        return app;
     }
 
     @Override
@@ -114,6 +164,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
             }
         }
     }
+
 
     // based on ListDemoProject
     // https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDemoProject/src/components/ListDemo.java
@@ -186,5 +237,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
             return false;
         }
     }
+
+
 }
 

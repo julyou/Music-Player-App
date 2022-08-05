@@ -12,8 +12,8 @@ import java.awt.event.ActionListener;
 
 public class AllSongsMenuFrame extends javax.swing.JFrame implements ActionListener, ListSelectionListener {
     JFrame frame = new JFrame();
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = 450;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 550;
 
     private final JMenuBar menuBar;
     private final JMenu file;
@@ -32,8 +32,6 @@ public class AllSongsMenuFrame extends javax.swing.JFrame implements ActionListe
         frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setVisible(true);
-//        frame.setBackground(new Color(234, 231, 226));
-//        frame.getContentPane().setBackground(new Color(234, 231, 226));
 
         menuBar = new JMenuBar();
         menuBar.setOpaque(true);
@@ -62,7 +60,7 @@ public class AllSongsMenuFrame extends javax.swing.JFrame implements ActionListe
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
         list.setVisibleRowCount(5);
-        list.setFont(new Font("Serif", Font.PLAIN, 14));
+        list.setFont(new Font("Serif", Font.PLAIN, 16));
 
         frame.add(list);
     }
