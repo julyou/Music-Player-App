@@ -6,9 +6,8 @@ import model.Song;
 import model.SongThread;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-import ui.menus.MainMenuFrame;
+import ui.menus.SplashScreenOpen;
 
-import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -36,9 +35,6 @@ public class MusicApp {
     private static final String SAVE_COMMAND = "save";
     private static final String LOAD_COMMAND = "load";
     private static final String QUIT_COMMAND = "quit";
-
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 400;
 
     private Scanner input;
     private final SongThread songthread = new SongThread();
@@ -90,7 +86,7 @@ public class MusicApp {
     // MODIFIES this
     // EFFECTS: creates and shows UI
     public void initializeFrame() {
-        new MainMenuFrame(this);
+        new SplashScreenOpen(this);
     }
 
     // EFFECTS: processes user input
