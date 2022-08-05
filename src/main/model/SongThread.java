@@ -85,13 +85,6 @@ public class SongThread extends Thread {
         return status;
     }
 
-    public String getCurrentSong() {
-        return currentSong;
-    }
-
-    public String getCurrentArtist() {
-        return currentArtist;
-    }
 }
 
 

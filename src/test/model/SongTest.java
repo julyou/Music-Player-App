@@ -30,7 +30,7 @@ class SongTest {
         assertEquals("unknown", testSong1.getArtist());
         assertEquals(44, testSong2.getSongDuration());
         assertEquals("file:song2.wav", testSong2.getSongURL());
-
+        assertEquals("song1.wav", testSong1.getSongSrc());
     }
 
     @Test

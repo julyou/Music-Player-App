@@ -7,7 +7,7 @@
           "song name": "Dhol Drums",
           "artist": "unknown",
           "audioclip": "sun.applet.AppletAudioClip@377dca04",
-          "url": "file:data/song6.wav",
+          "source": "data/song6.wav",
           "status": ""
         }
       ],
@@ -20,7 +20,7 @@
           "song name": "Cantina Band",
           "artist": "John Williams",
           "audioclip": "sun.applet.AppletAudioClip@2e5d6d97",
-          "url": "file:data/song5.wav",
+          "source": "data/song5.wav",
           "status": ""
         },
         {
@@ -28,7 +28,7 @@
           "song name": "Main Title",
           "artist": "John Williams",
           "audioclip": "sun.applet.AppletAudioClip@238e0d81",
-          "url": "file:data/song7.wav",
+          "source": "data/song7.wav",
           "status": ""
         }
       ],

@@ -43,7 +43,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
 
     private static final String addSongString = "Add Song";
     private static final String deleteSongString = "Delete Song";
-
+    private static final int FONT_SIZE = 16;
 
     SongMenuFrame(MusicApp app, Playlist playlist) {
         this.app = app;
@@ -54,12 +54,8 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         frame.setSize(WIDTH, HEIGHT);
         frame.setVisible(true);
 
-        frame.setJMenuBar(initMenuBar());
-
-
         JPanel emptyPanel = new JPanel();
         emptyPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.17), (int) (HEIGHT * .04)));
-
 
         sidePanel = new JPanel();
         sidePanel.setPreferredSize(new Dimension((int) (WIDTH * 0.2), (int) (HEIGHT * .7)));
@@ -68,7 +64,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         sidePanel.add(initDeleteButton());
         sidePanel.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-
+        frame.setJMenuBar(initMenuBar());
         frame.add(initBottomPanel(), BorderLayout.SOUTH);
         frame.add(initMainPanel(), BorderLayout.WEST);
         frame.add(sidePanel, BorderLayout.EAST);
@@ -77,9 +73,11 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
     private JMenuBar initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         JMenu file = new JMenu("File");
-        file.setFont(new Font("Serif", Font.PLAIN, 16));
+        file.setFont(new Font("Serif", Font.PLAIN, 18));
         mainMenu = new JMenuItem("Main menu");
+        mainMenu.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         back = new JMenuItem("Back");
+        back.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         mainMenu.addActionListener(this);
         back.addActionListener(this);
         menuBar.add(file);
@@ -90,9 +88,9 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
 
     private JPanel initMainPanel() {
         JLabel songsAdded = new JLabel("Songs in your playlist");
-        songsAdded.setFont(new Font("Serif", Font.PLAIN, 14));
+        songsAdded.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         JLabel songsNotAdded = new JLabel("Song list");
-        songsNotAdded.setFont(new Font("Serif", Font.PLAIN, 14));
+        songsNotAdded.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
 
         JPanel subMainPanelLeft = new JPanel();
         subMainPanelLeft.setPreferredSize(new Dimension((int) (WIDTH * 0.47), (int) (HEIGHT * .7)));
@@ -129,7 +127,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         addButton = new JButton(addSongString);
         addButton.setActionCommand(addSongString);
         addButton.setPreferredSize(new Dimension((int) (WIDTH * 0.17), (int) (HEIGHT * .32)));
-        addButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        addButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         addButton.addActionListener(new AddButtonListener());
         return addButton;
@@ -140,7 +138,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         deleteButton.setActionCommand(deleteSongString);
         deleteButton.addActionListener(new DeleteButtonListener());
         deleteButton.setPreferredSize(new Dimension((int) (WIDTH * 0.17), (int) (HEIGHT * .32)));
-        deleteButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        deleteButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         deleteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         return deleteButton;
     }
@@ -150,7 +148,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         playButton.addActionListener(this);
         playButton.setPreferredSize(new Dimension((int) (WIDTH / 2.2), (int) (HEIGHT * .12)));
         playButton.setText("Play");
-        playButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        playButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         return playButton;
     }
 
@@ -159,7 +157,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         pauseButton.addActionListener(this);
         pauseButton.setPreferredSize(new Dimension((int) (WIDTH / 2.2), (int) (HEIGHT * .12)));
         pauseButton.setText("Stop");
-        pauseButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        pauseButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         return pauseButton;
     }
 
@@ -176,7 +174,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         mainSongList.setSelectedIndex(0);
         mainSongList.addListSelectionListener(this);
         mainSongList.setVisibleRowCount(5);
-        mainSongList.setFont(new Font("Serif", Font.PLAIN, 14));
+        mainSongList.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         scrollPanelLeft = new JScrollPane(mainSongList);
         scrollPanelLeft.setPreferredSize(new Dimension((int) (WIDTH * 0.47), (int) (HEIGHT * 0.7)));
         return scrollPanelLeft;
@@ -195,7 +193,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         songsToCopyList.setSelectedIndex(0);
         songsToCopyList.addListSelectionListener(this);
         songsToCopyList.setVisibleRowCount(5);
-        songsToCopyList.setFont(new Font("Serif", Font.PLAIN, 14));
+        songsToCopyList.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         scrollPanelRight = new JScrollPane(songsToCopyList);
         scrollPanelRight.setPreferredSize(new Dimension((int) (WIDTH * 0.33), (int) (HEIGHT * 0.7)));
         return scrollPanelRight;
@@ -264,7 +262,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         } else if (e.getSource() == back) {
             frame.dispose();
             // TODO: not create new frame
-
+            AllPlaylistsMenuFrame allPlaylistsMenuFrame = new AllPlaylistsMenuFrame(app);
             System.out.println("playlist menu");
         } else if (e.getSource() == playButton) {
             app.getSongThread().startPlaying(playlist.getSongsInPlaylist());

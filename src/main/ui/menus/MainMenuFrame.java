@@ -21,6 +21,8 @@ public class MainMenuFrame extends JFrame implements ActionListener {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 550;
 
+    private static final int FONT_SIZE = 16;
+
     public MainMenuFrame(MusicApp app) {
         this.app = app;
         this.setLayout(new BorderLayout());
@@ -49,7 +51,7 @@ public class MainMenuFrame extends JFrame implements ActionListener {
         songsButton.addActionListener(this);
         songsButton.setPreferredSize(new Dimension(WIDTH / 2, (int) (HEIGHT * .75)));
         songsButton.setText("Browse Songs");
-        songsButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        songsButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         return songsButton;
     }
 
@@ -58,25 +60,25 @@ public class MainMenuFrame extends JFrame implements ActionListener {
         playlistsButton.addActionListener(this);
         playlistsButton.setPreferredSize(new Dimension(WIDTH / 2, (int) (HEIGHT * .75)));
         playlistsButton.setText("Browse Playlists");
-        playlistsButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        playlistsButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         return playlistsButton;
     }
 
     private JButton initPlayButton() {
         playButton = new JButton();
         playButton.addActionListener(this);
-        playButton.setPreferredSize(new Dimension(WIDTH / 4, (int) (HEIGHT * .12)));
+        playButton.setPreferredSize(new Dimension((int) (WIDTH / 2.5), (int) (HEIGHT * .12)));
         playButton.setText("Play");
-        playButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        playButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         return playButton;
     }
 
     private JButton initPauseButton() {
         pauseButton = new JButton();
         pauseButton.addActionListener(this);
-        pauseButton.setPreferredSize(new Dimension(WIDTH / 4, (int) (HEIGHT * .12)));
+        pauseButton.setPreferredSize(new Dimension((int) (WIDTH / 2.5), (int) (HEIGHT * .12)));
         pauseButton.setText("Stop");
-        pauseButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        pauseButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         return pauseButton;
     }
 

@@ -79,10 +79,10 @@ public class JsonReader {
     private void addSong(Playlist p, JSONObject jsonObject) throws MalformedURLException {
         String name = jsonObject.getString("song name");
         String artist = jsonObject.getString("artist");
-        String src = jsonObject.getString("source");
+        String source = jsonObject.getString("source");
         int duration = jsonObject.getInt("duration");
 
-        Song song = new Song(name, artist, src, duration);
+        Song song = new Song(name, artist, source, duration);
         p.addSong(song);
     }
 }
