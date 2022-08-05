@@ -92,14 +92,9 @@ public class MainMenuFrame extends JFrame implements ActionListener {
             System.out.println("playlists");
         } else if (e.getSource() == playButton) {
             app.getSongThread().startPlaying(app.getAllSongs());
-//            if (app.getSongThread().getStatus().equals("playing")) {
-//                for (Song s : app.getAllSongs()) {
-//                    currentSongLabel.setText("Playing: " + s.getSongTitle() + " by " + s.getArtist());
-//                }
-//            }
+
         } else if (e.getSource() == pauseButton) {
             app.getSongThread().stopPlaying();
-//            currentSongLabel.setText("Stopped");
         }
     }
 }

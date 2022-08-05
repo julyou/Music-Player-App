@@ -15,16 +15,15 @@ public class AllSongsMenuFrame extends javax.swing.JFrame implements ActionListe
     private static final int WIDTH = 800;
     private static final int HEIGHT = 550;
 
-    private final JMenuBar menuBar;
-    private final JMenu file;
-    private final JMenuItem mainMenu;
+    private JMenuBar menuBar;
+    private JMenu file;
+    private JMenuItem mainMenu;
 
     private final JList<String> list;
     private final DefaultListModel<String> listModel;
     private final MusicApp app;
 
     // TODO: fix checkstyle error
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     AllSongsMenuFrame(MusicApp app) {
         this.app = app;
 
@@ -33,19 +32,8 @@ public class AllSongsMenuFrame extends javax.swing.JFrame implements ActionListe
         frame.setSize(WIDTH, HEIGHT);
         frame.setVisible(true);
 
-        menuBar = new JMenuBar();
-        menuBar.setOpaque(true);
 
-        file = new JMenu("File");
-        file.setFont(new Font("Serif", Font.PLAIN, 18));
-        mainMenu = new JMenuItem("Main menu");
-
-        menuBar.add(file);
-        file.add(mainMenu);
-
-        frame.setJMenuBar(menuBar);
-
-        mainMenu.addActionListener(this);
+        frame.setJMenuBar(initMenuBar());
 
         listModel = new DefaultListModel<>();
 
@@ -63,6 +51,18 @@ public class AllSongsMenuFrame extends javax.swing.JFrame implements ActionListe
         list.setFont(new Font("Serif", Font.PLAIN, 16));
 
         frame.add(list);
+    }
+
+    public JMenuBar initMenuBar() {
+        menuBar = new JMenuBar();
+        file = new JMenu("File");
+        file.setFont(new Font("Serif", Font.PLAIN, 18));
+        mainMenu = new JMenuItem("Main menu");
+        mainMenu.addActionListener(this);
+        menuBar.add(file);
+        file.add(mainMenu);
+
+        return menuBar;
     }
 
     @Override
