@@ -1,7 +1,5 @@
 package ui.menus;
 
-import model.Song;
-import model.SongThread;
 import ui.MusicApp;
 
 import javax.swing.*;
@@ -17,23 +15,12 @@ public class MainMenuFrame extends JFrame implements ActionListener {
 
     JPanel bottomMainPanel;
     JPanel playPausePanel;
-//    JLabel currentSongLabel;
-    JList<JButton> listButton;
-    SongThread songThread;
-
-    ImageIcon playIcon;
-    ImageIcon pauseIcon;
-
-
-
-    String text;
 
     MusicApp app;
 
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = 450;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 550;
 
-    //    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public MainMenuFrame(MusicApp app) {
         this.app = app;
         this.setLayout(new BorderLayout());
@@ -42,17 +29,6 @@ public class MainMenuFrame extends JFrame implements ActionListener {
         this.setSize(WIDTH, HEIGHT);
         this.setVisible(true);
 
-//        currentSongLabel = new JLabel();
-//        currentSongLabel.setPreferredSize(new Dimension(WIDTH, 20));
-//        currentSongLabel.setHorizontalTextPosition(JLabel.CENTER);
-//        currentSongLabel.setVerticalTextPosition(JLabel.BOTTOM);
-//        currentSongLabel.setVerticalAlignment(JLabel.CENTER);
-//        currentSongLabel.setHorizontalAlignment(JLabel.CENTER);
-//        currentSongLabel.setText("");
-//
-//
-//        currentSongLabel.setFont(new Font("Serif", Font.PLAIN, 14));
-
         playPausePanel = new JPanel();
         playPausePanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .17)));
         playPausePanel.add(initPlayButton());
@@ -60,13 +36,13 @@ public class MainMenuFrame extends JFrame implements ActionListener {
 
         bottomMainPanel = new JPanel();
         bottomMainPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .17)));
-//        bottomMainPanel.add(currentSongLabel);
         bottomMainPanel.add(playPausePanel);
 
         this.add(initSongsButton(), BorderLayout.WEST);
         this.add(initPlaylistsButton(), BorderLayout.EAST);
         this.add(bottomMainPanel, BorderLayout.SOUTH);
     }
+
 
     private JButton initSongsButton() {
         songsButton = new JButton();
@@ -112,18 +88,13 @@ public class MainMenuFrame extends JFrame implements ActionListener {
             System.out.println("songs");
         } else if (e.getSource() == playlistsButton) {
             this.dispose();
-            PlaylistMenuFrame playlistMenuFrame = new PlaylistMenuFrame(app);
+            AllPlaylistsMenuFrame allPlaylistsMenuFrame = new AllPlaylistsMenuFrame(app);
             System.out.println("playlists");
         } else if (e.getSource() == playButton) {
             app.getSongThread().startPlaying(app.getAllSongs());
-//            if (app.getSongThread().getStatus().equals("playing")) {
-//                for (Song s : app.getAllSongs()) {
-//                    currentSongLabel.setText("Playing: " + s.getSongTitle() + " by " + s.getArtist());
-//                }
-//            }
+
         } else if (e.getSource() == pauseButton) {
             app.getSongThread().stopPlaying();
-//            currentSongLabel.setText("Stopped");
         }
     }
 }

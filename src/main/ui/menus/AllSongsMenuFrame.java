@@ -12,19 +12,18 @@ import java.awt.event.ActionListener;
 
 public class AllSongsMenuFrame extends javax.swing.JFrame implements ActionListener, ListSelectionListener {
     JFrame frame = new JFrame();
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = 450;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 550;
 
-    private final JMenuBar menuBar;
-    private final JMenu file;
-    private final JMenuItem mainMenu;
+    private JMenuBar menuBar;
+    private JMenu file;
+    private JMenuItem mainMenu;
 
     private final JList<String> list;
     private final DefaultListModel<String> listModel;
     private final MusicApp app;
 
     // TODO: fix checkstyle error
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     AllSongsMenuFrame(MusicApp app) {
         this.app = app;
 
@@ -32,22 +31,9 @@ public class AllSongsMenuFrame extends javax.swing.JFrame implements ActionListe
         frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setVisible(true);
-//        frame.setBackground(new Color(234, 231, 226));
-//        frame.getContentPane().setBackground(new Color(234, 231, 226));
 
-        menuBar = new JMenuBar();
-        menuBar.setOpaque(true);
 
-        file = new JMenu("File");
-        file.setFont(new Font("Serif", Font.PLAIN, 18));
-        mainMenu = new JMenuItem("Main menu");
-
-        menuBar.add(file);
-        file.add(mainMenu);
-
-        frame.setJMenuBar(menuBar);
-
-        mainMenu.addActionListener(this);
+        frame.setJMenuBar(initMenuBar());
 
         listModel = new DefaultListModel<>();
 
@@ -62,9 +48,21 @@ public class AllSongsMenuFrame extends javax.swing.JFrame implements ActionListe
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
         list.setVisibleRowCount(5);
-        list.setFont(new Font("Serif", Font.PLAIN, 14));
+        list.setFont(new Font("Serif", Font.PLAIN, 16));
 
         frame.add(list);
+    }
+
+    public JMenuBar initMenuBar() {
+        menuBar = new JMenuBar();
+        file = new JMenu("File");
+        file.setFont(new Font("Serif", Font.PLAIN, 18));
+        mainMenu = new JMenuItem("Main menu");
+        mainMenu.addActionListener(this);
+        menuBar.add(file);
+        file.add(mainMenu);
+
+        return menuBar;
     }
 
     @Override
