@@ -50,9 +50,8 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     private static final String addPlaylistString = "Add Playlist";
     private static final String deletePlaylistString = "Delete Playlist";
     private static final String JSON_STORE = "data/playlists.json";
+    private static final int FONT_SIZE = 16;
 
-
-    // TODO: checkstyle fix
     public AllPlaylistsMenuFrame(MusicApp app) {
         this.app = app;
 
@@ -72,7 +71,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         saveLoadLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         inputPlaylistNameForm = new JTextField("", 27);
-        inputPlaylistNameForm.setFont(new Font("Serif", Font.PLAIN, 14));
+        inputPlaylistNameForm.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         inputPlaylistNameForm.setPreferredSize(new Dimension(WIDTH / 2, (int) (HEIGHT * .1)));
 
         frame.setJMenuBar(initMenuBar());
@@ -84,7 +83,8 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         menuBar = new JMenuBar();
         file = new JMenu("File");
         mainMenu = new JMenuItem("Main menu");
-        file.setFont(new Font("Serif", Font.PLAIN, 16));
+        file.setFont(new Font("Serif", Font.PLAIN, 18));
+        mainMenu.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         mainMenu.addActionListener(this);
         menuBar.add(file);
         file.add(mainMenu);
@@ -135,7 +135,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
-        list.setFont(new Font("Serif", Font.PLAIN, 14));
+        list.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         scrollPanel = new JScrollPane(list);
         scrollPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.77), (int) (HEIGHT * 0.7)));
 
@@ -148,7 +148,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         addButton.setActionCommand(addPlaylistString);
         addButton.addActionListener(addButtonListener);
         addButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .1)));
-        addButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        addButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         addButton.setEnabled(true);
 
         return addButton;
@@ -157,7 +157,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     public JButton initDeleteButton() {
         deleteButton = new JButton(deletePlaylistString);
         deleteButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .1)));
-        deleteButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        deleteButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         deleteButton.setActionCommand(deletePlaylistString);
         deleteButton.addActionListener(new DeleteButtonListener());
 
@@ -168,7 +168,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     public JButton initOpenPlaylistButton() {
         openButton = new JButton("View playlist");
         openButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .25)));
-        openButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        openButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         openButton.addActionListener(new ViewListener());
         openButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         return openButton;
@@ -177,7 +177,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     public JButton initSaveButton() {
         saveButton = new JButton("Save playlists");
         saveButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .18)));
-        saveButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        saveButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         saveButton.addActionListener(new PlaylistsSaveListener());
         saveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         return saveButton;
@@ -186,7 +186,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     public JButton initLoadButton() {
         loadButton = new JButton("Load playlists");
         loadButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .18)));
-        loadButton.setFont(new Font("Serif", Font.PLAIN, 14));
+        loadButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         loadButton.addActionListener(new PlaylistsLoadListener());
         loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         return loadButton;
