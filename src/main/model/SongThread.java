@@ -8,8 +8,6 @@ import java.util.concurrent.TimeUnit;
 public class SongThread extends Thread {
     private static String status;
     List<Song> songs;
-    private String currentSong;
-    private String currentArtist;
 
     // EFFECTS: creates an empty song thread with initial status "stopped"
     public SongThread() {
@@ -42,8 +40,8 @@ public class SongThread extends Thread {
         for (Song s : songs) {
             s.playSong();
             System.out.println("playing" + s.getSongTitle());
-            currentSong = s.getSongTitle();
-            currentArtist = s.getArtist();
+            String currentSong = s.getSongTitle();
+            String currentArtist = s.getArtist();
             int i = 0;
             while (status.equals("playing") && i < s.getSongDuration()) {
                 try {
