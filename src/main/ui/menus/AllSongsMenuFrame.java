@@ -24,40 +24,48 @@ public class AllSongsMenuFrame extends JPanel implements ActionListener, ListSel
         super(new GridLayout(1, 0));
         this.app = app;
 
-        frame.setTitle("Your Songs");
+        JScrollPane scrollPane = new JScrollPane(initSongTable());
+
+        frame.setTitle("All Songs");
+        frame.setFont(new Font("Serif", Font.BOLD, 18));
         frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
-        frame.setVisible(true);
         frame.setJMenuBar(initMenuBar());
-
-        JScrollPane scrollPane = new JScrollPane(initSongTable());
         frame.add(scrollPane);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.setResizable(false);
     }
 
     // MODIFIES: this
     // EFFECTS: fills table with songs information, including song title, artist, and duration
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public JTable initSongTable() {
-        String[] columnNames = {"Song", "Artist", "Duration (seconds)"};
+        String[] columnNames = {"#", "Song", "Artist", "Duration (sec)"};
 
         Object[][] data = {
-                {app.getAllSongs().get(0).getSongTitle(), app.getAllSongs().get(0).getArtist(),
+                {1, app.getAllSongs().get(0).getSongTitle(), app.getAllSongs().get(0).getArtist(),
                         app.getAllSongs().get(0).getSongDuration()},
-                {app.getAllSongs().get(1).getSongTitle(), app.getAllSongs().get(1).getArtist(),
+                {2, app.getAllSongs().get(1).getSongTitle(), app.getAllSongs().get(1).getArtist(),
                         app.getAllSongs().get(1).getSongDuration()},
-                {app.getAllSongs().get(2).getSongTitle(), app.getAllSongs().get(2).getArtist(),
+                {3, app.getAllSongs().get(2).getSongTitle(), app.getAllSongs().get(2).getArtist(),
                         app.getAllSongs().get(2).getSongDuration()},
-                {app.getAllSongs().get(3).getSongTitle(), app.getAllSongs().get(3).getArtist(),
+                {4, app.getAllSongs().get(3).getSongTitle(), app.getAllSongs().get(3).getArtist(),
                         app.getAllSongs().get(3).getSongDuration()},
-                {app.getAllSongs().get(4).getSongTitle(), app.getAllSongs().get(4).getArtist(),
+                {5, app.getAllSongs().get(4).getSongTitle(), app.getAllSongs().get(4).getArtist(),
                         app.getAllSongs().get(4).getSongDuration()},
-                {app.getAllSongs().get(5).getSongTitle(), app.getAllSongs().get(5).getArtist(),
+                {6, app.getAllSongs().get(5).getSongTitle(), app.getAllSongs().get(5).getArtist(),
                         app.getAllSongs().get(5).getSongDuration()},
-                {app.getAllSongs().get(6).getSongTitle(), app.getAllSongs().get(6).getArtist(),
+                {7, app.getAllSongs().get(6).getSongTitle(), app.getAllSongs().get(6).getArtist(),
                         app.getAllSongs().get(6).getSongDuration()}
         };
 
         final JTable table = new JTable(data, columnNames);
         table.setRowHeight(26);
+        table.getColumnModel().getColumn(0).setMaxWidth((int) (WIDTH * 0.08));
+        table.getColumnModel().getColumn(1).setMinWidth((int) (WIDTH * 0.3));
+        table.getColumnModel().getColumn(2).setMinWidth((int) (WIDTH * 0.3));
+        table.getColumnModel().getColumn(3).setMinWidth((int) (WIDTH * 0.2));
         table.getTableHeader().setFont(new Font("Serif", Font.BOLD, 18));
         table.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         return table;

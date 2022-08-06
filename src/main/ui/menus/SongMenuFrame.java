@@ -50,25 +50,34 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
             this.playlists.addPlaylist(p);
         }
 
-        frame.setTitle("Songs");
+        frame.setTitle(playlist.getPlaylistName());
+        frame.setFont(new Font("Serif", Font.BOLD, 18));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
+        frame.setJMenuBar(initMenuBar());
+        frame.add(initBottomPanel(), BorderLayout.SOUTH);
+        frame.add(initMainPanel(), BorderLayout.CENTER);
+        frame.add(initSidePanel(), BorderLayout.EAST);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        frame.setResizable(false);
+    }
 
+    // MODIFIES: this
+    // EFFECTS: creates side panel with add song and delete song buttons
+    private JPanel initSidePanel() {
         JPanel emptyPanel = new JPanel();
-        emptyPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.17), (int) (HEIGHT * .04)));
+        emptyPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.1), (int) (HEIGHT * .04)));
 
         JPanel sidePanel = new JPanel();
-        sidePanel.setPreferredSize(new Dimension((int) (WIDTH * 0.2), (int) (HEIGHT * .7)));
+        sidePanel.setPreferredSize(new Dimension((int) (WIDTH * 0.16), (int) (HEIGHT * .7)));
         sidePanel.add(emptyPanel);
         sidePanel.add(initAddButton());
         sidePanel.add(initDeleteButton());
         sidePanel.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-        frame.setJMenuBar(initMenuBar());
-        frame.add(initBottomPanel(), BorderLayout.SOUTH);
-        frame.add(initMainPanel(), BorderLayout.WEST);
-        frame.add(sidePanel, BorderLayout.EAST);
+        return sidePanel;
     }
 
     // MODIFIES: this
@@ -96,16 +105,16 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         songsAdded.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
 
         JPanel subMainPanelLeft = new JPanel();
-        subMainPanelLeft.setPreferredSize(new Dimension((int) (WIDTH * 0.47), (int) (HEIGHT * .7)));
+        subMainPanelLeft.setPreferredSize(new Dimension((int) (WIDTH * 0.52), (int) (HEIGHT * .7)));
         subMainPanelLeft.setAlignmentY(Component.CENTER_ALIGNMENT);
         subMainPanelLeft.add(songsAdded, BorderLayout.NORTH);
         subMainPanelLeft.add(initAddedSongsScrollPanel(), BorderLayout.SOUTH);
 
-        JLabel songsNotAdded = new JLabel("Choose songs to add: ");
+        JLabel songsNotAdded = new JLabel("<<<  Choose songs to add: ");
         songsNotAdded.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
 
         JPanel subMainPanelRight = new JPanel();
-        subMainPanelRight.setPreferredSize(new Dimension((int) (WIDTH * 0.33), (int) (HEIGHT * .7)));
+        subMainPanelRight.setPreferredSize(new Dimension((int) (WIDTH * 0.32), (int) (HEIGHT * .7)));
         subMainPanelRight.setAlignmentY(Component.CENTER_ALIGNMENT);
         subMainPanelRight.add(songsNotAdded, BorderLayout.NORTH);
         subMainPanelRight.add(initAllSongsScrollPanel(), BorderLayout.SOUTH);
@@ -136,10 +145,11 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
     private JButton initAddButton() {
         addButton = new JButton(addSongString);
         addButton.setActionCommand(addSongString);
-        addButton.setPreferredSize(new Dimension((int) (WIDTH * 0.17), (int) (HEIGHT * .32)));
+        addButton.setPreferredSize(new Dimension((int) (WIDTH * 0.155), (int) (HEIGHT * .32)));
         addButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         addButton.addActionListener(new AddButtonListener());
+        addButton.setEnabled(true);
         return addButton;
     }
 
@@ -149,7 +159,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         deleteButton = new JButton(deleteSongString);
         deleteButton.setActionCommand(deleteSongString);
         deleteButton.addActionListener(new DeleteButtonListener());
-        deleteButton.setPreferredSize(new Dimension((int) (WIDTH * 0.17), (int) (HEIGHT * .32)));
+        deleteButton.setPreferredSize(new Dimension((int) (WIDTH * 0.155), (int) (HEIGHT * .32)));
         deleteButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         deleteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         return deleteButton;
@@ -194,7 +204,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         mainSongList.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
 
         JScrollPane scrollPanelLeft = new JScrollPane(mainSongList);
-        scrollPanelLeft.setPreferredSize(new Dimension((int) (WIDTH * 0.47), (int) (HEIGHT * 0.7)));
+        scrollPanelLeft.setPreferredSize(new Dimension((int) (WIDTH * 0.52), (int) (HEIGHT * 0.7)));
         return scrollPanelLeft;
     }
 
@@ -215,14 +225,23 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         songsToCopyList.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
 
         JScrollPane scrollPanelRight = new JScrollPane(songsToCopyList);
-        scrollPanelRight.setPreferredSize(new Dimension((int) (WIDTH * 0.33), (int) (HEIGHT * 0.7)));
+        scrollPanelRight.setPreferredSize(new Dimension((int) (WIDTH * 0.32), (int) (HEIGHT * 0.7)));
         return scrollPanelRight;
     }
 
-
     @Override
     public void valueChanged(ListSelectionEvent e) {
-
+        if (!e.getValueIsAdjusting()) {
+            if (songsToCopyList.getSelectedIndex() == -1) {
+                addButton.setEnabled(false);
+            } else if (songsToCopyList.getSelectedIndex() != -1) {
+                addButton.setEnabled(true);
+            } else if (mainSongList.getSelectedIndex() == -1) {
+                deleteButton.setEnabled(false);
+            } else {
+                deleteButton.setEnabled(true);
+            }
+        }
     }
 
     // based on ListDemoProject
@@ -232,13 +251,17 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
     class DeleteButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             int index = mainSongList.getSelectedIndex();
+            String element = mainSongList.getSelectedValue();
             mainSongListModel.remove(index);
-            String element = songsToCopyList.getSelectedValue();
+
             for (Song s : app.getAllSongs()) {
                 if (element.equals(s.getSongTitle())) {
                     playlist.removeSong(s);
                 }
             }
+
+            System.out.println(playlist.getSongsTitlesInPlaylist());
+
             int size = mainSongListModel.getSize();
 
             if (size == 0) {
@@ -262,12 +285,24 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
     class AddButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String element = songsToCopyList.getSelectedValue();
-            mainSongListModel.addElement(element);
+
+
+            int index = mainSongList.getSelectedIndex();
+            if (index == -1) {
+                index = 0;
+            } else {
+                index++;
+            }
+
+            mainSongListModel.insertElementAt(element, index);
+
+//            mainSongListModel.addElement(element);
             for (Song s : app.getAllSongs()) {
                 if (element.equals(s.getSongTitle())) {
-                    playlist.addSong(s);
+                    playlist.addSongAtIndex(index, s);
                 }
             }
+            System.out.println(playlist.getSongsTitlesInPlaylist());
 
             int size = songsToCopyListModel.getSize();
 
@@ -294,5 +329,3 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         }
     }
 }
-
-

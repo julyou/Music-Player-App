@@ -18,7 +18,7 @@ public class MainMenuFrame extends JFrame implements ActionListener {
     private final MusicApp app;
 
     private static final int WIDTH = 800;
-    private static final int HEIGHT = 550;
+    private static final int HEIGHT = 555;
     private static final int FONT_SIZE = 16;
 
     // EFFECTS: creates main menu with layout and components
@@ -26,25 +26,29 @@ public class MainMenuFrame extends JFrame implements ActionListener {
         this.app = app;
 
         JPanel playPausePanel = new JPanel();
-        playPausePanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .17)));
+        playPausePanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .18)));
         playPausePanel.add(initPlayButton());
         playPausePanel.add(initStopButton());
 
         JPanel bottomMainPanel = new JPanel();
-        bottomMainPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .17)));
+        bottomMainPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .18)));
         bottomMainPanel.add(playPausePanel);
 
         JPanel mainPanel = new JPanel();
         mainPanel.add(initSongsButton(), BorderLayout.WEST);
         mainPanel.add(initPlaylistsButton(), BorderLayout.EAST);
-        mainPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .8)));
+        mainPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .79)));
 
-        frame.setTitle("Music Player");
+        frame.setTitle("Main Menu");
+        frame.setFont(new Font("Serif", Font.BOLD, 18));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
-        frame.setVisible(true);
         frame.add(mainPanel, BorderLayout.CENTER);
         frame.add(bottomMainPanel, BorderLayout.SOUTH);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.setResizable(false);
     }
 
     // MODIFIES: this
@@ -52,7 +56,7 @@ public class MainMenuFrame extends JFrame implements ActionListener {
     private JButton initSongsButton() {
         songsButton = new JButton();
         songsButton.addActionListener(this);
-        songsButton.setPreferredSize(new Dimension((int) (WIDTH / 2.05), (int) (HEIGHT * .8)));
+        songsButton.setPreferredSize(new Dimension((int) (WIDTH / 2.05), (int) (HEIGHT * .75)));
         songsButton.setText("Browse Songs");
         songsButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         return songsButton;
@@ -63,7 +67,7 @@ public class MainMenuFrame extends JFrame implements ActionListener {
     private JButton initPlaylistsButton() {
         playlistsButton = new JButton();
         playlistsButton.addActionListener(this);
-        playlistsButton.setPreferredSize(new Dimension((int) (WIDTH / 2.05), (int) (HEIGHT * .8)));
+        playlistsButton.setPreferredSize(new Dimension((int) (WIDTH / 2.05), (int) (HEIGHT * .75)));
         playlistsButton.setText("Browse Playlists");
         playlistsButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         return playlistsButton;
@@ -74,7 +78,7 @@ public class MainMenuFrame extends JFrame implements ActionListener {
     private JButton initPlayButton() {
         playButton = new JButton();
         playButton.addActionListener(this);
-        playButton.setPreferredSize(new Dimension((int) (WIDTH / 2.5), (int) (HEIGHT * .12)));
+        playButton.setPreferredSize(new Dimension((int) (WIDTH / 2.5), (int) (HEIGHT * .14)));
         playButton.setText("Play");
         playButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         return playButton;
@@ -85,7 +89,7 @@ public class MainMenuFrame extends JFrame implements ActionListener {
     private JButton initStopButton() {
         stopButton = new JButton();
         stopButton.addActionListener(this);
-        stopButton.setPreferredSize(new Dimension((int) (WIDTH / 2.5), (int) (HEIGHT * .12)));
+        stopButton.setPreferredSize(new Dimension((int) (WIDTH / 2.5), (int) (HEIGHT * .14)));
         stopButton.setText("Stop");
         stopButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         return stopButton;
