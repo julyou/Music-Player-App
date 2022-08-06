@@ -157,7 +157,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         addButton.addActionListener(addButtonListener);
         addButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .1)));
         addButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
-        addButton.setEnabled(false);
+        addButton.setEnabled(true);
 
         return addButton;
     }

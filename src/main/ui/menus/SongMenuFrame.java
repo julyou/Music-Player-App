@@ -251,13 +251,17 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
     class DeleteButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             int index = mainSongList.getSelectedIndex();
+            String element = mainSongList.getSelectedValue();
             mainSongListModel.remove(index);
-            String element = songsToCopyList.getSelectedValue();
+
             for (Song s : app.getAllSongs()) {
                 if (element.equals(s.getSongTitle())) {
                     playlist.removeSong(s);
                 }
             }
+
+            System.out.println(playlist.getSongsTitlesInPlaylist());
+
             int size = mainSongListModel.getSize();
 
             if (size == 0) {
@@ -287,6 +291,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
                     playlist.addSong(s);
                 }
             }
+            System.out.println(playlist.getSongsTitlesInPlaylist());
 
             int size = songsToCopyListModel.getSize();
 
