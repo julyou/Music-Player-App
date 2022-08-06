@@ -1,7 +1,5 @@
 package ui;
 
-import ui.menus.MainMenuFrame;
-
 import java.net.MalformedURLException;
 
 // Creates a Music player application
