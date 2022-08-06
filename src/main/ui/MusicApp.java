@@ -70,10 +70,6 @@ public class MusicApp {
         songthread.end();
     }
 
-    public SongThread getSongThread() {
-        return songthread;
-    }
-
     // EFFECTS: sets up the music application
     public void runMusicApp() {
         keepGoing = true;
@@ -83,8 +79,8 @@ public class MusicApp {
         endProgram();
     }
 
-    // MODIFIES this
-    // EFFECTS: creates and shows UI
+    // MODIFIES: this
+    // EFFECTS: creates and shows initial splash screen
     public void initializeFrame() {
         new SplashScreenOpen(this);
     }
@@ -472,27 +468,6 @@ public class MusicApp {
         }
     }
 
-    // getters
-    public List<Song> getAllSongs() {
-        List<Song> songs = new LinkedList<>();
-        for (Song s : this.songs) {
-            songs.add(s);
-        }
-        return songs;
-    }
-
-    public Playlists getAllPlaylists() {
-        return playlists;
-    }
-
-//    private List<String> getAllSongs(List<Song> songs) {
-//        List<String> songNames = new LinkedList<>();
-//        for (Song s : songs) {
-//            songNames.add(s.getSongTitle() + " by " + s.getArtist());
-//        }
-//        return songNames;
-//    }
-
     // EFFECTS: prints all playlists in library
     public void printAllPlaylists(Playlists playlists) {
         List<String> playlistNames = new LinkedList<>();
@@ -513,6 +488,7 @@ public class MusicApp {
         input.close();
     }
 
+    // MODIFIES: this
     // EFFECTS: saves playlists to file
     public void savePlaylists() {
         try {
@@ -539,5 +515,20 @@ public class MusicApp {
         displayPlaylistMenu(playlists);
     }
 
+    // getters
+    public List<Song> getAllSongs() {
+        List<Song> songs = new LinkedList<>();
+        for (Song s : this.songs) {
+            songs.add(s);
+        }
+        return songs;
+    }
 
+    public Playlists getAllPlaylists() {
+        return playlists;
+    }
+
+    public SongThread getSongThread() {
+        return songthread;
+    }
 }

@@ -22,6 +22,12 @@ public class Playlists implements Writable {
         playlists.add(p);
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes playlist to from playlists
+    public void removePlaylist(int i) {
+        playlists.remove(i);
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -49,6 +55,14 @@ public class Playlists implements Writable {
 
     public List<Playlist> getPlaylists() {
         return playlists;
+    }
+
+    public List<String> getPlaylistsNames() {
+        List<String> names = new ArrayList<>();
+        for (Playlist p : playlists) {
+            names.add(p.getPlaylistName());
+        }
+        return names;
     }
 
 }

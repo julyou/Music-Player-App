@@ -1,6 +1,5 @@
 package ui.menus;
 
-import model.Song;
 import ui.MusicApp;
 
 import javax.swing.*;
@@ -10,22 +9,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// represents menu displaying all songs in the app with song title, artist, and duration
 public class AllSongsMenuFrame extends JPanel implements ActionListener, ListSelectionListener {
-    JFrame frame = new JFrame();
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 550;
-
-    private JMenuBar menuBar;
-    private JMenu file;
+    private final JFrame frame = new JFrame();
     private JMenuItem mainMenu;
-
     private final MusicApp app;
 
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 550;
     private static final int FONT_SIZE = 16;
 
+    // EFFECTS: creates all songs menu in table layout
     public AllSongsMenuFrame(MusicApp app) {
         super(new GridLayout(1, 0));
-
         this.app = app;
 
         frame.setTitle("Your Songs");
@@ -38,6 +34,8 @@ public class AllSongsMenuFrame extends JPanel implements ActionListener, ListSel
         frame.add(scrollPane);
     }
 
+    // MODIFIES: this
+    // EFFECTS: fills table with songs information, including song title, artist, and duration
     public JTable initSongTable() {
         String[] columnNames = {"Song", "Artist", "Duration (seconds)"};
 
@@ -65,9 +63,11 @@ public class AllSongsMenuFrame extends JPanel implements ActionListener, ListSel
         return table;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates menu bar with main menu submenu
     public JMenuBar initMenuBar() {
-        menuBar = new JMenuBar();
-        file = new JMenu("File");
+        JMenuBar menuBar = new JMenuBar();
+        JMenu file = new JMenu("Navigation");
         file.setFont(new Font("Serif", Font.PLAIN, 18));
         mainMenu = new JMenuItem("Main menu");
         mainMenu.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
@@ -79,6 +79,8 @@ public class AllSongsMenuFrame extends JPanel implements ActionListener, ListSel
     }
 
     @Override
+    // MODIFIES: this
+    // EFFECTS: processes main menu click and brings user to main menu
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == mainMenu) {
             frame.dispose();
@@ -89,6 +91,5 @@ public class AllSongsMenuFrame extends JPanel implements ActionListener, ListSel
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-
     }
 }

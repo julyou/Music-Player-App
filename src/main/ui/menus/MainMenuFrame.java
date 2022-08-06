@@ -1,41 +1,36 @@
 package ui.menus;
 
-import model.Song;
 import ui.MusicApp;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
+// Represents a main menu
 public class MainMenuFrame extends JFrame implements ActionListener {
-    JFrame frame = new JFrame();
-    JButton songsButton;
-    JButton playlistsButton;
-    JButton playButton;
-    JButton pauseButton;
+    private final JFrame frame = new JFrame();
+    private JButton songsButton;
+    private JButton playlistsButton;
+    private JButton playButton;
+    private JButton stopButton;
 
-    JPanel bottomMainPanel;
-    JPanel playPausePanel;
-
-    MusicApp app;
+    private final MusicApp app;
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 550;
-
     private static final int FONT_SIZE = 16;
 
+    // EFFECTS: creates main menu with layout and components
     public MainMenuFrame(MusicApp app) {
         this.app = app;
 
-        playPausePanel = new JPanel();
+        JPanel playPausePanel = new JPanel();
         playPausePanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .17)));
         playPausePanel.add(initPlayButton());
-        playPausePanel.add(initPauseButton());
+        playPausePanel.add(initStopButton());
 
-        bottomMainPanel = new JPanel();
+        JPanel bottomMainPanel = new JPanel();
         bottomMainPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .17)));
         bottomMainPanel.add(playPausePanel);
 
@@ -46,14 +41,14 @@ public class MainMenuFrame extends JFrame implements ActionListener {
 
         frame.setTitle("Music Player");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         frame.setSize(WIDTH, HEIGHT);
         frame.setVisible(true);
         frame.add(mainPanel, BorderLayout.CENTER);
         frame.add(bottomMainPanel, BorderLayout.SOUTH);
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: creates "browse songs" button
     private JButton initSongsButton() {
         songsButton = new JButton();
         songsButton.addActionListener(this);
@@ -63,6 +58,8 @@ public class MainMenuFrame extends JFrame implements ActionListener {
         return songsButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates "browse playlists" button
     private JButton initPlaylistsButton() {
         playlistsButton = new JButton();
         playlistsButton.addActionListener(this);
@@ -72,6 +69,8 @@ public class MainMenuFrame extends JFrame implements ActionListener {
         return playlistsButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates "play" button
     private JButton initPlayButton() {
         playButton = new JButton();
         playButton.addActionListener(this);
@@ -81,29 +80,32 @@ public class MainMenuFrame extends JFrame implements ActionListener {
         return playButton;
     }
 
-    private JButton initPauseButton() {
-        pauseButton = new JButton();
-        pauseButton.addActionListener(this);
-        pauseButton.setPreferredSize(new Dimension((int) (WIDTH / 2.5), (int) (HEIGHT * .12)));
-        pauseButton.setText("Stop");
-        pauseButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
-        return pauseButton;
+    // MODIFIES: this
+    // EFFECTS: creates "stop" button
+    private JButton initStopButton() {
+        stopButton = new JButton();
+        stopButton.addActionListener(this);
+        stopButton.setPreferredSize(new Dimension((int) (WIDTH / 2.5), (int) (HEIGHT * .12)));
+        stopButton.setText("Stop");
+        stopButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
+        return stopButton;
     }
 
     @Override
+    // MODIFIES: this
+    // EFFECTS: listens for button clicks and processes resulting action of the respective button
+    //          "browse songs" brings user to all songs menu, "browse playlists" brings user playlists menu
+    //          "play" starts playing songs, "stop" stops playing songs
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == songsButton) {
             frame.dispose();
             AllSongsMenuFrame allSongsMenuFrame = new AllSongsMenuFrame(app);
-            System.out.println("songs");
         } else if (e.getSource() == playlistsButton) {
             frame.dispose();
-            AllPlaylistsMenuFrame allPlaylistsMenuFrame = new AllPlaylistsMenuFrame(app);
-            System.out.println("playlists");
+            AllPlaylistsMenuFrame allPlaylistsMenuFrame = new AllPlaylistsMenuFrame(app, app.getAllPlaylists());
         } else if (e.getSource() == playButton) {
             app.getSongThread().startPlaying(app.getAllSongs());
-
-        } else if (e.getSource() == pauseButton) {
+        } else if (e.getSource() == stopButton) {
             app.getSongThread().stopPlaying();
         }
     }
