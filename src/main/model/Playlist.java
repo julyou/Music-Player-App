@@ -83,6 +83,4 @@ public class Playlist implements Writable {
     public String getPlaylistName() {
         return playlistName;
     }
-
-
 }

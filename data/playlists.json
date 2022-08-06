@@ -19,11 +19,93 @@
         "playlist name": "Instrumental"
     },
     {
+        "songs": [
+            {
+                "duration": 30,
+                "song name": "Pink Panther",
+                "artist": "Henry Mancini",
+                "source": "data/song3.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
+                "song name": "Imperial March",
+                "artist": "John Williams",
+                "source": "data/song4.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
+                "song name": "Cantina Band",
+                "artist": "John Williams",
+                "source": "data/song5.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
+                "song name": "Main Title",
+                "artist": "John Williams",
+                "source": "data/song7.wav",
+                "status": ""
+            }
+        ],
+        "playlist name": "Film scores"
+    },
+    {
         "songs": [],
-        "playlist name": "a"
+        "playlist name": "f"
+    },
+    {
+        "songs": [],
+        "playlist name": "b"
+    },
+    {
+        "songs": [],
+        "playlist name": "c"
     },
     {
         "songs": [],
         "playlist name": "s"
+    },
+    {
+        "songs": [],
+        "playlist name": "e"
+    },
+    {
+        "songs": [
+            {
+                "duration": 34,
+                "song name": "song1",
+                "artist": "unknown",
+                "source": "data/song1.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
+                "song name": "Imperial March",
+                "artist": "John Williams",
+                "source": "data/song4.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
+                "song name": "Cantina Band",
+                "artist": "John Williams",
+                "source": "data/song5.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
+                "song name": "Cantina Band",
+                "artist": "John Williams",
+                "source": "data/song5.wav",
+                "status": ""
+            }
+        ],
+        "playlist name": "r"
+    },
+    {
+        "songs": [],
+        "playlist name": "q"
     }
 ]}

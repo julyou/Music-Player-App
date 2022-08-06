@@ -24,13 +24,13 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     private JList<String> list;
     private DefaultListModel<String> listModel;
 
-    private final JFrame frame;
+    private JFrame frame;
     private JMenuItem mainMenu;
     private JButton addButton;
     private final JTextField inputPlaylistNameForm;
     private final JLabel saveLoadLabel;
 
-    private final AddButtonListener addButtonListener;
+    private AddButtonListener addButtonListener;
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 550;
@@ -39,15 +39,9 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     private static final String JSON_STORE = "data/playlists.json";
     private static final int FONT_SIZE = 16;
 
-    // EFFECTS: creates playlist menu with layout and components
+    // EFFECTS: creates playlist menu
     public AllPlaylistsMenuFrame(MusicApp app, Playlists playlists) {
         this.app = app;
-
-        frame = new JFrame("Playlists");
-        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setVisible(true);
-        frame.setResizable(true);
 
         this.playlists = new Playlists();
         for (Playlist p : playlists.getPlaylists()) {
@@ -55,19 +49,34 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         }
 
         saveLoadLabel = new JLabel("");
-        saveLoadLabel.setPreferredSize(new Dimension(WIDTH / 6, (int) (HEIGHT * .05)));
+        saveLoadLabel.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
+        saveLoadLabel.setPreferredSize(new Dimension(WIDTH / 6, (int) (HEIGHT * .04)));
         saveLoadLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        addButtonListener = new AddButtonListener();
-
+        addButtonListener = new AddButtonListener(addButton);
         inputPlaylistNameForm = new JTextField("", 27);
         inputPlaylistNameForm.addActionListener(addButtonListener);
         inputPlaylistNameForm.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         inputPlaylistNameForm.setPreferredSize(new Dimension(WIDTH / 2, (int) (HEIGHT * .1)));
+        initJFrame();
+    }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame with layout and components that opens in center of screen
+    private JFrame initJFrame() {
+        frame = new JFrame("Playlists");
+        frame.setFont(new Font("Serif", Font.PLAIN, 18));
+        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        frame.setSize(WIDTH, HEIGHT);
+        frame.setResizable(false);
         frame.setJMenuBar(initMenuBar());
         frame.add(initMainPanel(), BorderLayout.NORTH);
         frame.add(initBottomPanel(), BorderLayout.SOUTH);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+        return frame;
     }
 
     // MODIFIES: this
@@ -88,7 +97,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     // EFFECTS: creates panel with list of playlists on the left and view, save, and load buttons on the right
     private JPanel initMainPanel() {
         JPanel emptyPanel = new JPanel();
-        emptyPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.17), (int) (HEIGHT * .03)));
+        emptyPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.17), (int) (HEIGHT * .015)));
 
         JPanel mainPanel = new JPanel();
         mainPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.76), (int) (HEIGHT * .7)));
@@ -148,6 +157,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         addButton.addActionListener(addButtonListener);
         addButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .1)));
         addButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
+        addButton.setEnabled(false);
 
         return addButton;
     }
@@ -217,13 +227,25 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     // EFFECTS: listens for delete playlist button click and removes playlist from displayed list and playlists
     class AddButtonListener implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
+        private JButton button;
+
+        public AddButtonListener(JButton button) {
+            this.button = button;
+        }
 
         public void actionPerformed(ActionEvent e) {
             String name = inputPlaylistNameForm.getText();
             Playlist playlist = new Playlist(name);
-            listModel.addElement(playlist.getPlaylistName());
             playlists.addPlaylist(playlist);
             saveLoadLabel.setText("");
+
+
+            if (name.equals("") || alreadyInList(name)) {
+                Toolkit.getDefaultToolkit().beep();
+                inputPlaylistNameForm.requestFocusInWindow();
+                inputPlaylistNameForm.selectAll();
+                return;
+            }
 
             int index = list.getSelectedIndex();
             if (index == -1) {
@@ -232,6 +254,8 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
                 index++;
             }
 
+            listModel.addElement(inputPlaylistNameForm.getText());
+
             // Reset the text field.
             inputPlaylistNameForm.requestFocusInWindow();
             inputPlaylistNameForm.setText("");
@@ -239,6 +263,10 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
             // Select the new item and make it visible.
             list.setSelectedIndex(index);
             list.ensureIndexIsVisible(index);
+        }
+
+        protected boolean alreadyInList(String name) {
+            return listModel.contains(name);
         }
 
         public void insertUpdate(DocumentEvent e) {
@@ -257,13 +285,13 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
 
         private void enableButton() {
             if (!alreadyEnabled) {
-                addButton.setEnabled(true);
+                button.setEnabled(true);
             }
         }
 
         private boolean handleEmptyTextField(DocumentEvent e) {
             if (e.getDocument().getLength() <= 0) {
-                addButton.setEnabled(false);
+                button.setEnabled(false);
                 alreadyEnabled = false;
                 return true;
             }
@@ -338,12 +366,17 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
             } catch (Exception ex) {
                 saveLoadLabel.setText("Could not load...");
             }
-
         }
-
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
+        if (e.getValueIsAdjusting() == false) {
+            if (list.getSelectedIndex() == -1) {
+                initDeleteButton().setEnabled(false);
+            } else {
+                initDeleteButton().setEnabled(true);
+            }
+        }
     }
 }
