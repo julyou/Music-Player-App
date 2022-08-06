@@ -52,7 +52,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     private static final String JSON_STORE = "data/playlists.json";
     private static final int FONT_SIZE = 16;
 
-    public AllPlaylistsMenuFrame(MusicApp app) {
+    public AllPlaylistsMenuFrame(MusicApp app, Playlists playlists) {
         this.app = app;
 
         frame = new JFrame("Playlists");
@@ -61,10 +61,11 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         frame.setVisible(true);
         frame.setResizable(true);
 
-        playlists = new Playlists();
-        for (Playlist p : app.getAllPlaylists().getPlaylists()) {
-            playlists.addPlaylist(p);
+        this.playlists = new Playlists();
+        for (Playlist p : playlists.getPlaylists()) {
+            this.playlists.addPlaylist(p);
         }
+
 
         saveLoadLabel = new JLabel("");
         saveLoadLabel.setPreferredSize(new Dimension(WIDTH / 6, (int) (HEIGHT * .05)));
@@ -126,7 +127,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
 
     public JScrollPane initPlaylistScrollPane() {
         listModel = new DefaultListModel<>();
-        for (Playlist p : app.getAllPlaylists().getPlaylists()) {
+        for (Playlist p : playlists.getPlaylists()) {
             listModel.addElement(p.getPlaylistName());
         }
 
@@ -223,18 +224,18 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
             playlistList.addPlaylist(playlist);
             saveLoadLabel.setText("");
 
-            int index = list.getSelectedIndex(); //get selected index
-            if (index == -1) { //no selection, so insert at beginning
+            int index = list.getSelectedIndex();
+            if (index == -1) {
                 index = 0;
-            } else {           //add after the selected item
+            } else {
                 index++;
             }
 
-            //Reset the text field.
+            // Reset the text field.
             inputPlaylistNameForm.requestFocusInWindow();
             inputPlaylistNameForm.setText("");
 
-            //Select the new item and make it visible.
+            // Select the new item and make it visible.
             list.setSelectedIndex(index);
             list.ensureIndexIsVisible(index);
         }
@@ -279,13 +280,19 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
             String playlistName = list.getSelectedValue();
             frame.dispose();
             if (playlistName.equals("Star Wars Soundtrack")) {
-                SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(0));
+                SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(0), playlists);
             } else if (playlistName.equals("Instrumental")) {
-                SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(1));
+                SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(1), playlists);
             } else if (playlistName.equals("Film scores")) {
-                SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(2));
+                SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(2), playlists);
             } else {
-                SongMenuFrame songMenuFrame = new SongMenuFrame(app, new Playlist(playlistName));
+                int index = 0;
+                for (String s : playlists.getPlaylistsNames()) {
+                    if (s.equals(playlistName)) {
+                        SongMenuFrame songMenuFrame = new SongMenuFrame(app, playlists.getPlaylist(index), playlists);
+                    }
+                    index++;
+                }
             }
         }
     }

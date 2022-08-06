@@ -51,4 +51,12 @@ public class Playlists implements Writable {
         return playlists;
     }
 
+    public List<String> getPlaylistsNames() {
+        List<String> names = new ArrayList<>();
+        for (Playlist p : playlists) {
+            names.add(p.getPlaylistName());
+        }
+        return names;
+    }
+
 }

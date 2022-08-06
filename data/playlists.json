@@ -76,5 +76,41 @@
             }
         ],
         "playlist name": "Film scores"
+    },
+    {
+        "songs": [{
+            "duration": 34,
+            "song name": "song1",
+            "artist": "unknown",
+            "source": "data/song1.wav",
+            "status": ""
+        }],
+        "playlist name": "a"
+    },
+    {
+        "songs": [
+            {
+                "duration": 34,
+                "song name": "song1",
+                "artist": "unknown",
+                "source": "data/song1.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
+                "song name": "Imperial March",
+                "artist": "John Williams",
+                "source": "data/song4.wav",
+                "status": ""
+            },
+            {
+                "duration": 18,
+                "song name": "Dhol Drums",
+                "artist": "unknown",
+                "source": "data/song6.wav",
+                "status": ""
+            }
+        ],
+        "playlist name": "s"
     }
 ]}

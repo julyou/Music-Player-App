@@ -1,6 +1,7 @@
 package ui.menus;
 
 import model.Playlist;
+import model.Playlists;
 import model.Song;
 import ui.MusicApp;
 
@@ -40,14 +41,21 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
 
     private final MusicApp app;
     private final Playlist playlist;
+    private final Playlists playlists;
+
 
     private static final String addSongString = "Add Song";
     private static final String deleteSongString = "Delete Song";
     private static final int FONT_SIZE = 16;
 
-    SongMenuFrame(MusicApp app, Playlist playlist) {
+    SongMenuFrame(MusicApp app, Playlist playlist, Playlists previousPlaylists) {
         this.app = app;
         this.playlist = playlist;
+        this.playlists = new Playlists();
+
+        for (Playlist p : previousPlaylists.getPlaylists()) {
+            this.playlists.addPlaylist(p);
+        }
 
         frame.setTitle("Songs");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -258,12 +266,9 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         if (e.getSource() == mainMenu) {
             frame.dispose();
             MainMenuFrame mainMenuFrame = new MainMenuFrame(app);
-            System.out.println("main menu");
         } else if (e.getSource() == back) {
             frame.dispose();
-            // TODO: not create new frame
-            AllPlaylistsMenuFrame allPlaylistsMenuFrame = new AllPlaylistsMenuFrame(app);
-            System.out.println("playlist menu");
+            AllPlaylistsMenuFrame allPlaylistsMenuFrame = new AllPlaylistsMenuFrame(app, playlists);
         } else if (e.getSource() == playButton) {
             app.getSongThread().startPlaying(playlist.getSongsInPlaylist());
         } else if (e.getSource() == pauseButton) {

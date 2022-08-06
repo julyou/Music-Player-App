@@ -1,5 +1,7 @@
 package ui.menus;
 
+import model.Playlist;
+import model.Playlists;
 import model.Song;
 import ui.MusicApp;
 
@@ -22,6 +24,8 @@ public class MainMenuFrame extends JFrame implements ActionListener {
 
     MusicApp app;
 
+    Playlists playlists;
+
     private static final int WIDTH = 800;
     private static final int HEIGHT = 550;
 
@@ -29,6 +33,7 @@ public class MainMenuFrame extends JFrame implements ActionListener {
 
     public MainMenuFrame(MusicApp app) {
         this.app = app;
+//        playlists = app.getAllPlaylists();
 
         playPausePanel = new JPanel();
         playPausePanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .17)));
@@ -95,11 +100,9 @@ public class MainMenuFrame extends JFrame implements ActionListener {
         if (e.getSource() == songsButton) {
             frame.dispose();
             AllSongsMenuFrame allSongsMenuFrame = new AllSongsMenuFrame(app);
-            System.out.println("songs");
         } else if (e.getSource() == playlistsButton) {
             frame.dispose();
-            AllPlaylistsMenuFrame allPlaylistsMenuFrame = new AllPlaylistsMenuFrame(app);
-            System.out.println("playlists");
+            AllPlaylistsMenuFrame allPlaylistsMenuFrame = new AllPlaylistsMenuFrame(app, app.getAllPlaylists());
         } else if (e.getSource() == playButton) {
             app.getSongThread().startPlaying(app.getAllSongs());
 
