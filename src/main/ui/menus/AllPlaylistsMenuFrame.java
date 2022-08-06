@@ -24,26 +24,15 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     private DefaultListModel<String> listModel;
 
     private final JFrame frame;
-    private JPanel bottomPanel;
-    private JPanel mainPanel;
-    private JPanel sidePanel;
-    private JPanel topMainPanel;
 
-    private JScrollPane scrollPanel;
-
-    private JMenuBar menuBar;
-    private JMenu file;
     private JMenuItem mainMenu;
 
     private JButton addButton;
-    private JButton deleteButton;
     private final JTextField inputPlaylistNameForm;
 
-    private JButton openButton;
-    private JButton saveButton;
-    private JButton loadButton;
     private final JLabel saveLoadLabel;
 
+    AddButtonListener addButtonListener;
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 550;
@@ -51,6 +40,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     private static final String deletePlaylistString = "Delete Playlist";
     private static final String JSON_STORE = "data/playlists.json";
     private static final int FONT_SIZE = 16;
+
 
     public AllPlaylistsMenuFrame(MusicApp app, Playlists playlists) {
         this.app = app;
@@ -66,12 +56,14 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
             this.playlists.addPlaylist(p);
         }
 
-
         saveLoadLabel = new JLabel("");
         saveLoadLabel.setPreferredSize(new Dimension(WIDTH / 6, (int) (HEIGHT * .05)));
         saveLoadLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        addButtonListener = new AddButtonListener(addButton);
+
         inputPlaylistNameForm = new JTextField("", 27);
+        inputPlaylistNameForm.addActionListener(addButtonListener);
         inputPlaylistNameForm.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         inputPlaylistNameForm.setPreferredSize(new Dimension(WIDTH / 2, (int) (HEIGHT * .1)));
 
@@ -81,8 +73,8 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     }
 
     private JMenuBar initMenuBar() {
-        menuBar = new JMenuBar();
-        file = new JMenu("File");
+        JMenuBar menuBar = new JMenuBar();
+        JMenu file = new JMenu("File");
         mainMenu = new JMenuItem("Main menu");
         file.setFont(new Font("Serif", Font.PLAIN, 18));
         mainMenu.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
@@ -96,11 +88,11 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         JPanel emptyPanel = new JPanel();
         emptyPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.17), (int) (HEIGHT * .03)));
 
-        mainPanel = new JPanel();
+        JPanel mainPanel = new JPanel();
         mainPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.76), (int) (HEIGHT * .7)));
         mainPanel.add(initPlaylistScrollPane(), BorderLayout.WEST);
 
-        sidePanel = new JPanel();
+        JPanel sidePanel = new JPanel();
         sidePanel.setPreferredSize(new Dimension((int) (WIDTH * 0.2), (int) (HEIGHT * 0.75)));
         sidePanel.add(emptyPanel);
         sidePanel.add(initOpenPlaylistButton());
@@ -108,7 +100,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         sidePanel.add(initLoadButton());
         sidePanel.add(saveLoadLabel);
 
-        topMainPanel = new JPanel();
+        JPanel topMainPanel = new JPanel();
         topMainPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .75)));
         topMainPanel.add(mainPanel, BorderLayout.WEST);
         topMainPanel.add(sidePanel, BorderLayout.EAST);
@@ -117,7 +109,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     }
 
     public JPanel initBottomPanel() {
-        bottomPanel = new JPanel();
+        JPanel bottomPanel = new JPanel();
         bottomPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .14)));
         bottomPanel.add(inputPlaylistNameForm);
         bottomPanel.add(initAddButton());
@@ -137,7 +129,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
         list.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
-        scrollPanel = new JScrollPane(list);
+        JScrollPane scrollPanel = new JScrollPane(list);
         scrollPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.77), (int) (HEIGHT * 0.7)));
 
         return scrollPanel;
@@ -145,7 +137,6 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
 
     public JButton initAddButton() {
         addButton = new JButton(addPlaylistString);
-        AddButtonListener addButtonListener = new AddButtonListener(addButton, playlists);
         addButton.setActionCommand(addPlaylistString);
         addButton.addActionListener(addButtonListener);
         addButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .1)));
@@ -155,8 +146,9 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         return addButton;
     }
 
+
     public JButton initDeleteButton() {
-        deleteButton = new JButton(deletePlaylistString);
+        JButton deleteButton = new JButton(deletePlaylistString);
         deleteButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .1)));
         deleteButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         deleteButton.setActionCommand(deletePlaylistString);
@@ -165,9 +157,8 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         return deleteButton;
     }
 
-
     public JButton initOpenPlaylistButton() {
-        openButton = new JButton("View playlist");
+        JButton openButton = new JButton("View playlist");
         openButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .25)));
         openButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         openButton.addActionListener(new ViewListener());
@@ -176,7 +167,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     }
 
     public JButton initSaveButton() {
-        saveButton = new JButton("Save playlists");
+        JButton saveButton = new JButton("Save playlists");
         saveButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .18)));
         saveButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         saveButton.addActionListener(new PlaylistsSaveListener());
@@ -185,7 +176,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     }
 
     public JButton initLoadButton() {
-        loadButton = new JButton("Load playlists");
+        JButton loadButton = new JButton("Load playlists");
         loadButton.setPreferredSize(new Dimension(WIDTH / 5, (int) (HEIGHT * .18)));
         loadButton.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         loadButton.addActionListener(new PlaylistsLoadListener());
@@ -196,10 +187,13 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     // based on ListDemoProject
     // https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDemoProject/src/components/ListDemo.java
     class DeleteButtonListener implements ActionListener {
+
         public void actionPerformed(ActionEvent e) {
             int index = list.getSelectedIndex();
             listModel.remove(index);
+            listModel.removeElement(index);
             saveLoadLabel.setText("");
+            playlists.removePlaylist(index);
         }
     }
 
@@ -209,19 +203,24 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     class AddButtonListener implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
         private final JButton button;
-        private final Playlists playlistList;
+//        private final Playlists playlistList;
 
-        public AddButtonListener(JButton button, Playlists playlistList) {
+        public AddButtonListener(JButton button) {
             this.button = button;
-            this.playlistList = playlistList;
         }
+
+//        public AddButtonListener(JButton button, Playlists playlistList) {
+//            this.button = button;
+//            this.playlistList = playlistList;
+//        }
 
         //Required by ActionListener.
         public void actionPerformed(ActionEvent e) {
             String name = inputPlaylistNameForm.getText();
             Playlist playlist = new Playlist(name);
             listModel.addElement(playlist.getPlaylistName());
-            playlistList.addPlaylist(playlist);
+//            playlistList.addPlaylist(playlist);
+            playlists.addPlaylist(playlist);
             saveLoadLabel.setText("");
 
             int index = list.getSelectedIndex();
@@ -277,15 +276,20 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         // MODIFIES: this
         // EFFECTS: on button press, change frame to song menu frame of respective playlist
         public void actionPerformed(ActionEvent e) {
-            String playlistName = list.getSelectedValue();
-            frame.dispose();
-            if (playlistName.equals("Star Wars Soundtrack")) {
-                SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(0), playlists);
-            } else if (playlistName.equals("Instrumental")) {
-                SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(1), playlists);
-            } else if (playlistName.equals("Film scores")) {
-                SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(2), playlists);
-            } else {
+            if (list.getSelectedValue() != null) {
+                String playlistName = list.getSelectedValue();
+                frame.dispose();
+
+//                if (playlistName.equals("Star Wars Soundtrack")) {
+//                    SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(0),
+//                    playlists);
+//                } else if (playlistName.equals("Instrumental")) {
+//                    SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(1),
+//                    playlists);
+//                } else if (playlistName.equals("Film scores")) {
+//                    SongMenuFrame songMenuFrame = new SongMenuFrame(app, app.getAllPlaylists().getPlaylist(2),
+//                    playlists);
+//                } else {
                 int index = 0;
                 for (String s : playlists.getPlaylistsNames()) {
                     if (s.equals(playlistName)) {
@@ -294,6 +298,9 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
                     index++;
                 }
             }
+//            }
+
+            System.out.println("null");
         }
     }
 
@@ -337,7 +344,6 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
                 playlists = jsonReader.readPlaylists();
                 for (Playlist p : playlists.getPlaylists()) {
                     listModel.addElement(p.getPlaylistName());
-                    list = new JList<>(listModel);
                 }
                 saveLoadLabel.setText("Loaded!");
             } catch (Exception ex) {

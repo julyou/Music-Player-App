@@ -22,6 +22,12 @@ public class Playlists implements Writable {
         playlists.add(p);
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes playlist to from playlists
+    public void removePlaylist(int i) {
+        playlists.remove(i);
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

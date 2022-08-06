@@ -28,6 +28,13 @@ public class PlaylistsTest {
     }
 
     @Test
+    public void testRemovePlaylist() {
+        testPlaylists.addPlaylist(testPlaylist);
+        testPlaylists.removePlaylist(0);
+        assertEquals(0, testPlaylists.getPlaylistsSize());
+    }
+
+    @Test
     public void testGetPlaylist() {
         testPlaylists.addPlaylist(testPlaylist);
         assertEquals(testPlaylist, testPlaylists.getPlaylist(0));

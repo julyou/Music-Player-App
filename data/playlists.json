@@ -26,58 +26,6 @@
         "playlist name": "Star Wars Soundtrack"
     },
     {
-        "songs": [
-            {
-                "duration": 44,
-                "song name": "song2",
-                "artist": "unknown",
-                "source": "data/song2.wav",
-                "status": ""
-            },
-            {
-                "duration": 18,
-                "song name": "Dhol Drums",
-                "artist": "unknown",
-                "source": "data/song6.wav",
-                "status": ""
-            }
-        ],
-        "playlist name": "Instrumental"
-    },
-    {
-        "songs": [
-            {
-                "duration": 30,
-                "song name": "Pink Panther",
-                "artist": "Henry Mancini",
-                "source": "data/song3.wav",
-                "status": ""
-            },
-            {
-                "duration": 60,
-                "song name": "Imperial March",
-                "artist": "John Williams",
-                "source": "data/song4.wav",
-                "status": ""
-            },
-            {
-                "duration": 60,
-                "song name": "Cantina Band",
-                "artist": "John Williams",
-                "source": "data/song5.wav",
-                "status": ""
-            },
-            {
-                "duration": 60,
-                "song name": "Main Title",
-                "artist": "John Williams",
-                "source": "data/song7.wav",
-                "status": ""
-            }
-        ],
-        "playlist name": "Film scores"
-    },
-    {
         "songs": [{
             "duration": 34,
             "song name": "song1",
@@ -90,6 +38,43 @@
     {
         "songs": [
             {
+                "duration": 60,
+                "song name": "Cantina Band",
+                "artist": "John Williams",
+                "source": "data/song5.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
+                "song name": "Cantina Band",
+                "artist": "John Williams",
+                "source": "data/song5.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
+                "song name": "Cantina Band",
+                "artist": "John Williams",
+                "source": "data/song5.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
+                "song name": "Cantina Band",
+                "artist": "John Williams",
+                "source": "data/song5.wav",
+                "status": ""
+            }
+        ],
+        "playlist name": "a"
+    },
+    {
+        "songs": [],
+        "playlist name": "instru"
+    },
+    {
+        "songs": [
+            {
                 "duration": 34,
                 "song name": "song1",
                 "artist": "unknown",
@@ -97,20 +82,34 @@
                 "status": ""
             },
             {
-                "duration": 60,
-                "song name": "Imperial March",
-                "artist": "John Williams",
-                "source": "data/song4.wav",
+                "duration": 34,
+                "song name": "song1",
+                "artist": "unknown",
+                "source": "data/song1.wav",
                 "status": ""
             },
             {
-                "duration": 18,
-                "song name": "Dhol Drums",
+                "duration": 34,
+                "song name": "song1",
                 "artist": "unknown",
-                "source": "data/song6.wav",
+                "source": "data/song1.wav",
+                "status": ""
+            },
+            {
+                "duration": 34,
+                "song name": "song1",
+                "artist": "unknown",
+                "source": "data/song1.wav",
+                "status": ""
+            },
+            {
+                "duration": 34,
+                "song name": "song1",
+                "artist": "unknown",
+                "source": "data/song1.wav",
                 "status": ""
             }
         ],
-        "playlist name": "s"
+        "playlist name": "asdf"
     }
 ]}
