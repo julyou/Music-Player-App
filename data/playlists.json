@@ -2,114 +2,28 @@
     {
         "songs": [
             {
-                "duration": 60,
-                "song name": "Imperial March",
-                "artist": "John Williams",
-                "source": "data/song4.wav",
+                "duration": 44,
+                "song name": "song2",
+                "artist": "unknown",
+                "source": "data/song2.wav",
                 "status": ""
             },
             {
-                "duration": 60,
-                "song name": "Cantina Band",
-                "artist": "John Williams",
-                "source": "data/song5.wav",
-                "status": ""
-            },
-            {
-                "duration": 60,
-                "song name": "Main Title",
-                "artist": "John Williams",
-                "source": "data/song7.wav",
+                "duration": 18,
+                "song name": "Dhol Drums",
+                "artist": "unknown",
+                "source": "data/song6.wav",
                 "status": ""
             }
         ],
-        "playlist name": "Star Wars Soundtrack"
+        "playlist name": "Instrumental"
     },
     {
-        "songs": [{
-            "duration": 34,
-            "song name": "song1",
-            "artist": "unknown",
-            "source": "data/song1.wav",
-            "status": ""
-        }],
-        "playlist name": "a"
-    },
-    {
-        "songs": [
-            {
-                "duration": 60,
-                "song name": "Cantina Band",
-                "artist": "John Williams",
-                "source": "data/song5.wav",
-                "status": ""
-            },
-            {
-                "duration": 60,
-                "song name": "Cantina Band",
-                "artist": "John Williams",
-                "source": "data/song5.wav",
-                "status": ""
-            },
-            {
-                "duration": 60,
-                "song name": "Cantina Band",
-                "artist": "John Williams",
-                "source": "data/song5.wav",
-                "status": ""
-            },
-            {
-                "duration": 60,
-                "song name": "Cantina Band",
-                "artist": "John Williams",
-                "source": "data/song5.wav",
-                "status": ""
-            }
-        ],
+        "songs": [],
         "playlist name": "a"
     },
     {
         "songs": [],
-        "playlist name": "instru"
-    },
-    {
-        "songs": [
-            {
-                "duration": 34,
-                "song name": "song1",
-                "artist": "unknown",
-                "source": "data/song1.wav",
-                "status": ""
-            },
-            {
-                "duration": 34,
-                "song name": "song1",
-                "artist": "unknown",
-                "source": "data/song1.wav",
-                "status": ""
-            },
-            {
-                "duration": 34,
-                "song name": "song1",
-                "artist": "unknown",
-                "source": "data/song1.wav",
-                "status": ""
-            },
-            {
-                "duration": 34,
-                "song name": "song1",
-                "artist": "unknown",
-                "source": "data/song1.wav",
-                "status": ""
-            },
-            {
-                "duration": 34,
-                "song name": "song1",
-                "artist": "unknown",
-                "source": "data/song1.wav",
-                "status": ""
-            }
-        ],
-        "playlist name": "asdf"
+        "playlist name": "s"
     }
 ]}
