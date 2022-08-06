@@ -59,6 +59,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         frame.add(initMainPanel(), BorderLayout.CENTER);
         frame.add(initSidePanel(), BorderLayout.EAST);
         frame.pack();
+        frame.setBackground(Color.black);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setResizable(false);
@@ -84,8 +85,14 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
     // EFFECTS: creates menu bar with main menu and back options
     private JMenuBar initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu file = new JMenu("Navigation");
+        JMenu file = new JMenu("File");
         file.setFont(new Font("Serif", Font.PLAIN, 18));
+        JMenu edit = new JMenu("Edit");
+        edit.setFont(new Font("Serif", Font.PLAIN, 18));
+        JMenu view = new JMenu("View");
+        view.setFont(new Font("Serif", Font.PLAIN, 18));
+        JMenu help = new JMenu("Help");
+        help.setFont(new Font("Serif", Font.PLAIN, 18));
         mainMenu = new JMenuItem("Main menu");
         mainMenu.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         back = new JMenuItem("Back");
@@ -93,6 +100,9 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         mainMenu.addActionListener(this);
         back.addActionListener(this);
         menuBar.add(file);
+        menuBar.add(edit);
+        menuBar.add(view);
+        menuBar.add(help);
         file.add(mainMenu);
         file.add(back);
         return menuBar;
@@ -231,17 +241,6 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (!e.getValueIsAdjusting()) {
-            if (songsToCopyList.getSelectedIndex() == -1) {
-                addButton.setEnabled(false);
-            } else if (songsToCopyList.getSelectedIndex() != -1) {
-                addButton.setEnabled(true);
-            } else if (mainSongList.getSelectedIndex() == -1) {
-                deleteButton.setEnabled(false);
-            } else {
-                deleteButton.setEnabled(true);
-            }
-        }
     }
 
     // based on ListDemoProject
@@ -265,13 +264,12 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
             int size = mainSongListModel.getSize();
 
             if (size == 0) {
-                deleteButton.setEnabled(false);
+//                deleteButton.setEnabled(false);
 
             } else {
                 if (index == mainSongListModel.getSize()) {
                     index--;
                 }
-
                 mainSongList.setSelectedIndex(index);
                 mainSongList.ensureIndexIsVisible(index);
             }
@@ -286,7 +284,6 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         public void actionPerformed(ActionEvent e) {
             String element = songsToCopyList.getSelectedValue();
 
-
             int index = mainSongList.getSelectedIndex();
             if (index == -1) {
                 index = 0;
@@ -296,7 +293,6 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
 
             mainSongListModel.insertElementAt(element, index);
 
-//            mainSongListModel.addElement(element);
             for (Song s : app.getAllSongs()) {
                 if (element.equals(s.getSongTitle())) {
                     playlist.addSongAtIndex(index, s);

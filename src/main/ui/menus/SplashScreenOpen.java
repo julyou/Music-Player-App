@@ -25,7 +25,7 @@ public class SplashScreenOpen {
         frame.setResizable(false);
 
         try {
-            Thread.sleep(4000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

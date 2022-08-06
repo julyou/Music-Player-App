@@ -75,7 +75,7 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-
+        frame.setBackground(Color.orange);
         return frame;
     }
 
@@ -83,12 +83,24 @@ public class AllPlaylistsMenuFrame implements ActionListener, ListSelectionListe
     // EFFECTS: creates menu bar with "main menu" submenu
     private JMenuBar initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu file = new JMenu("Navigation");
-        mainMenu = new JMenuItem("Main menu");
+        menuBar.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * 0.05)));
+        menuBar.setBorderPainted(true);
+        JMenu file = new JMenu("File");
         file.setFont(new Font("Serif", Font.PLAIN, 18));
+        JMenu edit = new JMenu("Edit");
+        edit.setFont(new Font("Serif", Font.PLAIN, 18));
+        JMenu view = new JMenu("View");
+        view.setFont(new Font("Serif", Font.PLAIN, 18));
+        JMenu help = new JMenu("Help");
+        help.setFont(new Font("Serif", Font.PLAIN, 18));
+        mainMenu = new JMenuItem("Main menu");
         mainMenu.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         mainMenu.addActionListener(this);
+
         menuBar.add(file);
+        menuBar.add(edit);
+        menuBar.add(view);
+        menuBar.add(help);
         file.add(mainMenu);
         return menuBar;
     }

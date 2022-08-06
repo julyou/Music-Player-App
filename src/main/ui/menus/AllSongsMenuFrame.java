@@ -35,6 +35,7 @@ public class AllSongsMenuFrame extends JPanel implements ActionListener, ListSel
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setResizable(false);
+        frame.setBackground(Color.orange);
     }
 
     // MODIFIES: this
@@ -75,12 +76,21 @@ public class AllSongsMenuFrame extends JPanel implements ActionListener, ListSel
     // EFFECTS: creates menu bar with main menu submenu
     public JMenuBar initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu file = new JMenu("Navigation");
+        JMenu file = new JMenu("File");
         file.setFont(new Font("Serif", Font.PLAIN, 18));
+        JMenu edit = new JMenu("Edit");
+        edit.setFont(new Font("Serif", Font.PLAIN, 18));
+        JMenu view = new JMenu("View");
+        view.setFont(new Font("Serif", Font.PLAIN, 18));
+        JMenu help = new JMenu("Help");
+        help.setFont(new Font("Serif", Font.PLAIN, 18));
         mainMenu = new JMenuItem("Main menu");
         mainMenu.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         mainMenu.addActionListener(this);
         menuBar.add(file);
+        menuBar.add(edit);
+        menuBar.add(view);
+        menuBar.add(help);
         file.add(mainMenu);
 
         return menuBar;
