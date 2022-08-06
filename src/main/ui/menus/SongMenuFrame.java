@@ -110,7 +110,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
         subMainPanelLeft.add(songsAdded, BorderLayout.NORTH);
         subMainPanelLeft.add(initAddedSongsScrollPanel(), BorderLayout.SOUTH);
 
-        JLabel songsNotAdded = new JLabel("Choose songs to add: ");
+        JLabel songsNotAdded = new JLabel("<<<  Choose songs to add: ");
         songsNotAdded.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
 
         JPanel subMainPanelRight = new JPanel();
@@ -231,7 +231,7 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting() == false) {
+        if (!e.getValueIsAdjusting()) {
             if (songsToCopyList.getSelectedIndex() == -1) {
                 addButton.setEnabled(false);
             } else if (songsToCopyList.getSelectedIndex() != -1) {
@@ -285,10 +285,21 @@ public class SongMenuFrame extends JFrame implements ActionListener, ListSelecti
     class AddButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String element = songsToCopyList.getSelectedValue();
-            mainSongListModel.addElement(element);
+
+
+            int index = mainSongList.getSelectedIndex();
+            if (index == -1) {
+                index = 0;
+            } else {
+                index++;
+            }
+
+            mainSongListModel.insertElementAt(element, index);
+
+//            mainSongListModel.addElement(element);
             for (Song s : app.getAllSongs()) {
                 if (element.equals(s.getSongTitle())) {
-                    playlist.addSong(s);
+                    playlist.addSongAtIndex(index, s);
                 }
             }
             System.out.println(playlist.getSongsTitlesInPlaylist());

@@ -38,6 +38,15 @@ public class PlaylistTest {
     }
 
     @Test
+    public void testAddSongAtIndex() {
+        testPlaylist1.addSongAtIndex(0, testSong1);
+        assertEquals(testSong1, testPlaylist1.getSongsInPlaylist().get(0));
+        testPlaylist1.addSongAtIndex(0, testSong2);
+        assertEquals(testSong2, testPlaylist1.getSongsInPlaylist().get(0));
+        assertEquals(testSong1, testPlaylist1.getSongsInPlaylist().get(1));
+    }
+
+    @Test
     public void testAddTwoSameSongs() {
         testPlaylist1.addSong(testSong1);
         testPlaylist1.addSong(testSong1);

@@ -20,9 +20,15 @@ public class Playlist implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds song to the playlist to end of playlist
+    // EFFECTS: adds song to the playlist to at index of playlist
     public void addSong(Song s) {
         playlist.add(s);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds song to the playlist to at index of playlist
+    public void addSongAtIndex(int i, Song s) {
+        playlist.add(i, s);
     }
 
     // REQUIRES: song exists in playlist
