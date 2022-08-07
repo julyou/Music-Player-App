@@ -3,65 +3,6 @@
         "songs": [
             {
                 "duration": 60,
-                "song name": "Cantina Band",
-                "artist": "John Williams",
-                "source": "data/song5.wav",
-                "status": ""
-            },
-            {
-                "duration": 18,
-                "song name": "Dhol Drums",
-                "artist": "unknown",
-                "source": "data/song6.wav",
-                "status": ""
-            },
-            {
-                "duration": 60,
-                "song name": "Main Title",
-                "artist": "John Williams",
-                "source": "data/song7.wav",
-                "status": ""
-            },
-            {
-                "duration": 18,
-                "song name": "Dhol Drums",
-                "artist": "unknown",
-                "source": "data/song6.wav",
-                "status": ""
-            }
-        ],
-        "playlist name": "Star Wars Soundtrack"
-    },
-    {
-        "songs": [
-            {
-                "duration": 44,
-                "song name": "song2",
-                "artist": "unknown",
-                "source": "data/song2.wav",
-                "status": ""
-            },
-            {
-                "duration": 18,
-                "song name": "Dhol Drums",
-                "artist": "unknown",
-                "source": "data/song6.wav",
-                "status": ""
-            }
-        ],
-        "playlist name": "Instrumental"
-    },
-    {
-        "songs": [
-            {
-                "duration": 30,
-                "song name": "Pink Panther",
-                "artist": "Henry Mancini",
-                "source": "data/song3.wav",
-                "status": ""
-            },
-            {
-                "duration": 60,
                 "song name": "Imperial March",
                 "artist": "John Williams",
                 "source": "data/song4.wav",
@@ -76,12 +17,38 @@
             },
             {
                 "duration": 60,
+                "song name": "Imperial March",
+                "artist": "John Williams",
+                "source": "data/song4.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
+                "song name": "Imperial March",
+                "artist": "John Williams",
+                "source": "data/song4.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
                 "song name": "Main Title",
                 "artist": "John Williams",
                 "source": "data/song7.wav",
                 "status": ""
             }
         ],
-        "playlist name": "Film scores"
+        "playlist name": "Star Wars Soundtrack"
+    },
+    {
+        "songs": [],
+        "playlist name": "sdf"
+    },
+    {
+        "songs": [],
+        "playlist name": "f"
+    },
+    {
+        "songs": [],
+        "playlist name": "a"
     }
 ]}
