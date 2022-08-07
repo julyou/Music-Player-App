@@ -12,10 +12,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 
 // represents list of all playlists in app with save and load options
@@ -191,6 +188,8 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
         list.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
+
+        list.addKeyListener(new KeyDeleteListener());
         JScrollPane scrollPanel = new JScrollPane(list);
         scrollPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.77), (int) (HEIGHT * 0.7)));
 
@@ -355,7 +354,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         public void actionPerformed(ActionEvent e) {
             if (list.getSelectedValue() != null) {
                 String playlistName = list.getSelectedValue();
-//                String playlistName = list.getSelectedValue().substring(3);
                 frame.dispose();
                 int index = 0;
                 for (String s : playlists.getPlaylistsNames()) {
@@ -367,6 +365,34 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
             }
         }
     }
+
+    // MODIFIES: this
+    // EFFECTS: listens for backspace key press and deletes playlist
+    class KeyDeleteListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                int index = list.getSelectedIndex();
+                listModel.remove(index);
+                listModel.removeElement(index);
+                saveLoadLabel.setText("");
+                playlists.removePlaylist(index);
+            } else {
+                Toolkit.getDefaultToolkit().beep();
+            }
+        }
+    }
+
 
     @Override
     // MODIFIES: this

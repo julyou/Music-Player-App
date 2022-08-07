@@ -11,6 +11,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 // represents a song menu showing songs in a playlist
 public class SongMenu extends JFrame implements ActionListener, ListSelectionListener {
@@ -206,10 +208,10 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
 
         mainSongList = new JList<>(mainSongListModel);
         mainSongList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-//        mainSongList.setSelectedIndex(0);
         mainSongList.addListSelectionListener(this);
         mainSongList.setVisibleRowCount(5);
         mainSongList.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
+        mainSongList.addKeyListener(new KeyDeleteListener());
 
         JScrollPane scrollPanelLeft = new JScrollPane(mainSongList);
         scrollPanelLeft.setPreferredSize(new Dimension((int) (WIDTH * 0.52), (int) (HEIGHT * 0.7)));
@@ -227,10 +229,10 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
 
         songsToCopyList = new JList<>(songsToCopyListModel);
         songsToCopyList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-//        songsToCopyList.setSelectedIndex(0);
         songsToCopyList.addListSelectionListener(this);
         songsToCopyList.setVisibleRowCount(5);
         songsToCopyList.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
+        songsToCopyList.addKeyListener(new KeyAddListener());
 
         JScrollPane scrollPanelRight = new JScrollPane(songsToCopyList);
         scrollPanelRight.setPreferredSize(new Dimension((int) (WIDTH * 0.32), (int) (HEIGHT * 0.7)));
@@ -299,6 +301,85 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
 
             if (size == 0) {
                 addButton.setEnabled(false);
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: listens for backspace key press and deletes song from playlist
+    class KeyDeleteListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                int index = mainSongList.getSelectedIndex();
+                String element = mainSongList.getSelectedValue();
+                mainSongListModel.remove(index);
+
+                for (Song s : app.getAllSongs()) {
+                    if (element.equals(s.getSongTitle())) {
+                        playlist.removeSong(s);
+                    }
+                }
+
+                int size = mainSongListModel.getSize();
+
+                if (size != 0) {
+                    if (index == mainSongListModel.getSize()) {
+                        index--;
+                    }
+                    mainSongList.setSelectedIndex(index);
+                    mainSongList.ensureIndexIsVisible(index);
+                }
+            } else {
+                Toolkit.getDefaultToolkit().beep();
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: listens for enter key press and adds song from playlist
+    class KeyAddListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                String element = songsToCopyList.getSelectedValue();
+
+                int index = mainSongList.getSelectedIndex();
+                if (index == -1) {
+                    index = 0;
+                } else {
+                    index++;
+                }
+
+                mainSongListModel.insertElementAt(element, index);
+
+                for (Song s : app.getAllSongs()) {
+                    if (element.equals(s.getSongTitle())) {
+                        playlist.addSongAtIndex(index, s);
+                    }
+                }
+            } else {
+                Toolkit.getDefaultToolkit().beep();
             }
         }
     }
