@@ -42,8 +42,13 @@ public class MainMenu extends JFrame implements ActionListener {
         frame.add(bottomMainPanel, BorderLayout.SOUTH);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
         frame.setResizable(false);
+        frame.setVisible(true);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         frame.setBackground(Color.PINK);
     }
 

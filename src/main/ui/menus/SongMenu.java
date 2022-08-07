@@ -62,6 +62,11 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setResizable(false);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         frame.setBackground(Color.PINK);
     }
 
@@ -340,14 +345,15 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
                     mainSongList.setSelectedIndex(index);
                     mainSongList.ensureIndexIsVisible(index);
                 }
-            } else {
+            } else if (e.getKeyCode() != KeyEvent.VK_UP && e.getKeyCode() != KeyEvent.VK_DOWN) {
                 Toolkit.getDefaultToolkit().beep();
             }
         }
     }
 
+
     // MODIFIES: this
-    // EFFECTS: listens for enter key press and adds song from playlist
+// EFFECTS: listens for enter key press and adds song from playlist
     class KeyAddListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
@@ -378,7 +384,7 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
                         playlist.addSongAtIndex(index, s);
                     }
                 }
-            } else {
+            } else if (e.getKeyCode() != KeyEvent.VK_UP && e.getKeyCode() != KeyEvent.VK_DOWN) {
                 Toolkit.getDefaultToolkit().beep();
             }
         }

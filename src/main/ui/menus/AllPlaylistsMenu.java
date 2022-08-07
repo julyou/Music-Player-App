@@ -99,8 +99,12 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         frame.setBackground(Color.PINK);
-
         return frame;
     }
 
@@ -387,7 +391,7 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
                 listModel.removeElement(index);
                 saveLoadLabel.setText("");
                 playlists.removePlaylist(index);
-            } else {
+            } else if (e.getKeyCode() != KeyEvent.VK_UP && e.getKeyCode() != KeyEvent.VK_DOWN) {
                 Toolkit.getDefaultToolkit().beep();
             }
         }

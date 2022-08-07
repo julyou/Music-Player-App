@@ -32,8 +32,13 @@ public class AllSongsMenu extends JPanel implements ActionListener, ListSelectio
         frame.setJMenuBar(initMenuBar());
         frame.add(scrollPane);
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
         frame.setResizable(false);
+        frame.setVisible(true);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         frame.setBackground(Color.PINK);
     }
 
