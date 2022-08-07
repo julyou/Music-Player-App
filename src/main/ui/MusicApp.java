@@ -6,7 +6,7 @@ import model.Song;
 import model.SongThread;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-import ui.menus.SplashScreenOpen;
+import ui.menus.SplashScreen;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -82,7 +82,7 @@ public class MusicApp {
     // MODIFIES: this
     // EFFECTS: creates and shows initial splash screen
     public void initializeFrame() {
-        new SplashScreenOpen(this);
+        new SplashScreen(this);
     }
 
     // EFFECTS: processes user input

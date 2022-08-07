@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 // Represents a main menu
-public class MainMenuFrame extends JFrame implements ActionListener {
+public class MainMenu extends JFrame implements ActionListener {
     private final JFrame frame = new JFrame();
     private JButton songsButton;
     private JButton playlistsButton;
@@ -22,7 +22,7 @@ public class MainMenuFrame extends JFrame implements ActionListener {
     private static final int FONT_SIZE = 16;
 
     // EFFECTS: creates main menu with layout and components
-    public MainMenuFrame(MusicApp app) {
+    public MainMenu(MusicApp app) {
         this.app = app;
 
         JPanel bottomMainPanel = new JPanel();
@@ -35,7 +35,6 @@ public class MainMenuFrame extends JFrame implements ActionListener {
         mainPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .70)));
 
         frame.setTitle("Main Menu");
-        frame.setFont(new Font("Serif", Font.BOLD, 18));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.add(initMenuBar(), BorderLayout.NORTH);
@@ -45,7 +44,7 @@ public class MainMenuFrame extends JFrame implements ActionListener {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setResizable(false);
-        frame.setBackground(Color.BLACK);
+        frame.setBackground(Color.PINK);
     }
 
     // MODIFIES: this
@@ -137,10 +136,10 @@ public class MainMenuFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == songsButton) {
             frame.dispose();
-            AllSongsMenuFrame allSongsMenuFrame = new AllSongsMenuFrame(app);
+            AllSongsMenu allSongsMenu = new AllSongsMenu(app);
         } else if (e.getSource() == playlistsButton) {
             frame.dispose();
-            AllPlaylistsMenuFrame allPlaylistsMenuFrame = new AllPlaylistsMenuFrame(app, app.getAllPlaylists());
+            AllPlaylistsMenu allPlaylistsMenu = new AllPlaylistsMenu(app, app.getAllPlaylists());
         } else if (e.getSource() == playButton) {
             app.getSongThread().startPlaying(app.getAllSongs());
         } else if (e.getSource() == stopButton) {

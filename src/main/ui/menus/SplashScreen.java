@@ -6,14 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 
 // Creates splash screen upon loading the music app
-public class SplashScreenOpen {
+public class SplashScreen {
     MusicApp app;
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 550;
 
     // EFFECTS: constructs splash screen and displays for 4 seconds before loading application
-    public SplashScreenOpen(MusicApp app) {
+    public SplashScreen(MusicApp app) {
         this.app = app;
         JFrame frame = new JFrame("Music Player");
         frame.setFont(new Font("Serif", Font.BOLD, 18));
@@ -23,6 +23,7 @@ public class SplashScreenOpen {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setResizable(false);
+        frame.setBackground(Color.PINK);
 
         try {
             Thread.sleep(5000);
@@ -31,7 +32,7 @@ public class SplashScreenOpen {
         }
 
         frame.setVisible(false);
-        MainMenuFrame mainMenuFrame = new MainMenuFrame(app);
+        MainMenu mainMenuFrame = new MainMenu(app);
         frame.dispose();
     }
 }
