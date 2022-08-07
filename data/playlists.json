@@ -1,27 +1,26 @@
 {"playlists": [
     {
+        "songs": [],
+        "playlist name": ""
+    },
+    {
+        "songs": [],
+        "playlist name": "A"
+    },
+    {
+        "songs": [],
+        "playlist name": "A"
+    },
+    {
+        "songs": [],
+        "playlist name": "AF"
+    },
+    {
+        "songs": [],
+        "playlist name": "A"
+    },
+    {
         "songs": [
-            {
-                "duration": 60,
-                "song name": "Imperial March",
-                "artist": "John Williams",
-                "source": "data/song4.wav",
-                "status": ""
-            },
-            {
-                "duration": 60,
-                "song name": "Cantina Band",
-                "artist": "John Williams",
-                "source": "data/song5.wav",
-                "status": ""
-            },
-            {
-                "duration": 60,
-                "song name": "Imperial March",
-                "artist": "John Williams",
-                "source": "data/song4.wav",
-                "status": ""
-            },
             {
                 "duration": 60,
                 "song name": "Imperial March",
@@ -35,20 +34,46 @@
                 "artist": "John Williams",
                 "source": "data/song7.wav",
                 "status": ""
+            },
+            {
+                "duration": 60,
+                "song name": "Imperial March",
+                "artist": "John Williams",
+                "source": "data/song4.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
+                "song name": "Imperial March",
+                "artist": "John Williams",
+                "source": "data/song4.wav",
+                "status": ""
             }
         ],
-        "playlist name": "Star Wars Soundtrack"
+        "playlist name": "V"
     },
     {
         "songs": [],
-        "playlist name": "sdf"
+        "playlist name": "A"
     },
     {
         "songs": [],
-        "playlist name": "f"
+        "playlist name": "A"
     },
     {
         "songs": [],
-        "playlist name": "a"
+        "playlist name": "T"
+    },
+    {
+        "songs": [],
+        "playlist name": "ER"
+    },
+    {
+        "songs": [],
+        "playlist name": "HH"
+    },
+    {
+        "songs": [],
+        "playlist name": "H"
     }
 ]}

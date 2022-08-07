@@ -221,27 +221,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         return deleteButton;
     }
 
-    class KeyDeleteListener implements KeyListener {
-        @Override
-        public void keyTyped(KeyEvent e) {
-
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            int index = list.getSelectedIndex();
-            listModel.remove(index);
-            listModel.removeElement(index);
-            saveLoadLabel.setText("");
-            playlists.removePlaylist(index);
-        }
-    }
-
     // MODIFIES: this
     // EFFECTS: creates view playlist button
     public JButton initViewPlaylistButton() {
@@ -386,6 +365,34 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
             }
         }
     }
+
+    // MODIFIES: this
+    // EFFECTS: listens for backspace key press and deletes playlist
+    class KeyDeleteListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                int index = list.getSelectedIndex();
+                listModel.remove(index);
+                listModel.removeElement(index);
+                saveLoadLabel.setText("");
+                playlists.removePlaylist(index);
+            } else {
+                Toolkit.getDefaultToolkit().beep();
+            }
+        }
+    }
+
 
     @Override
     // MODIFIES: this
