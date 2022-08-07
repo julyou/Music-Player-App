@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 // represents menu displaying all songs in the app with song title, artist, and duration
-public class AllSongsMenuFrame extends JPanel implements ActionListener, ListSelectionListener {
+public class AllSongsMenu extends JPanel implements ActionListener, ListSelectionListener {
     private final JFrame frame = new JFrame();
     private JMenuItem mainMenu;
     private final MusicApp app;
@@ -20,14 +20,13 @@ public class AllSongsMenuFrame extends JPanel implements ActionListener, ListSel
     private static final int FONT_SIZE = 16;
 
     // EFFECTS: creates all songs menu in table layout
-    public AllSongsMenuFrame(MusicApp app) {
+    public AllSongsMenu(MusicApp app) {
         super(new GridLayout(1, 0));
         this.app = app;
 
         JScrollPane scrollPane = new JScrollPane(initSongTable());
 
         frame.setTitle("All Songs");
-        frame.setFont(new Font("Serif", Font.BOLD, 18));
         frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setJMenuBar(initMenuBar());
@@ -35,6 +34,7 @@ public class AllSongsMenuFrame extends JPanel implements ActionListener, ListSel
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setResizable(false);
+        frame.setBackground(Color.PINK);
     }
 
     // MODIFIES: this
@@ -75,12 +75,21 @@ public class AllSongsMenuFrame extends JPanel implements ActionListener, ListSel
     // EFFECTS: creates menu bar with main menu submenu
     public JMenuBar initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu file = new JMenu("Navigation");
+        JMenu file = new JMenu("File");
         file.setFont(new Font("Serif", Font.PLAIN, 18));
+        JMenu edit = new JMenu("Edit");
+        edit.setFont(new Font("Serif", Font.PLAIN, 18));
+        JMenu view = new JMenu("View");
+        view.setFont(new Font("Serif", Font.PLAIN, 18));
+        JMenu help = new JMenu("Help");
+        help.setFont(new Font("Serif", Font.PLAIN, 18));
         mainMenu = new JMenuItem("Main menu");
         mainMenu.setFont(new Font("Serif", Font.PLAIN, FONT_SIZE));
         mainMenu.addActionListener(this);
         menuBar.add(file);
+        menuBar.add(edit);
+        menuBar.add(view);
+        menuBar.add(help);
         file.add(mainMenu);
 
         return menuBar;
@@ -92,7 +101,7 @@ public class AllSongsMenuFrame extends JPanel implements ActionListener, ListSel
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == mainMenu) {
             frame.dispose();
-            MainMenuFrame mainMenuFrame = new MainMenuFrame(app);
+            MainMenu mainMenu = new MainMenu(app);
             System.out.println("main menu");
         }
     }

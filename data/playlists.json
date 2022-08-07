@@ -1,12 +1,35 @@
 {"playlists": [
     {
-        "songs": [{
-            "duration": 18,
-            "song name": "Dhol Drums",
-            "artist": "unknown",
-            "source": "data/song6.wav",
-            "status": "stopped"
-        }],
+        "songs": [
+            {
+                "duration": 60,
+                "song name": "Cantina Band",
+                "artist": "John Williams",
+                "source": "data/song5.wav",
+                "status": ""
+            },
+            {
+                "duration": 18,
+                "song name": "Dhol Drums",
+                "artist": "unknown",
+                "source": "data/song6.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
+                "song name": "Main Title",
+                "artist": "John Williams",
+                "source": "data/song7.wav",
+                "status": ""
+            },
+            {
+                "duration": 18,
+                "song name": "Dhol Drums",
+                "artist": "unknown",
+                "source": "data/song6.wav",
+                "status": ""
+            }
+        ],
         "playlist name": "Star Wars Soundtrack"
     },
     {
@@ -23,7 +46,7 @@
                 "song name": "Dhol Drums",
                 "artist": "unknown",
                 "source": "data/song6.wav",
-                "status": "stopped"
+                "status": ""
             }
         ],
         "playlist name": "Instrumental"
@@ -56,29 +79,9 @@
                 "song name": "Main Title",
                 "artist": "John Williams",
                 "source": "data/song7.wav",
-                "status": "stopped"
+                "status": ""
             }
         ],
         "playlist name": "Film scores"
-    },
-    {
-        "songs": [],
-        "playlist name": "asdf"
-    },
-    {
-        "songs": [],
-        "playlist name": "g"
-    },
-    {
-        "songs": [],
-        "playlist name": "s"
-    },
-    {
-        "songs": [],
-        "playlist name": "s"
-    },
-    {
-        "songs": [],
-        "playlist name": "s"
     }
 ]}
