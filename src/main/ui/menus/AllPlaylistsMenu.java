@@ -85,6 +85,7 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         });
     }
 
+    // MODIFIES: this
     // EFFECTS: creates frame with layout and components that opens in center of screen
     private JFrame initJFrame() {
         frame = new JFrame("Playlists");
@@ -106,6 +107,7 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         return frame;
     }
 
+    // MODIFIES: this
     // EFFECTS: creates menu bar with "main menu" submenu
     private JMenuBar initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
@@ -131,6 +133,7 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         return menuBar;
     }
 
+    // MODIFIES: this
     // EFFECTS: creates panel with list of playlists on the left and view, save, and load buttons on the right
     private JPanel initMainPanel() {
         JPanel emptyPanel = new JPanel();
@@ -161,6 +164,7 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         return topMainPanel;
     }
 
+    // MODIFIES: this
     // EFFECTS: creates panel with text field allowing user to name a new playlist, and add and delete playlist buttons
     public JPanel initBottomPanel() {
         JPanel bottomPanel = new JPanel();
