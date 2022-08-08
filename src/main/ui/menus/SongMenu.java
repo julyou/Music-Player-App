@@ -62,11 +62,16 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setResizable(false);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         frame.setBackground(Color.PINK);
     }
 
     // MODIFIES: this
-    // EFFECTS: creates side panel with add song and delete song buttons
+    // EFFECTS: creates side panel with "add song" and "delete song" buttons
     private JPanel initSidePanel() {
         JPanel emptyPanel = new JPanel();
         emptyPanel.setPreferredSize(new Dimension((int) (WIDTH * 0.1), (int) (HEIGHT * .04)));
@@ -150,7 +155,6 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
         return bottomPanel;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates button allowing user to add a song into the playlist
     private JButton initAddButton() {
         addButton = new JButton(addSongString);
@@ -163,7 +167,6 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
         return addButton;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates button allowing user to delete a song from the playlist
     private JButton initDeleteButton() {
         JButton deleteButton = new JButton(deleteSongString);
@@ -175,7 +178,6 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
         return deleteButton;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates play button that starts playing songs in playlist on click
     private JButton initPlayButton() {
         playButton = new JButton();
@@ -186,7 +188,6 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
         return playButton;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates stop button that stops playing songs in playlist on click
     private JButton initStopButton() {
         stopButton = new JButton();
@@ -340,11 +341,12 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
                     mainSongList.setSelectedIndex(index);
                     mainSongList.ensureIndexIsVisible(index);
                 }
-            } else {
+            } else if (e.getKeyCode() != KeyEvent.VK_UP && e.getKeyCode() != KeyEvent.VK_DOWN) {
                 Toolkit.getDefaultToolkit().beep();
             }
         }
     }
+
 
     // MODIFIES: this
     // EFFECTS: listens for enter key press and adds song from playlist
@@ -378,7 +380,7 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
                         playlist.addSongAtIndex(index, s);
                     }
                 }
-            } else {
+            } else if (e.getKeyCode() != KeyEvent.VK_UP && e.getKeyCode() != KeyEvent.VK_DOWN) {
                 Toolkit.getDefaultToolkit().beep();
             }
         }

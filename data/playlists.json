@@ -1,25 +1,5 @@
 {"playlists": [
     {
-        "songs": [],
-        "playlist name": ""
-    },
-    {
-        "songs": [],
-        "playlist name": "A"
-    },
-    {
-        "songs": [],
-        "playlist name": "A"
-    },
-    {
-        "songs": [],
-        "playlist name": "AF"
-    },
-    {
-        "songs": [],
-        "playlist name": "A"
-    },
-    {
         "songs": [
             {
                 "duration": 60,
@@ -30,50 +10,52 @@
             },
             {
                 "duration": 60,
+                "song name": "Cantina Band",
+                "artist": "John Williams",
+                "source": "data/song5.wav",
+                "status": ""
+            },
+            {
+                "duration": 60,
                 "song name": "Main Title",
                 "artist": "John Williams",
                 "source": "data/song7.wav",
                 "status": ""
+            }
+        ],
+        "playlist name": "Star Wars Soundtrack"
+    },
+    {
+        "songs": [
+            {
+                "duration": 44,
+                "song name": "song2",
+                "artist": "unknown",
+                "source": "data/song2.wav",
+                "status": "stopped"
             },
             {
-                "duration": 60,
-                "song name": "Imperial March",
-                "artist": "John Williams",
-                "source": "data/song4.wav",
-                "status": ""
-            },
-            {
-                "duration": 60,
-                "song name": "Imperial March",
-                "artist": "John Williams",
-                "source": "data/song4.wav",
+                "duration": 18,
+                "song name": "Dhol Drums",
+                "artist": "unknown",
+                "source": "data/song6.wav",
                 "status": ""
             }
         ],
-        "playlist name": "V"
+        "playlist name": "Instrumental"
     },
     {
         "songs": [],
-        "playlist name": "A"
+        "playlist name": "asdf"
     },
     {
-        "songs": [],
-        "playlist name": "A"
-    },
-    {
-        "songs": [],
-        "playlist name": "T"
-    },
-    {
-        "songs": [],
-        "playlist name": "ER"
-    },
-    {
-        "songs": [],
-        "playlist name": "HH"
-    },
-    {
-        "songs": [],
-        "playlist name": "H"
+        "songs": [{
+            "duration": 44,
+            "song name": "song2",
+            "artist": "unknown",
+            "source": "data/song2.wav",
+            "status": "stopped"
+        }],
+        "playlist name": "b"
     }
 ]}

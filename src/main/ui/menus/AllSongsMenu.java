@@ -19,7 +19,7 @@ public class AllSongsMenu extends JPanel implements ActionListener, ListSelectio
     private static final int HEIGHT = 550;
     private static final int FONT_SIZE = 16;
 
-    // EFFECTS: creates all songs menu in table layout
+    // EFFECTS: creates menu with all songs in table layout
     public AllSongsMenu(MusicApp app) {
         super(new GridLayout(1, 0));
         this.app = app;
@@ -32,12 +32,16 @@ public class AllSongsMenu extends JPanel implements ActionListener, ListSelectio
         frame.setJMenuBar(initMenuBar());
         frame.add(scrollPane);
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
         frame.setResizable(false);
+        frame.setVisible(true);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         frame.setBackground(Color.PINK);
     }
 
-    // MODIFIES: this
     // EFFECTS: fills table with songs information, including song title, artist, and duration
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public JTable initSongTable() {
@@ -96,7 +100,6 @@ public class AllSongsMenu extends JPanel implements ActionListener, ListSelectio
     }
 
     @Override
-    // MODIFIES: this
     // EFFECTS: processes main menu click and brings user to main menu
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == mainMenu) {

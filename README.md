@@ -4,8 +4,6 @@
 
 This music player application will allow users to:
 - play and pause songs
-- skip songs forward and back
-- shuffle songs in a playlist
 - browse curated playlists 
 - create their playlists
 
@@ -41,6 +39,6 @@ at the bottom of the screen to remove the playlist.
 - You can locate my visual component by running Main.main(), which will display a splash screen before loading the application.
 - You can save the state of my application by clicking the "Save playlists" button in the playlists window.
 - You can reload the state of my application by clicking the "Load playlists" button in the playlists window.
-- Note: the two events when adding and deleting songs in a playlist
+- Note: the two events also work when adding and deleting songs within a playlist (click "view playlist" first). To switch between menus, click "File" in the menu bar.
 
 
