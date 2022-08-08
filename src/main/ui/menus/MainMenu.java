@@ -25,10 +25,6 @@ public class MainMenu extends JFrame implements ActionListener {
     public MainMenu(MusicApp app) {
         this.app = app;
 
-        JPanel bottomMainPanel = new JPanel();
-        bottomMainPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * 0.17)));
-        bottomMainPanel.add(initPlayPausePanel());
-
         JPanel mainPanel = new JPanel();
         mainPanel.add(initSongsButton(), BorderLayout.WEST);
         mainPanel.add(initPlaylistsButton(), BorderLayout.EAST);
@@ -39,7 +35,7 @@ public class MainMenu extends JFrame implements ActionListener {
         frame.setSize(WIDTH, HEIGHT);
         frame.add(initMenuBar(), BorderLayout.NORTH);
         frame.add(mainPanel, BorderLayout.CENTER);
-        frame.add(bottomMainPanel, BorderLayout.SOUTH);
+        frame.add(initBottomPanel(), BorderLayout.SOUTH);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -50,6 +46,16 @@ public class MainMenu extends JFrame implements ActionListener {
             e.printStackTrace();
         }
         frame.setBackground(Color.PINK);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates panel with play and pause panel
+    private JPanel initBottomPanel() {
+        JPanel bottomMainPanel = new JPanel();
+        bottomMainPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * 0.17)));
+        bottomMainPanel.add(initPlayPausePanel());
+
+        return bottomMainPanel;
     }
 
     // MODIFIES: this
@@ -89,7 +95,6 @@ public class MainMenu extends JFrame implements ActionListener {
         return menuBar;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates "browse songs" button
     private JButton initSongsButton() {
         songsButton = new JButton();
@@ -100,7 +105,6 @@ public class MainMenu extends JFrame implements ActionListener {
         return songsButton;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates "browse playlists" button
     private JButton initPlaylistsButton() {
         playlistsButton = new JButton();
@@ -111,7 +115,6 @@ public class MainMenu extends JFrame implements ActionListener {
         return playlistsButton;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates "play" button
     private JButton initPlayButton() {
         playButton = new JButton();
@@ -122,7 +125,6 @@ public class MainMenu extends JFrame implements ActionListener {
         return playButton;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates "stop" button
     private JButton initStopButton() {
         stopButton = new JButton();
@@ -134,7 +136,6 @@ public class MainMenu extends JFrame implements ActionListener {
     }
 
     @Override
-    // MODIFIES: this
     // EFFECTS: listens for button clicks and processes resulting action of the respective button
     //          "browse songs" brings user to all songs menu, "browse playlists" brings user playlists menu
     //          "play" starts playing songs, "stop" stops playing songs

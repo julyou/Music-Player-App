@@ -63,7 +63,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         initJFrame();
     }
 
-    // MODIFIES: this
     // EFFECTS: grays out default placeholder text until user types in the field, thus changing text
     //          to black until cursor moves outside of text field
     public void inputPlaylistNameListener() {
@@ -86,7 +85,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         });
     }
 
-    // MODIFIES: this
     // EFFECTS: creates frame with layout and components that opens in center of screen
     private JFrame initJFrame() {
         frame = new JFrame("Playlists");
@@ -108,7 +106,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         return frame;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates menu bar with "main menu" submenu
     private JMenuBar initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
@@ -134,7 +131,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         return menuBar;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates panel with list of playlists on the left and view, save, and load buttons on the right
     private JPanel initMainPanel() {
         JPanel emptyPanel = new JPanel();
@@ -165,7 +161,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         return topMainPanel;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates panel with text field allowing user to name a new playlist, and add and delete playlist buttons
     public JPanel initBottomPanel() {
         JPanel bottomPanel = new JPanel();
@@ -180,11 +175,8 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
     // EFFECTS: adds playlists into a scroll pane
     public JScrollPane initPlaylistScrollPane() {
         listModel = new DefaultListModel<>();
-//        int i = 1;
         for (Playlist p : playlists.getPlaylists()) {
-//            listModel.addElement(i + ". " + p.getPlaylistName());
             listModel.addElement(p.getPlaylistName());
-//            i++;
         }
 
         list = new JList<>(listModel);
@@ -200,7 +192,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         return scrollPanel;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates add playlist button
     public JButton initAddButton() {
         addButton = new JButton(addPlaylistString);
@@ -213,7 +204,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         return addButton;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates delete playlist button
     public JButton initDeleteButton() {
         JButton deleteButton = new JButton(deletePlaylistString);
@@ -225,7 +215,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         return deleteButton;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates view playlist button
     public JButton initViewPlaylistButton() {
         JButton openButton = new JButton("View playlist");
@@ -236,7 +225,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         return openButton;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates save playlists button
     public JButton initSaveButton() {
         JButton saveButton = new JButton("Save playlists");
@@ -247,7 +235,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         return saveButton;
     }
 
-    // MODIFIES: this
     // EFFECTS: creates load playlists button
     public JButton initLoadButton() {
         JButton loadButton = new JButton("Load playlists");
@@ -258,7 +245,7 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         return loadButton;
     }
 
-    // based on ListDemoProject
+    // based on ListDemoProject linked below
     // https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDemoProject/src/components/ListDemo.java
     // MODIFIES: this
     // EFFECTS: listens for delete playlist button click and removes playlist from displayed list and playlists
@@ -272,7 +259,7 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         }
     }
 
-    // based on ListDemoProject
+    // based on ListDemoProject linked below
     // https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDemoProject/src/components/ListDemo.java
     // MODIFIES: this
     // EFFECTS: listens for delete playlist button click and removes playlist from displayed list and playlists
@@ -290,7 +277,7 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
             playlists.addPlaylist(playlist);
             saveLoadLabel.setText("");
 
-
+            // beeps if entered name is not unique
             if (name.equals("") || alreadyInList(name)) {
                 Toolkit.getDefaultToolkit().beep();
                 inputPlaylistNameForm.requestFocusInWindow();
@@ -350,8 +337,7 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: listens for "view playlist" button click and opens song menu window with songs in playlist
+    // EFFECTS: listens for "view playlist" button click and opens song menu window of chosen playlist
     class ViewListener implements ActionListener {
         private AllPlaylistsMenu allPlaylistsMenu;
 
@@ -370,17 +356,23 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         }
     }
 
+    @Override
+    // EFFECTS: enables delete button
+    public void valueChanged(ListSelectionEvent e) {
+        if (!e.getValueIsAdjusting()) {
+            initDeleteButton().setEnabled(list.getSelectedIndex() != -1);
+        }
+    }
+
     // MODIFIES: this
-    // EFFECTS: listens for backspace key press and deletes playlist
+    // EFFECTS: listens for backspace key press and deletes playlist, beeps if invalid key is pressed
     class KeyDeleteListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
-
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
-
         }
 
         @Override
@@ -397,9 +389,7 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
         }
     }
 
-
     @Override
-    // MODIFIES: this
     // EFFECTS: listens for "main menu" click and returns user to main menu
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == mainMenu) {
@@ -412,7 +402,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
     // MODIFIES: this
     // EFFECTS: listens for "save playlists" button click and saves playlists and songs to JSON file
     private class PlaylistsSaveListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
@@ -431,7 +420,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
     // MODIFIES: this
     // EFFECTS: listens for "load playlists" button click and loads playlists and songs to display
     private class PlaylistsLoadListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
@@ -445,13 +433,6 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
             } catch (Exception ex) {
                 saveLoadLabel.setText("Could not load...");
             }
-        }
-    }
-
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-        if (!e.getValueIsAdjusting()) {
-            initDeleteButton().setEnabled(list.getSelectedIndex() != -1);
         }
     }
 }
