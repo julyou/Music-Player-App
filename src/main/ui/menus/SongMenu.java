@@ -1,18 +1,14 @@
 package ui.menus;
 
-import model.Playlist;
-import model.Playlists;
-import model.Song;
+import model.*;
+import model.Event;
 import ui.MusicApp;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 // represents a song menu showing songs in a playlist
 public class SongMenu extends JFrame implements ActionListener, ListSelectionListener {
@@ -51,8 +47,19 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
             this.playlists.addPlaylist(p);
         }
 
+        initFrame();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates frame with appropriate layout and components
+    private JFrame initFrame() {
         frame.setTitle(playlist.getPlaylistName());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                printLog();
+                System.exit(0);
+            }
+        });
         frame.setSize(WIDTH, HEIGHT);
         frame.setJMenuBar(initMenuBar());
         frame.add(initBottomPanel(), BorderLayout.SOUTH);
@@ -68,6 +75,8 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
             e.printStackTrace();
         }
         frame.setBackground(Color.PINK);
+
+        return frame;
     }
 
     // MODIFIES: this
@@ -400,6 +409,13 @@ public class SongMenu extends JFrame implements ActionListener, ListSelectionLis
             app.getSongThread().startPlaying(playlist.getSongsInPlaylist());
         } else if (e.getSource() == stopButton) {
             app.getSongThread().stopPlaying();
+        }
+    }
+
+    // EFFECTS: prints events
+    public void printLog() {
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e);
         }
     }
 }

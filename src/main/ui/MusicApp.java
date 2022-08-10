@@ -1,9 +1,6 @@
 package ui;
 
-import model.Playlist;
-import model.Playlists;
-import model.Song;
-import model.SongThread;
+import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.menus.SplashScreen;

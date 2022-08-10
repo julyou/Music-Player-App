@@ -1,5 +1,7 @@
 package ui.menus;
 
+import model.Event;
+import model.EventLog;
 import model.Playlist;
 import model.Playlists;
 import persistence.JsonReader;
@@ -14,6 +16,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 // represents list of all playlists in app with save and load options
 public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
@@ -89,7 +93,13 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
     // EFFECTS: creates frame with layout and components that opens in center of screen
     private JFrame initJFrame() {
         frame = new JFrame("Playlists");
-        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+//        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                printLog();
+                System.exit(0);
+            }
+        });
         frame.setSize(WIDTH, HEIGHT);
         frame.setResizable(false);
         frame.setJMenuBar(initMenuBar());
@@ -437,6 +447,13 @@ public class AllPlaylistsMenu implements ActionListener, ListSelectionListener {
             } catch (Exception ex) {
                 saveLoadLabel.setText("Could not load...");
             }
+        }
+    }
+
+    // EFFECTS: prints events
+    public void printLog() {
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e);
         }
     }
 }

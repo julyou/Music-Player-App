@@ -41,4 +41,29 @@ at the bottom of the screen to remove the playlist.
 - You can reload the state of my application by clicking the "Load playlists" button in the playlists window.
 - Note: the two events also work when adding and deleting songs within a playlist (click "view playlist" first). To switch between menus, click "File" in the menu bar.
 
+## Phase  4: Task 2
+Tue Aug 09 21:40:54 PDT 2022  
+Created new playlist: Star Wars Soundtrack  
+Tue Aug 09 21:40:54 PDT 2022  
+Created new playlist: Instrumental  
+Tue Aug 09 21:40:54 PDT 2022  
+Created new playlist: Film scores  
+Tue Aug 09 21:41:01 PDT 2022  
+Created new playlist: Star Wars Soundtrack  
+Tue Aug 09 21:41:01 PDT 2022  
+Created new playlist: Instrumental  
+Tue Aug 09 21:41:01 PDT 2022  
+Created new playlist: Film scores  
+Tue Aug 09 21:41:06 PDT 2022  
+Created new playlist: new playlist  
+Tue Aug 09 21:41:11 PDT 2022  
+Removed playlist: Instrumental  
+
+## Phase  4: Task 3
+- I noticed a lot of code duplication when creating the different menus for the GUI aspect of the project. For example, 
+I create near identical frames for each menu. I could create an abstract class or interface to capture these methods to
+improve readability.
+- Alternatively, I could pull duplicated code into abstract methods. This will decrease coupling and increase cohesion.
+
+
 

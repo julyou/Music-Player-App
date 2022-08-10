@@ -1,11 +1,15 @@
 package ui.menus;
 
+import model.Event;
+import model.EventLog;
 import ui.MusicApp;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 // Represents a main menu
 public class MainMenu extends JFrame implements ActionListener {
@@ -25,16 +29,16 @@ public class MainMenu extends JFrame implements ActionListener {
     public MainMenu(MusicApp app) {
         this.app = app;
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.add(initSongsButton(), BorderLayout.WEST);
-        mainPanel.add(initPlaylistsButton(), BorderLayout.EAST);
-        mainPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .70)));
-
         frame.setTitle("Main Menu");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                printLog();
+                System.exit(0);
+            }
+        });
         frame.setSize(WIDTH, HEIGHT);
         frame.add(initMenuBar(), BorderLayout.NORTH);
-        frame.add(mainPanel, BorderLayout.CENTER);
+        frame.add(initMainPanel(), BorderLayout.CENTER);
         frame.add(initBottomPanel(), BorderLayout.SOUTH);
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -46,6 +50,17 @@ public class MainMenu extends JFrame implements ActionListener {
             e.printStackTrace();
         }
         frame.setBackground(Color.PINK);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates panel with browse songs and browse playlists buttons
+    private JPanel initMainPanel() {
+        JPanel mainPanel = new JPanel();
+        mainPanel.add(initSongsButton(), BorderLayout.WEST);
+        mainPanel.add(initPlaylistsButton(), BorderLayout.EAST);
+        mainPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * .70)));
+
+        return mainPanel;
     }
 
     // MODIFIES: this
@@ -150,6 +165,13 @@ public class MainMenu extends JFrame implements ActionListener {
             app.getSongThread().startPlaying(app.getAllSongs());
         } else if (e.getSource() == stopButton) {
             app.getSongThread().stopPlaying();
+        }
+    }
+
+    // EFFECTS: prints events
+    public void printLog() {
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e);
         }
     }
 }
