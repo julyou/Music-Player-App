@@ -2,6 +2,32 @@
     {
         "songs": [
             {
+                "duration": 44,
+                "song name": "song2",
+                "artist": "unknown",
+                "source": "data/song2.wav",
+                "status": ""
+            },
+            {
+                "duration": 18,
+                "song name": "Dhol Drums",
+                "artist": "unknown",
+                "source": "data/song6.wav",
+                "status": ""
+            }
+        ],
+        "playlist name": "Instrumental"
+    },
+    {
+        "songs": [
+            {
+                "duration": 30,
+                "song name": "Pink Panther",
+                "artist": "Henry Mancini",
+                "source": "data/song3.wav",
+                "status": ""
+            },
+            {
                 "duration": 60,
                 "song name": "Imperial March",
                 "artist": "John Williams",
@@ -23,39 +49,10 @@
                 "status": ""
             }
         ],
-        "playlist name": "Star Wars Soundtrack"
-    },
-    {
-        "songs": [
-            {
-                "duration": 44,
-                "song name": "song2",
-                "artist": "unknown",
-                "source": "data/song2.wav",
-                "status": "stopped"
-            },
-            {
-                "duration": 18,
-                "song name": "Dhol Drums",
-                "artist": "unknown",
-                "source": "data/song6.wav",
-                "status": ""
-            }
-        ],
-        "playlist name": "Instrumental"
+        "playlist name": "Film scores"
     },
     {
         "songs": [],
-        "playlist name": "asdf"
-    },
-    {
-        "songs": [{
-            "duration": 44,
-            "song name": "song2",
-            "artist": "unknown",
-            "source": "data/song2.wav",
-            "status": "stopped"
-        }],
-        "playlist name": "b"
+        "playlist name": "a"
     }
 ]}

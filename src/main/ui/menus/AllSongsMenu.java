@@ -1,5 +1,7 @@
 package ui.menus;
 
+import model.Event;
+import model.EventLog;
 import ui.MusicApp;
 
 import javax.swing.*;
@@ -8,6 +10,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 // represents menu displaying all songs in the app with song title, artist, and duration
 public class AllSongsMenu extends JPanel implements ActionListener, ListSelectionListener {
@@ -27,7 +31,13 @@ public class AllSongsMenu extends JPanel implements ActionListener, ListSelectio
         JScrollPane scrollPane = new JScrollPane(initSongTable());
 
         frame.setTitle("All Songs");
-        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+//        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                printLog();
+                System.exit(0);
+            }
+        });
         frame.setSize(WIDTH, HEIGHT);
         frame.setJMenuBar(initMenuBar());
         frame.add(scrollPane);
@@ -111,5 +121,12 @@ public class AllSongsMenu extends JPanel implements ActionListener, ListSelectio
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
+    }
+
+    // EFFECTS: prints events
+    public void printLog() {
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e);
+        }
     }
 }

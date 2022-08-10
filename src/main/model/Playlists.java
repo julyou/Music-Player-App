@@ -20,12 +20,14 @@ public class Playlists implements Writable {
     // EFFECTS: adds playlist to this playlists
     public void addPlaylist(Playlist p) {
         playlists.add(p);
+        EventLog.getInstance().logEvent(new Event("Created new playlist: " + p.getPlaylistName()));
     }
 
     // MODIFIES: this
     // EFFECTS: removes playlist to from playlists
     public void removePlaylist(int i) {
         playlists.remove(i);
+        EventLog.getInstance().logEvent(new Event("Removed playlist: " + playlists.get(i).getPlaylistName()));
     }
 
     @Override
