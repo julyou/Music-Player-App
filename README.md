@@ -63,7 +63,7 @@ Removed playlist: Instrumental
 - I noticed a lot of code duplication when creating the different menus for the GUI aspect of the project. For example, 
 I create near identical frames for each menu. I could create an abstract class or interface to capture these methods to
 improve readability.
-- Alternatively, I could pull duplicated code into abstract methods. This will decrease coupling and increase cohesion.
+- Alternatively, I could pull duplicated code into abstract methods. This will improve coupling.
 
 
 
